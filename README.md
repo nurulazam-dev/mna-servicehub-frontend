@@ -1,36 +1,21 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ⚙️ MNA ServiceHub
 
-## Getting Started
+> “All local services in one smart platform.”
 
-First, run the development server:
+**MNA ServiceHub** is a role-based service booking platform (Admin, Manager, Service Provider, Job Candidate, Customer) where customers can discover and request local services. Managers assign service providers to requests based on their schedules, service providers complete the assigned tasks, and the Admin oversees and controls the entire system.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+MNA ServiceHub acts as a centralized digital platform that enables all local service-related activities to be managed efficiently from a single place.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🔗 Project Links
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Frontend Live Link:** [mna-servicehub.vercel.app](https://mna-servicehub.vercel.app/)
+- **Backend Repository:** [MNA-ServiceHub Backend](https://github.com/nurulazam-dev/mna-servicehub-backend)
+  <br>
+  <br>
+  [![Backend Deployment](https://img.shields.io/badge/Deployment-Vercel-blue)](https://mna-servicehub-backend.vercel.app/)
+  [![Prisma](https://img.shields.io/badge/ORM-Prisma-2D3748)](https://www.prisma.io/)
+  [![PostgreSQL](https://img.shields.io/badge/Database-PostgreSQL-336791)](https://www.postgresql.org/)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+# 📋 Frontend Tech Stack:
