@@ -27,14 +27,14 @@ const nextConfig: NextConfig = {
     ],
   },
 
-  async rewrites() {
+  /*   async rewrites() {
     return [
       {
         source: "/api/auth/:path*",
         destination: `${process.env.NEXT_PUBLIC_BACKEND}/api/auth/:path*`,
       },
     ];
-  },
+  }, */
 };
 
 export default nextConfig;
