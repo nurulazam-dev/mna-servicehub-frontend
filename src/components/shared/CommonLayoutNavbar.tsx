@@ -3,7 +3,7 @@
 import { Menu, LogOut, User, LayoutDashboard } from "lucide-react";
 
 import { cn } from "@/lib/utils";
-
+import { ModeToggle } from "./ModeToggle";
 import { Button } from "@/components/ui/button";
 import {
   NavigationMenu,
@@ -59,13 +59,14 @@ interface Navbar1Props {
 const CommonLayoutNavbar = ({
   logo = {
     url: "/",
-    src: "/mna-mediStore.png",
-    alt: "logo",
-    title: "MediStore",
+    src: "/mna-serviceHub.png",
+    alt: "MNA ServiceHub",
+    title: "MNA SH",
   },
   menu = [
     { title: "Home", url: "/" },
-    { title: "Medicines", url: "/medicines" },
+    { title: "Services", url: "/services" },
+    { title: "Careers", url: "/careers" },
     { title: "About Us", url: "/about-us" },
     { title: "Contact Us", url: "/contact-us" },
   ],
@@ -82,11 +83,15 @@ const CommonLayoutNavbar = ({
   const getDashboardPath = () => {
     switch (user?.role) {
       case "ADMIN":
-        return "/admin-dashboard/dashboard";
-      case "SELLER":
-        return "/seller-dashboard/dashboard";
+        return "/admin/dashboard";
+      case "MANAGER":
+        return "/manager/dashboard";
+      case "SERVICE_PROVIDER":
+        return "/provider/dashboard";
+      case "JOB_CANDIDATE":
+        return "/candidate/dashboard";
       case "CUSTOMER":
-        return "/dashboard/overview";
+        return "/dashboard";
       default:
         return "/dashboard";
     }
@@ -97,6 +102,7 @@ const CommonLayoutNavbar = ({
       fetchOptions: {
         onSuccess: () => {
           router.push("/login");
+          router.refresh();
         },
       },
     });
@@ -118,15 +124,15 @@ const CommonLayoutNavbar = ({
             <Link href={logo.url} className="flex items-center gap-1">
               <Image
                 src={logo.src}
-                height={40}
-                width={40}
+                height={60}
+                width={60}
                 alt={logo.alt}
                 preload
-                className="h-10 w-auto object-contain"
+                className="rounded-tr-md rounded-bl-md w-auto object-contain border border-red-600"
               />
-              <span className="text-2xl font-bold tracking-tighter">
+              {/* <span className="text-2xl font-bold tracking-tighter">
                 {logo.title}
-              </span>
+              </span> */}
             </Link>
           </div>
 
@@ -150,6 +156,7 @@ const CommonLayoutNavbar = ({
           </div>
 
           <div className="flex items-center gap-3">
+            <ModeToggle />
             {user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -215,8 +222,14 @@ const CommonLayoutNavbar = ({
 
         <div className="flex items-center justify-between px-2 lg:hidden">
           <Link href={logo.url} className="flex items-center gap-2">
-            <Image src={logo.src} height={40} width={40} alt={logo.alt} />
-            <span className="font-bold text-2xl">{logo.title}</span>
+            <Image
+              src={logo.src}
+              height={60}
+              width={60}
+              alt={logo.alt}
+              className="rounded-tr-md rounded-bl-md w-auto object-contain border border-red-600"
+            />
+            {/* <span className="font-bold text-2xl">{logo.title}</span> */}
           </Link>
 
           <div className="flex items-center gap-2">
@@ -230,8 +243,14 @@ const CommonLayoutNavbar = ({
               <SheetContent side="right" className="w-75">
                 <SheetHeader>
                   <SheetTitle className="text-left flex items-center gap-2 text-2xl">
-                    <Image src={logo.src} height={40} width={40} alt="logo" />
-                    {logo.title}
+                    <Image
+                      src={logo.src}
+                      height={60}
+                      width={60}
+                      alt="MNA ServiceHub"
+                      className="rounded-tr-md rounded-bl-md w-auto object-contain border border-red-600"
+                    />{" "}
+                    {/* {logo.title} */}
                   </SheetTitle>
                 </SheetHeader>
                 <div className="flex flex-col gap-3 py-3 mx-5">

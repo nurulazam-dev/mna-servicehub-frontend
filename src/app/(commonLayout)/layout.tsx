@@ -1,5 +1,5 @@
+import { CommonLayoutNavbar } from "@/components/shared/CommonLayoutNavbar";
 import Footer from "@/components/shared/Footer";
-import CommonLayoutNavbar from "@/components/shared/Navbar";
 
 export default function CommonLayout({
   children,
