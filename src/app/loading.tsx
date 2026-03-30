@@ -30,7 +30,7 @@ export default function GlobalLoader() {
         <div className="flex flex-col items-center gap-3 rounded-xl border bg-background p-6 shadow-2xl">
           <Loader2 className="h-10 w-10 animate-spin text-primary" />
           <p className="text-sm font-medium animate-pulse text-muted-foreground">
-            Loading your experience...
+            Loading...
           </p>
         </div>
       </div>
