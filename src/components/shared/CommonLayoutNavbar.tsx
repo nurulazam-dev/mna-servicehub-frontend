@@ -2,8 +2,6 @@
 
 import { Menu, LogOut, User, LayoutDashboard } from "lucide-react";
 
-import { cn } from "@/lib/utils";
-import { ModeToggle } from "./ModeToggle";
 import { Button } from "@/components/ui/button";
 import {
   NavigationMenu,
@@ -20,8 +18,8 @@ import {
 } from "@/components/ui/sheet";
 import Image from "next/image";
 import Link from "next/link";
+import { ModeToggle } from "./ModeToggle";
 import { useRouter } from "next/navigation";
-import { authClient } from "@/lib/auth-client";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -31,7 +29,9 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { IUserPayload } from "@/types/users.type";
+import { useUser } from "@/hooks/useUser";
+import { authClient } from "@/lib/auth-client";
+import { cn } from "@/lib/utils";
 
 interface MenuItem {
   title: string;
@@ -76,9 +76,8 @@ const CommonLayoutNavbar = ({
   className,
 }: Navbar1Props) => {
   const router = useRouter();
-  const { data: session } = authClient.useSession();
-  const user = session?.user as IUserPayload | undefined;
-  // if (!user) return null;
+
+  const { data: user } = useUser();
 
   const getDashboardPath = () => {
     switch (user?.role) {
@@ -107,7 +106,6 @@ const CommonLayoutNavbar = ({
       },
     });
   };
-
   return (
     <section
       className={cn(
@@ -124,15 +122,15 @@ const CommonLayoutNavbar = ({
             <Link href={logo.url} className="flex items-center gap-1">
               <Image
                 src={logo.src}
-                height={60}
-                width={60}
+                height={40}
+                width={40}
                 alt={logo.alt}
                 preload
-                className="rounded-tr-md rounded-bl-md w-auto object-contain border border-red-600"
+                className="h-10 w-auto object-contain"
               />
-              {/* <span className="text-2xl font-bold tracking-tighter">
+              <span className="text-2xl font-bold tracking-tighter">
                 {logo.title}
-              </span> */}
+              </span>
             </Link>
           </div>
 
@@ -157,6 +155,7 @@ const CommonLayoutNavbar = ({
 
           <div className="flex items-center gap-3">
             <ModeToggle />
+
             {user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -222,14 +221,8 @@ const CommonLayoutNavbar = ({
 
         <div className="flex items-center justify-between px-2 lg:hidden">
           <Link href={logo.url} className="flex items-center gap-2">
-            <Image
-              src={logo.src}
-              height={60}
-              width={60}
-              alt={logo.alt}
-              className="rounded-tr-md rounded-bl-md w-auto object-contain border border-red-600"
-            />
-            {/* <span className="font-bold text-2xl">{logo.title}</span> */}
+            <Image src={logo.src} height={40} width={40} alt={logo.alt} />
+            <span className="font-bold text-2xl">{logo.title}</span>
           </Link>
 
           <div className="flex items-center gap-2">
@@ -243,14 +236,8 @@ const CommonLayoutNavbar = ({
               <SheetContent side="right" className="w-75">
                 <SheetHeader>
                   <SheetTitle className="text-left flex items-center gap-2 text-2xl">
-                    <Image
-                      src={logo.src}
-                      height={60}
-                      width={60}
-                      alt="MNA ServiceHub"
-                      className="rounded-tr-md rounded-bl-md w-auto object-contain border border-red-600"
-                    />{" "}
-                    {/* {logo.title} */}
+                    <Image src={logo.src} height={40} width={40} alt="logo" />
+                    {logo.title}
                   </SheetTitle>
                 </SheetHeader>
                 <div className="flex flex-col gap-3 py-3 mx-5">
