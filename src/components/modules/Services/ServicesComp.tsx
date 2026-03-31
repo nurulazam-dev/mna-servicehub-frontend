@@ -1,3 +1,3 @@
-export default function AboutUs() {
-  return <div>AboutUs</div>;
+export default function ServicesComp() {
+  return <div>ServicesComp</div>;
 }
