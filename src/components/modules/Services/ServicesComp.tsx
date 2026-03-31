@@ -1,44 +1,36 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
+import { useQuery } from "@tanstack/react-query";
 import ServiceCard from "./ServiceCard";
-
-const services = [
-  {
-    id: "1",
-    name: "Home Appliance Repair",
-    description:
-      "Professional repair services for refrigerators, washing machines, and ovens by certified technicians.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&q=80",
-    averageRating: 4.8,
-    totalReviews: 124,
-    isActive: true,
-  },
-  {
-    id: "2",
-    name: "Web Development",
-    description:
-      "High-performance MERN stack applications tailored for your business needs and scalability.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80",
-    averageRating: 4.9,
-    totalReviews: 89,
-    isActive: true,
-  },
-  {
-    id: "3",
-    name: "Electrical Solutions",
-    description:
-      "Complete electrical wiring, maintenance, and emergency support for residential and commercial spaces.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&q=80",
-    averageRating: 4.7,
-    totalReviews: 210,
-    isActive: true,
-  },
-];
+import { getAllServices } from "@/services/servicesData.services";
+import { IServicePayload } from "@/types/service.type";
+import { Loader2 } from "lucide-react";
 
 const ServicesComp = () => {
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["services"],
+    queryFn: () => getAllServices(""),
+  });
+
+  if (isLoading) {
+    return (
+      <div className="py-12 flex justify-center items-center g-3 text-center">
+        <Loader2 /> Loading services...
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="py-20 text-center text-red-500">
+        Failed to load services.
+      </div>
+    );
+  }
+
+  const services: IServicePayload[] = (data as any) || [];
+
   return (
     <div className="py-12">
       <div className="container mx-auto px-6">
@@ -53,9 +45,15 @@ const ServicesComp = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {services.map((service, index) => (
-            <ServiceCard key={service.id} service={service} index={index} />
-          ))}
+          {services && services.length > 0 ? (
+            services.map((service: IServicePayload, index: number) => (
+              <ServiceCard key={service.id} service={service} index={index} />
+            ))
+          ) : (
+            <p className="col-span-full text-center text-muted-foreground py-10 border border-dashed rounded-xl">
+              No services available right now.
+            </p>
+          )}
         </div>
       </div>
     </div>

@@ -10,6 +10,10 @@ export interface IServicePayload {
   totalReviews: number;
   isActive: boolean;
   isDeleted: boolean;
+  _count?: {
+    reviews: number;
+    serviceRequests: number;
+  };
   serviceRequests?: IServiceRequestPayload[];
   reviews?: IReviewPayload[];
   createdAt: Date | string;

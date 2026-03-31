@@ -1,14 +1,15 @@
 "use server";
 
 import { httpClient } from "@/lib/axios/httpClient";
+import { ApiResponse } from "@/types/api.types";
 import { ICreateServicePayload, IServicePayload } from "@/types/service.type";
 
-export const getAllServices = async (queryString: string) => {
+export const getAllServices = async (queryString: string = "") => {
   try {
-    const services = await httpClient.get<IServicePayload[]>(
+    const response = await httpClient.get<ApiResponse<IServicePayload[]>>(
       queryString ? `/services?${queryString}` : "/services",
     );
-    return services;
+    return response.data;
   } catch (error) {
     console.log("Error fetching services:", error);
     throw error;

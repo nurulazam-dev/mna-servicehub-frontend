@@ -1,3 +1,19 @@
-export default function ServiceDetailsPage() {
-  return <div>ServiceDetailsPage</div>;
+"use server";
+
+import { getServiceById } from "@/services/servicesData.services";
+import ServiceDetails from "./ServiceDetails";
+
+export default async function ServiceDetailsPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const paramsId = await params;
+  const id = paramsId.id;
+
+  const response = await getServiceById(id);
+  const serviceData = response?.data;
+  console.log("serviceData=======", serviceData);
+
+  return <ServiceDetails service={serviceData} />;
 }
