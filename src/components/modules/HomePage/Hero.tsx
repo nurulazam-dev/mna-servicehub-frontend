@@ -44,9 +44,10 @@ export default function Hero() {
               <Button
                 variant="outline"
                 size="lg"
-                className="dark:text-white text-black border-white/20 hover:bg-white/10 rounded-full px-8"
+                className="dark:text-white text-black border-white/20 hover:bg-white/10 rounded-full px-8 group"
               >
                 Join as Provider
+                <ArrowRight className="ml-2 size-4 transition-transform group-hover:translate-x-1" />
               </Button>
             </Link>
           </div>

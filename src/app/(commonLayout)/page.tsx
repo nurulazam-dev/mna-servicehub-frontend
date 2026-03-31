@@ -3,6 +3,7 @@ import AboutOurGoal from "@/components/modules/AboutUs/AboutOurGoal";
 import AboutUsDetailedInfo from "@/components/modules/AboutUs/AboutUsDetailedInfo";
 import ValueProposition from "@/components/modules/AboutUs/ValueProposition";
 import ContactUs from "@/components/modules/HomePage/ContactUs";
+import GoogleMapLocation from "@/components/modules/HomePage/GoogleMapLocation";
 import Hero from "@/components/modules/HomePage/Hero";
 
 export default function Home() {
@@ -13,6 +14,7 @@ export default function Home() {
       <AboutUsDetailedInfo />
       <AboutOurGoal />
       <AboutOurCompany />
+      <GoogleMapLocation />
       <ContactUs />
     </main>
   );
