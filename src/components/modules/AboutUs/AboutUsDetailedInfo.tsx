@@ -10,10 +10,10 @@ export default function AboutUsDetailedInfo() {
             <div className="absolute -inset-4 bg-primary/10 rounded-[3rem] blur-2xl group-hover:bg-primary/20 transition-all duration-700" />
             <div className="relative rounded-[2.5rem] overflow-hidden border border-border shadow-2xl">
               <Image
-                src="https://images.unsplash.com/photo-1600880212340-02d956ea3b85?auto=format&fit=crop&q=80"
+                src="https://res.cloudinary.com/mnaofficialbd/image/upload/v1774940101/mna-service-hub/pdfs/assets_img/winCleSerImg_ofb88z.jpg"
                 alt="MNA ServiceHub Workflow"
                 width={600}
-                height={500}
+                height={450}
                 className="object-cover transition-transform duration-700 group-hover:scale-105"
               />
             </div>
