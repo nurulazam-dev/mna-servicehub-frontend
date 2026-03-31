@@ -1,5 +1,6 @@
 "use client";
 
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -29,9 +30,18 @@ const UserDropdown = ({ userInfo }: UserDropdownProps) => {
           size={"icon"}
           className="rounded-full focus-visible:ring-0"
         >
-          <span className="text-sm font-semibold">
+          {/* <span className="text-sm font-semibold">
             {userInfo?.name?.charAt(0).toUpperCase()}
-          </span>
+          </span> */}
+          <Avatar className="h-10 w-10 border">
+            <AvatarImage
+              src={userInfo?.image || ""}
+              alt={userInfo?.name || "N/A"}
+            />
+            <AvatarFallback className="bg-primary/10">
+              <User className="size-5 text-primary" />
+            </AvatarFallback>
+          </Avatar>
         </Button>
       </DropdownMenuTrigger>
 
@@ -77,7 +87,7 @@ const UserDropdown = ({ userInfo }: UserDropdownProps) => {
 
         <DropdownMenuItem
           onClick={() => {}}
-          className="cursor-pointer text-red-600 focus:text-red-600 focus:bg-red-50"
+          className="text-destructive focus:bg-destructive focus:text-white cursor-pointer"
         >
           <LogOut className="mr-2 h-4 w-4" />
           <span>Logout</span>
