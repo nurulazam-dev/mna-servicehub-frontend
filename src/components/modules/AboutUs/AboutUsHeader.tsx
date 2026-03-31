@@ -1,16 +1,14 @@
 "use client";
 
 import Image from "next/image";
-import { ArrowRight, Zap } from "lucide-react";
-import { Button } from "@/components/ui/button";
 
 export default function AboutUsHeader() {
   return (
-    <section className="relative min-h-100 w-full flex items-center overflow-hidden">
+    <section className="relative min-h-30 w-full flex items-center overflow-hidden text-center">
       <div className="absolute inset-0 z-0">
         <Image
           src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&q=80"
-          alt="MNA ServiceHub Connectivity"
+          alt="MNA ServiceHub"
           fill
           className="object-cover transition-transform duration-10000 hover:scale-110"
           priority
@@ -19,32 +17,15 @@ export default function AboutUsHeader() {
       </div>
 
       <div className="container relative z-10 mx-auto p-6">
-        <div className="max-w-3xl animate-in fade-in slide-in-from-left-12 duration-1000">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/20 text-white/60 border border-white/40 text-xs font-bold uppercase tracking-widest mb-6">
-            <Zap className="size-3 fill-primary" /> The Future of Services
-          </div>
+        <div className="max-w-3xl animate-in fade-in slide-in-from-center-12 duration-1000">
           <h1 className="text-5xl md:text-7xl font-black mb-6 dark:text-primary text-primary-foreground leading-[1.1]">
-            Connecting Talent <br />
-            <span>With Opportunity.</span>
+            About Us
           </h1>
           <p className="text-lg md:text-xl text-gray-300 mb-10 leading-relaxed max-w-xl">
             MNA ServiceHub is Bangladesh&apos;s premier digital marketplace
             designed to bridge the gap between world-class service providers and
             everyday customers.
           </p>
-          <div className="flex flex-wrap gap-4">
-            <Button size="lg" className="font-bold px-8 rounded-full group">
-              Explore Services
-              <ArrowRight className="ml-2 size-4 transition-transform group-hover:translate-x-1" />
-            </Button>
-            <Button
-              variant="outline"
-              size="lg"
-              className="dark:text-white text-black border-white/20 hover:bg-white/10 rounded-full px-8"
-            >
-              Join as Provider
-            </Button>
-          </div>
         </div>
       </div>
     </section>
