@@ -4,27 +4,31 @@ import Image from "next/image";
 
 export default function AboutUsHeader() {
   return (
-    <section className="relative min-h-30 w-full flex items-center overflow-hidden text-center">
+    <section className="relative h-65 md:h-70 w-full flex items-center justify-center overflow-hidden text-center px-4">
+      {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0">
         <Image
           src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&q=80"
-          alt="MNA ServiceHub"
+          alt="MNA ServiceHub - About Us"
           fill
-          className="object-cover transition-transform duration-10000 hover:scale-110"
+          className="object-cover transition-transform duration-10000 hover:scale-105"
           priority
         />
-        <div className="absolute inset-0 bg-linear-to-r from-black/90 via-black/60 to-transparent" />
+        {/* Updated Overlay for better center text visibility */}
+        <div className="absolute inset-0 bg-black/70 backdrop-blur-[2px]" />
       </div>
 
-      <div className="container relative z-10 mx-auto p-6">
-        <div className="max-w-3xl animate-in fade-in slide-in-from-center-12 duration-1000">
-          <h1 className="text-5xl md:text-7xl font-black mb-6 dark:text-primary text-primary-foreground leading-[1.1]">
-            About Us
+      {/* Content Container - Fully Centered */}
+      <div className="container relative z-10 mx-auto">
+        <div className="max-w-4xl mx-auto flex flex-col items-center justify-center animate-in fade-in zoom-in-95 duration-1000">
+          <h1 className="text-5xl md:text-6xl font-black mb-4 dark:text-white/90 text-violet-400 tracking-tight leading-tight">
+            About <span className="text-white/90 dark:text-violet-400">Us</span>
           </h1>
-          <p className="text-lg md:text-xl text-gray-300 mb-10 leading-relaxed max-w-xl">
-            MNA ServiceHub is Bangladesh&apos;s premier digital marketplace
-            designed to bridge the gap between world-class service providers and
-            everyday customers.
+
+          <p className="text-base md:text-lg text-gray-300 max-w-2xl leading-relaxed font-medium">
+            Discover the vision behind MNA ServiceHub—Bangladesh&apos;s most
+            trusted digital ecosystem connecting skilled professionals with
+            high-demand opportunities through innovation and integrity.
           </p>
         </div>
       </div>
