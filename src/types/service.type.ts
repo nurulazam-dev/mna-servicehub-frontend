@@ -15,3 +15,10 @@ export interface IServicePayload {
   createdAt: Date | string;
   updatedAt: Date | string;
 }
+
+export interface ICreateServicePayload {
+  name: string;
+  description: string;
+  imageUrl?: string | null;
+  isActive?: boolean;
+}

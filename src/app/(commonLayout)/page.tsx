@@ -12,8 +12,10 @@ export default function Home() {
       <Hero />
       <ValueProposition />
       <AboutUsDetailedInfo />
+      {/* serviceR process */}
       <AboutOurGoal />
       <AboutOurCompany />
+      {/* review */}
       <GoogleMapLocation />
       <ContactUs />
     </main>
