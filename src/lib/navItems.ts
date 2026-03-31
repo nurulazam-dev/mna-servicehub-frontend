@@ -3,9 +3,14 @@ import { getDefaultDashboardRoute, UserRole } from "./authUtils";
 
 export const getCommonNavItems = (role: UserRole): NavSection[] => {
   const defaultDashboard = getDefaultDashboardRoute(role);
+
+  const profilePath =
+    role === "CUSTOMER"
+      ? "/dashboard/profile"
+      : `/${role.toLowerCase().replace("_", "-")}/dashboard/profile`;
+
   return [
     {
-      // title : "Dashboard",
       items: [
         {
           title: "Home",
@@ -19,7 +24,7 @@ export const getCommonNavItems = (role: UserRole): NavSection[] => {
         },
         {
           title: "My Profile",
-          href: `/my-profile`,
+          href: profilePath,
           icon: "User",
         },
       ],
@@ -29,7 +34,12 @@ export const getCommonNavItems = (role: UserRole): NavSection[] => {
       items: [
         {
           title: "Change Password",
-          href: "change-password",
+          href: "/change-password",
+          icon: "Settings",
+        },
+        {
+          title: "Account Settings",
+          href: "/settings",
           icon: "Settings",
         },
       ],
@@ -37,29 +47,49 @@ export const getCommonNavItems = (role: UserRole): NavSection[] => {
   ];
 };
 
-export const doctorNavItems: NavSection[] = [
+export const providerNavItems: NavSection[] = [
   {
-    title: "Patient Management",
+    title: "Service Management",
     items: [
       {
-        title: "Appointments",
-        href: "/doctor/dashboard/appointments",
-        icon: "Calender",
+        title: "Service Requests",
+        href: "/provider/dashboard/requests",
+        icon: "ClipboardList",
       },
       {
-        title: "My Schedules",
-        href: "/doctor/dashboard/my-schedules",
+        title: "My Services",
+        href: "/provider/dashboard/my-services",
+        icon: "Briefcase",
+      },
+      {
+        title: "Availability",
+        href: "/provider/dashboard/schedules",
         icon: "Clock",
       },
       {
-        title: "Prescriptions",
-        href: "/doctor/dashboard/prescriptions",
-        icon: "FileText",
+        title: "Earnings",
+        href: "/provider/dashboard/earnings",
+        icon: "Wallet",
       },
       {
-        title: "My Reviews",
-        href: "/doctor/dashboard/my-reviews",
+        title: "Reviews",
+        href: "/provider/dashboard/reviews",
         icon: "Star",
+      },
+      {
+        title: "Service Requests",
+        href: "/provider/dashboard/requests",
+        icon: "ClipboardList",
+      },
+      {
+        title: "Active Jobs",
+        href: "/provider/dashboard/active-jobs",
+        icon: "Activity",
+      },
+      {
+        title: "Schedules",
+        href: "/provider/dashboard/schedules",
+        icon: "Clock",
       },
     ],
   },
@@ -71,96 +101,178 @@ export const adminNavItems: NavSection[] = [
     items: [
       {
         title: "Admins",
-        href: "/admin/dashboard/admins-management",
-        icon: "Shield",
+        href: "/admin/dashboard/admins",
+        icon: "ShieldCheck",
       },
       {
-        title: "Doctors",
-        href: "/admin/dashboard/doctors-management",
-        icon: "Stethoscope",
+        title: "Service Providers",
+        href: "/admin/dashboard/providers",
+        icon: "HardHat",
       },
       {
-        title: "Patients",
-        href: "/admin/dashboard/patients-management",
+        title: "Customers",
+        href: "/admin/dashboard/customers",
         icon: "Users",
       },
     ],
   },
   {
-    title: "Hospital Management",
+    title: "Platform Operations",
     items: [
       {
-        title: "Appointments",
-        href: "/admin/dashboard/appointments-management",
-        icon: "Calendar",
+        title: "All Categories",
+        href: "/admin/dashboard/categories",
+        icon: "Layers",
       },
       {
-        title: "Schedules",
-        href: "/admin/dashboard/schedules-management",
-        icon: "Clock",
+        title: "Service Verification",
+        href: "/admin/dashboard/verifications",
+        icon: "UserCheck",
       },
       {
-        title: "Specialties",
-        href: "/admin/dashboard/specialties-management",
-        icon: "Hospital",
-      },
-      {
-        title: "Doctor Schedules",
-        href: "/admin/dashboard/doctor-schedules-management",
-        icon: "CalendarClock",
-      },
-      {
-        title: "Doctor Specialties",
-        href: "/admin/dashboard/doctor-specialties-management",
-        icon: "Stethoscope",
-      },
-      {
-        title: "Payments",
-        href: "/admin/dashboard/payments-management",
+        title: "Transactions",
+        href: "/admin/dashboard/transactions",
         icon: "CreditCard",
       },
       {
-        title: "Prescriptions",
-        href: "/admin/dashboard/prescriptions-management",
-        icon: "FileText",
+        title: "Platform Reports",
+        href: "/admin/dashboard/reports",
+        icon: "BarChart3",
+      },
+    ],
+  },
+  {
+    title: "User Control",
+    items: [
+      {
+        title: "Service Providers",
+        href: "/admin/dashboard/providers",
+        icon: "HardHat",
+      },
+      { title: "Customers", href: "/admin/dashboard/customers", icon: "Users" },
+      {
+        title: "Job Candidates",
+        href: "/admin/dashboard/candidates",
+        icon: "UserSearch",
+      },
+    ],
+  },
+  {
+    title: "Platform",
+    items: [
+      {
+        title: "All Bookings",
+        href: "/admin/dashboard/bookings",
+        icon: "CalendarDays",
       },
       {
-        title: "Reviews",
-        href: "/admin/dashboard/reviews-management",
-        icon: "Star",
+        title: "Payments",
+        href: "/admin/dashboard/payments",
+        icon: "CreditCard",
       },
     ],
   },
 ];
 
-export const patientNavItems: NavSection[] = [
+export const managerNavItems: NavSection[] = [
   {
-    title: "Appointments",
+    title: "User Management",
     items: [
       {
-        title: "My Appointments",
-        href: "/dashboard/my-appointments",
-        icon: "Calendar",
+        title: "Admins",
+        href: "/manager/dashboard/admins",
+        icon: "ShieldCheck",
       },
       {
-        title: "Book Appointment",
-        href: "/dashboard/book-appointments",
-        icon: "ClipboardList",
+        title: "Service Providers",
+        href: "/manager/dashboard/providers",
+        icon: "HardHat",
+      },
+      {
+        title: "Customers",
+        href: "/manager/dashboard/customers",
+        icon: "Users",
       },
     ],
   },
   {
-    title: "Medical Records",
+    title: "Platform Operations",
     items: [
       {
-        title: "My Prescriptions",
-        href: "/dashboard/my-prescriptions",
-        icon: "FileText",
+        title: "All Categories",
+        href: "/manager/dashboard/categories",
+        icon: "Layers",
       },
       {
-        title: "Health Records",
-        href: "/dashboard/health-records",
-        icon: "Activity",
+        title: "Service Verification",
+        href: "/manager/dashboard/verifications",
+        icon: "UserCheck",
+      },
+      {
+        title: "Transactions",
+        href: "/manager/dashboard/transactions",
+        icon: "CreditCard",
+      },
+      {
+        title: "Platform Reports",
+        href: "/manager/dashboard/reports",
+        icon: "BarChart3",
+      },
+    ],
+  },
+];
+
+export const candidateNavItems: NavSection[] = [
+  {
+    title: "Job Portal",
+    items: [
+      {
+        title: "Applied Jobs",
+        href: "/candidate/dashboard/applied",
+        icon: "Briefcase",
+      },
+      {
+        title: "Job Offers",
+        href: "/candidate/dashboard/offers",
+        icon: "MailOpen",
+      },
+      {
+        title: "Resume Builder",
+        href: "/candidate/dashboard/resume",
+        icon: "FileUser",
+      },
+    ],
+  },
+];
+
+export const customerNavItems: NavSection[] = [
+  {
+    title: "Orders & Activity",
+    items: [
+      {
+        title: "My Bookings",
+        href: "/dashboard/my-bookings",
+        icon: "CalendarCheck",
+      },
+      {
+        title: "Track Service",
+        href: "/dashboard/track-service",
+        icon: "MapPin",
+      },
+    ],
+  },
+  {
+    title: "History",
+    items: [
+      {
+        title: "Payment History",
+        href: "/dashboard/payments",
+        icon: "Receipt",
+      },
+      {
+        title: "My Reviews",
+        href: "/dashboard/my-reviews",
+        icon: "MessageSquareText",
       },
     ],
   },
@@ -170,14 +282,22 @@ export const getNavItemsByRole = (role: UserRole): NavSection[] => {
   const commonNavItems = getCommonNavItems(role);
 
   switch (role) {
-    case "SUPER_ADMIN":
     case "ADMIN":
       return [...commonNavItems, ...adminNavItems];
 
-    case "DOCTOR":
-      return [...commonNavItems, ...doctorNavItems];
+    case "MANAGER":
+      return [...commonNavItems, ...managerNavItems];
 
-    case "PATIENT":
-      return [...commonNavItems, ...patientNavItems];
+    case "SERVICE_PROVIDER":
+      return [...commonNavItems, ...providerNavItems];
+
+    case "JOB_CANDIDATE":
+      return [...commonNavItems, ...candidateNavItems];
+
+    case "CUSTOMER":
+      return [...commonNavItems, ...customerNavItems];
+
+    default:
+      return commonNavItems;
   }
 };

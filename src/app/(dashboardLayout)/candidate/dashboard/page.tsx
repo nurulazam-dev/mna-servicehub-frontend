@@ -10,7 +10,7 @@ export default async function CandidateDashboardPage() {
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({
-    queryKey: ["admin-dashboard-data"],
+    queryKey: ["candidate-dashboard-data"],
     queryFn: getDashboardData,
     staleTime: 30 * 1000,
     gcTime: 5 * 60 * 1000,
