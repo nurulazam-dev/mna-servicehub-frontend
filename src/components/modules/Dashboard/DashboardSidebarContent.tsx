@@ -6,12 +6,10 @@ import { getIconComponent } from "@/lib/iconMapper";
 import { cn } from "@/lib/utils";
 import { NavSection } from "@/types/dashboard.types";
 import { IUserPayload } from "@/types/users.type";
-// import { UserInfo } from "@/types/user.types";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 interface DashboardSidebarContentProps {
-  // userInfo: UserInfo;
   userInfo: IUserPayload;
   navItems: NavSection[];
   dashboardHome: string;
