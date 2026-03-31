@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { NavSection } from "@/types/dashboard.types";
-// import { UserInfo } from "@/types/user.types";
 import { Menu, Search } from "lucide-react";
 import { useEffect, useState } from "react";
 import DashboardMobileSidebar from "./DashboardMobileSidebar";
@@ -12,7 +11,6 @@ import UserDropdown from "./UserDropdown";
 import { IUserPayload } from "@/types/users.type";
 
 interface DashboardNavbarProps {
-  // userInfo: UserInfo;
   userInfo: IUserPayload;
   navItems: NavSection[];
   dashboardHome: string;
@@ -41,7 +39,6 @@ const DashboardNavbarContent = ({
 
   return (
     <div className="flex items-center gap-4 w-full px-4 py-3 border-b bg-background">
-      {/* Mobile Menu Toggle Button And Menu */}
       <Sheet open={isOpen && isMobile} onOpenChange={setIsOpen}>
         <SheetTrigger asChild className="md:hidden">
           <Button variant={"outline"} size={"icon"}>

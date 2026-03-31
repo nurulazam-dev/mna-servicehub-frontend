@@ -12,12 +12,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { IUserPayload } from "@/types/users.type";
-// import { UserInfo } from "@/types/user.types";
 import { Key, LogOut, User } from "lucide-react";
 import Link from "next/link";
 
 interface UserDropdownProps {
-  // userInfo: UserInfo;
   userInfo: IUserPayload;
 }
 
@@ -30,9 +28,6 @@ const UserDropdown = ({ userInfo }: UserDropdownProps) => {
           size={"icon"}
           className="rounded-full focus-visible:ring-0"
         >
-          {/* <span className="text-sm font-semibold">
-            {userInfo?.name?.charAt(0).toUpperCase()}
-          </span> */}
           <Avatar className="h-10 w-10 border">
             <AvatarImage
               src={userInfo?.image || ""}
