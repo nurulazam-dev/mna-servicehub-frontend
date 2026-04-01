@@ -14,9 +14,10 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import {
-  candidateRegisterZodSchema,
-  ICandidateRegisterPayload,
+  IRegisterCandidatePayload,
+  registerJobCandidateZodSchema,
 } from "@/zod/auth.validation";
+
 import { useForm } from "@tanstack/react-form";
 import { useMutation } from "@tanstack/react-query";
 
@@ -34,7 +35,7 @@ const CandidateRegisterForm = ({ redirectPath }: RegisterProps) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const { mutateAsync, isPending } = useMutation({
-    mutationFn: (payload: ICandidateRegisterPayload) =>
+    mutationFn: (payload: IRegisterCandidatePayload) =>
       loginAction(payload, redirectPath),
     onSuccess: (result) => {
       if ("success" in result && result.success === false) {
@@ -50,12 +51,15 @@ const CandidateRegisterForm = ({ redirectPath }: RegisterProps) => {
 
   const form = useForm({
     defaultValues: {
+      name: "",
       email: "",
       password: "",
+      phone: "",
+      cvUrl: "",
     },
 
     validators: {
-      onSubmit: candidateRegisterZodSchema,
+      onSubmit: registerJobCandidateZodSchema,
     },
 
     onSubmit: async ({ value }) => {
@@ -86,8 +90,23 @@ const CandidateRegisterForm = ({ redirectPath }: RegisterProps) => {
           className="space-y-4"
         >
           <form.Field
+            name="name"
+            validators={{ onChange: registerJobCandidateZodSchema.shape.name }}
+          >
+            {(field) => (
+              <AppField
+                field={field}
+                label="Name"
+                type="text"
+                placeholder="Your Name"
+                autoComplete="name"
+              />
+            )}
+          </form.Field>
+
+          <form.Field
             name="email"
-            validators={{ onChange: candidateRegisterZodSchema.shape.email }}
+            validators={{ onChange: registerJobCandidateZodSchema.shape.email }}
           >
             {(field) => (
               <AppField
@@ -100,10 +119,11 @@ const CandidateRegisterForm = ({ redirectPath }: RegisterProps) => {
             )}
           </form.Field>
 
-          {/* Password Field */}
           <form.Field
             name="password"
-            validators={{ onChange: candidateRegisterZodSchema.shape.password }}
+            validators={{
+              onChange: registerJobCandidateZodSchema.shape.password,
+            }}
           >
             {(field) => (
               <div className="space-y-1">
@@ -138,6 +158,35 @@ const CandidateRegisterForm = ({ redirectPath }: RegisterProps) => {
                   </Link>
                 </div>
               </div>
+            )}
+          </form.Field>
+
+          <form.Field
+            name="phone"
+            validators={{ onChange: registerJobCandidateZodSchema.shape.phone }}
+          >
+            {(field) => (
+              <AppField
+                field={field}
+                label="Contact Number"
+                type="text"
+                placeholder="+88 01725 124578"
+                autoComplete="phone"
+              />
+            )}
+          </form.Field>
+          <form.Field
+            name="cvUrl"
+            validators={{ onChange: registerJobCandidateZodSchema.shape.cvUrl }}
+          >
+            {(field) => (
+              <AppField
+                field={field}
+                label="CV Url"
+                type="text"
+                placeholder="https://elctrician-position-candidate.pdf"
+                autoComplete="cvUrl"
+              />
             )}
           </form.Field>
 
