@@ -1,4 +1,3 @@
-import AdminDashboardContent from "@/components/modules/Dashboard/Admin/AdminDashboardContent";
 import { getDashboardData } from "@/services/dashboard.services";
 import {
   dehydrate,
@@ -18,7 +17,7 @@ export default async function ProviderDashboardPage() {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <AdminDashboardContent />
+      {/* <ProviderDashboardContent /> */}
     </HydrationBoundary>
   );
 }
