@@ -10,6 +10,7 @@ import { httpClient } from "@/lib/axios/httpClient";
 import { setTokenInCookies } from "@/lib/tokenUtils";
 import { ApiErrorResponse } from "@/types/api.types";
 import { ILoginResponse } from "@/types/auth.types";
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import {
   ILoginPayload,
@@ -195,4 +196,20 @@ export const registerCustomerAction = async (
   }
 
   return { success: true, message: "Registration successful" };
+};
+
+export const logoutUserAction = async () => {
+  try {
+    await httpClient.post("/auth/logout");
+
+    const cookieStore = await cookies();
+
+    cookieStore.delete("accessToken");
+    cookieStore.delete("refreshToken");
+    cookieStore.delete("better-auth.session_token");
+  } catch (error) {
+    console.error("Logout failed:", error);
+  }
+
+  redirect("/login");
 };
