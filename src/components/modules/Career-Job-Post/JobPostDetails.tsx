@@ -17,12 +17,25 @@ import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { formatFullDate } from "@/lib/utils";
+import ApplyJobModal from "./ApplyJobModal";
+import { getUserInfo } from "@/services/auth.services";
 
-export default function JobPostDetails({
+export default async function JobPostDetails({
   jobPost,
 }: {
   jobPost: IJobPostPayload;
 }) {
+  const user = await getUserInfo();
+
+  if (!user) {
+    return (
+      <div className="h-screen flex flex-col items-center justify-center gap-4 text-center">
+        <AlertCircle className="size-16 text-destructive animate-pulse" />
+        <h2 className="text-3xl font-black">You are unauthorize!</h2>
+      </div>
+    );
+  }
+
   if (!jobPost) {
     return (
       <div className="h-screen flex flex-col items-center justify-center gap-4 text-center">
@@ -188,10 +201,14 @@ export default function JobPostDetails({
                 </p>
 
                 <div className="flex flex-col gap-4">
-                  <Button className="w-full h-14 rounded-lg text-lg font-bold shadow-lg shadow-indigo-600/20">
+                  {/*  <Button className="w-full h-14 rounded-lg text-lg font-bold shadow-lg shadow-indigo-600/20">
                     Apply For This Job
-                  </Button>
-
+                  </Button> */}
+                  <ApplyJobModal
+                    jobId={jobPost.id}
+                    jobTitle={jobPost.title}
+                    userId={user?.id}
+                  />
                   <div className="relative py-2">
                     <Separator />
                     <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-card px-2 text-[10px] font-bold text-muted-foreground uppercase">
