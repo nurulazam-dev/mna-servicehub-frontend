@@ -102,6 +102,7 @@ export const registerCandidateAction = async (
       "/auth/register-candidate",
       parsedPayload.data,
     );
+    console.log("register-candidate res=====", response);
 
     const { accessToken, refreshToken, token, user } = response.data;
     const { role, email } = user;

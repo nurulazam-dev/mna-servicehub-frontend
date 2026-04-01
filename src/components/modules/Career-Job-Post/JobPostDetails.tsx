@@ -42,7 +42,6 @@ export default function JobPostDetails({
 
   return (
     <div className="min-h-screen bg-muted/30 pb-20">
-      {/* Sticky Header */}
       <div className="sticky top-0 z-50 w-full bg-background/80 backdrop-blur-md border-b">
         <div className="container mx-auto px-6 h-16 flex items-center justify-between">
           <Link href="/job-posts">
@@ -68,10 +67,9 @@ export default function JobPostDetails({
 
       <div className="container mx-auto px-6 pt-10">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Left Column: Job Details */}
           <div className="lg:col-span-2 space-y-8">
             <div className="space-y-6">
-              <Badge className="bg-primary/10 text-primary hover:bg-primary/20 border-none px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
+              <Badge className="bg-green-800 text-primary hover:bg-primary/20 border-none px-4 py-1 rounded-full text-xs font-bold tracking-wider">
                 {jobPost.serviceType || "Full-Time"}
               </Badge>
               <h1 className="text-4xl md:text-5xl font-black tracking-tight text-foreground">
@@ -93,7 +91,7 @@ export default function JobPostDetails({
               </div>
             </div>
 
-            <Card className="p-8 border-none shadow-xl shadow-primary/5 rounded-[2rem]">
+            <Card className="p-8 md:p-12 border-none shadow-lg shadow-primary/5 rounded-lg text-justify">
               <div className="prose prose-slate max-w-none dark:prose-invert">
                 <div className="prose prose-slate max-w-none dark:prose-invert">
                   <h3 className="text-2xl font-bold mb-4">Job Description</h3>
@@ -167,10 +165,10 @@ export default function JobPostDetails({
                   ].map((item, i) => (
                     <li
                       key={i}
-                      className="flex items-start gap-3 text-muted-foreground"
+                      className="flex items-center  gap-3 text-muted-foreground"
                     >
-                      <CheckCircle2 className="size-5 text-primary mt-0.5 shrink-0" />{" "}
-                      {item}
+                      <CheckCircle2 className="size-5 text-green-600 shrink-0" />{" "}
+                      <p>{item}</p>
                     </li>
                   ))}
                 </ul>
@@ -178,11 +176,10 @@ export default function JobPostDetails({
             </Card>
           </div>
 
-          {/* Right Column: Action Sidebar */}
           <div className="lg:col-span-1">
             <div className="sticky top-24 space-y-6">
-              <Card className="p-8 border-t-4 border-t-primary shadow-2xl rounded-[2rem]">
-                <h4 className="text-xl font-bold mb-2">
+              <Card className="p-8 border-t-4 border-t-primary shadow-2xl rounded-lg">
+                <h4 className="text-xl md:text-2xl font-bold">
                   Interested in this role?
                 </h4>
                 <p className="text-sm text-muted-foreground mb-6">
@@ -191,7 +188,7 @@ export default function JobPostDetails({
                 </p>
 
                 <div className="flex flex-col gap-4">
-                  <Button className="w-full h-14 rounded-2xl text-lg font-bold shadow-lg shadow-primary/20">
+                  <Button className="w-full h-14 rounded-lg text-lg font-bold shadow-lg shadow-indigo-600/20">
                     Apply For This Job
                   </Button>
 
@@ -205,7 +202,7 @@ export default function JobPostDetails({
                   <Link href="/register-candidate" className="w-full">
                     <Button
                       variant="outline"
-                      className="w-full h-14 rounded-2xl text-lg font-bold border-2"
+                      className="w-full h-14 rounded-lg text-lg font-bold border-2"
                     >
                       <UserPlus className="mr-2 size-5" /> Register as Candidate
                     </Button>
@@ -221,7 +218,7 @@ export default function JobPostDetails({
                 </div>
               </Card>
 
-              <Card className="p-6 rounded-[2rem] border-none">
+              <Card className="p-6 rounded-lg border-none">
                 <h4 className="font-bold mb-4 flex items-center gap-2">
                   <Briefcase className="size-4" /> Hiring Activity
                 </h4>
