@@ -18,13 +18,17 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { IServicePayload } from "@/types/service.type";
+import { useRequestService } from "@/hooks/useRequestService";
+import ServiceRequestModal from "@/components/modules/ServiceRequest/ServiceRequestModal";
 
 export default function ServiceDetails({
   service,
 }: {
   service: IServicePayload;
 }) {
-  console.log("service======", service);
+  const { isOpen, setIsOpen, selectedService, handleRequestClick } =
+    useRequestService();
+
   if (!service) {
     return (
       <div className="h-screen flex flex-col items-center justify-center gap-4">
@@ -36,6 +40,7 @@ export default function ServiceDetails({
       </div>
     );
   }
+
   return (
     <div className="min-h-screen bg-background pb-20">
       {/* 1. Top Navigation & Action Bar */}
@@ -206,15 +211,13 @@ export default function ServiceDetails({
                 </div>
 
                 <div className="pt-4 space-y-3">
-                  <Link
-                    href={`/services/request/${service?.id}`}
-                    className="w-full block"
+                  <Button
+                    onClick={() => handleRequestClick(service)}
+                    className="w-full h-14 rounded-2xl font-black text-lg shadow-xl shadow-primary/20 hover:shadow-primary/40 transition-all hover:-translate-y-1 group"
                   >
-                    <Button className="w-full h-14 rounded-2xl font-black text-lg shadow-xl shadow-primary/20 hover:shadow-primary/40 transition-all hover:-translate-y-1 group">
-                      Request for Service
-                      <ChevronRight className="ml-2 size-5 transition-transform group-hover:translate-x-1" />
-                    </Button>
-                  </Link>
+                    Request for Service
+                    <ChevronRight className="ml-2 size-5 transition-transform group-hover:translate-x-1" />
+                  </Button>
 
                   <Button
                     variant="outline"
@@ -248,6 +251,11 @@ export default function ServiceDetails({
           </div>
         </div>
       </div>
+      <ServiceRequestModal
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        service={selectedService}
+      />
     </div>
   );
 }

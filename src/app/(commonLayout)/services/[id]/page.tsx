@@ -13,7 +13,6 @@ export default async function ServiceDetailsPage({
 
   const response = await getServiceById(id);
   const serviceData = response?.data;
-  console.log("serviceData=======", serviceData);
 
   return <ServiceDetails service={serviceData} />;
 }
