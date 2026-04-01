@@ -33,8 +33,6 @@ export default function ServiceRequestModal({
   customerId,
   service,
 }: ServiceRequestModalProps) {
-  // const [serverError, setServerError] = useState<string | null>(null);
-
   const [isOpen, setIsOpen] = useState(false);
 
   const { mutateAsync, isPending } = useMutation({

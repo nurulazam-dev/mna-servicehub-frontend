@@ -2,7 +2,6 @@
 import { Button } from "@/components/ui/button";
 import { IJobPostPayload } from "@/types/jobPost.type";
 import {
-  AlertCircle,
   ArrowLeft,
   Share2,
   MapPin,
@@ -26,32 +25,6 @@ export default async function JobPostDetails({
   jobPost: IJobPostPayload;
 }) {
   const user = await getUserInfo();
-
-  if (!user) {
-    return (
-      <div className="h-screen flex flex-col items-center justify-center gap-4 text-center">
-        <AlertCircle className="size-16 text-destructive animate-pulse" />
-        <h2 className="text-3xl font-black">You are unauthorize!</h2>
-      </div>
-    );
-  }
-
-  if (!jobPost) {
-    return (
-      <div className="h-screen flex flex-col items-center justify-center gap-4 text-center">
-        <AlertCircle className="size-16 text-destructive animate-pulse" />
-        <h2 className="text-3xl font-black">Job Post Not Found!</h2>
-        <p className="text-muted-foreground">
-          The position you are looking for might have been closed.
-        </p>
-        <Link href="/job-posts">
-          <Button variant="default" className="rounded-full px-8">
-            Back to Careers
-          </Button>
-        </Link>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-muted/30 pb-20">
@@ -83,23 +56,23 @@ export default async function JobPostDetails({
           <div className="lg:col-span-2 space-y-8">
             <div className="space-y-6">
               <Badge className="bg-green-800 text-primary hover:bg-primary/20 border-none px-4 py-1 rounded-full text-xs font-bold tracking-wider">
-                {jobPost.serviceType || "Full-Time"}
+                {jobPost?.serviceType || "Full-Time"}
               </Badge>
               <h1 className="text-4xl md:text-5xl font-black tracking-tight text-foreground">
-                {jobPost.title}
+                {jobPost?.title}
               </h1>
 
               <div className="flex flex-wrap gap-6 text-muted-foreground font-medium">
                 <div className="flex items-center gap-2">
-                  <MapPin className="size-5 text-primary" /> {jobPost.location}
+                  <MapPin className="size-5 text-primary" /> {jobPost?.location}
                 </div>
                 <div className="flex items-center gap-2">
                   <CircleDollarSign className="size-5 text-primary" />{" "}
-                  {jobPost.salaryRange}
+                  {jobPost?.salaryRange}
                 </div>
                 <div className="flex items-center gap-2 text-orange-600">
                   <Clock className="size-5" /> Deadline:{" "}
-                  {jobPost.deadline ? formatFullDate(jobPost.deadline) : "N/A"}
+                  {jobPost?.deadline ? formatFullDate(jobPost.deadline) : "N/A"}
                 </div>
               </div>
             </div>
@@ -113,7 +86,7 @@ export default async function JobPostDetails({
                     <p className="text-muted-foreground leading-relaxed whitespace-pre-wrap">
                       We are looking for a dedicated{" "}
                       <span className="text-primary font-bold">
-                        {jobPost.title}
+                        {jobPost?.title}
                       </span>{" "}
                       to join our growing team at{" "}
                       <span className="font-semibold text-foreground">
@@ -122,7 +95,7 @@ export default async function JobPostDetails({
                       . You will be responsible for delivering high-quality
                       services to our clients across{" "}
                       <span className="text-primary font-bold">
-                        {jobPost.location}
+                        {jobPost?.location}
                       </span>
                       .
                     </p>
@@ -132,8 +105,8 @@ export default async function JobPostDetails({
                         Role Overview
                       </h4>
                       <p className="text-muted-foreground leading-relaxed">
-                        As a <span className="lowercase">{jobPost.title}</span>,
-                        you will be the face of our service excellence. Your
+                        As a <span className="lowercase">{jobPost?.title}</span>
+                        , you will be the face of our service excellence. Your
                         primary goal will be to ensure seamless service delivery
                         while maintaining the highest safety and quality
                         standards. This role requires a blend of technical
@@ -202,8 +175,8 @@ export default async function JobPostDetails({
 
                 <div className="flex flex-col gap-4">
                   <ApplyJobModal
-                    jobId={jobPost.id}
-                    jobTitle={jobPost.title}
+                    jobId={jobPost?.id}
+                    jobTitle={jobPost?.title}
                     userId={user?.id}
                   />
                   <div className="relative py-2">

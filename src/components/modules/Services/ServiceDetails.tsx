@@ -38,16 +38,6 @@ export default async function ServiceDetails({
   }
 
   const user = await getUserInfo();
-  console.log("user info======", user);
-
-  /*  if (!user) {
-    return (
-      <div className="h-screen flex flex-col items-center justify-center gap-4 text-center">
-        <AlertCircle className="size-16 text-destructive animate-pulse" />
-        <h2 className="text-3xl font-black">You are unauthorize!</h2>
-      </div>
-    );
-  } */
 
   return (
     <div className="min-h-screen bg-background pb-20">
