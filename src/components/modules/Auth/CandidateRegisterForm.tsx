@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { loginAction } from "@/actions/auth.action";
+import { registerCandidateAction } from "@/actions/auth.action";
 import AppField from "@/components/shared/form/AppField";
 import CustomSubmitButton from "@/components/shared/form/CustomSubmitButton";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -21,7 +21,7 @@ import {
 import { useForm } from "@tanstack/react-form";
 import { useMutation } from "@tanstack/react-query";
 
-import { Eye, EyeOff, LogInIcon } from "lucide-react";
+import { Eye, EyeOff, UserPlus } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -36,12 +36,12 @@ const CandidateRegisterForm = ({ redirectPath }: RegisterProps) => {
 
   const { mutateAsync, isPending } = useMutation({
     mutationFn: (payload: IRegisterCandidatePayload) =>
-      loginAction(payload, redirectPath),
+      registerCandidateAction(payload, redirectPath),
     onSuccess: (result) => {
       if ("success" in result && result.success === false) {
-        setServerError(result.message || "Invalid credentials");
+        setServerError(result.message || "Registration failed");
       } else {
-        toast.success("Register...");
+        toast.success("Account created successfully!");
       }
     },
     onError: (error: any) => {
@@ -75,7 +75,7 @@ const CandidateRegisterForm = ({ redirectPath }: RegisterProps) => {
           Candidate Register
         </CardTitle>
         <CardDescription>
-          Enter your information to create account
+          Join MNA ServiceHub to find your next opportunity
         </CardDescription>
       </CardHeader>
 
@@ -126,38 +126,28 @@ const CandidateRegisterForm = ({ redirectPath }: RegisterProps) => {
             }}
           >
             {(field) => (
-              <div className="space-y-1">
-                <AppField
-                  field={field}
-                  label="Password"
-                  type={showPassword ? "text" : "password"}
-                  placeholder="••••••••"
-                  autoComplete="current-password"
-                  append={
-                    <Button
-                      type="button"
-                      onClick={() => setShowPassword(!showPassword)}
-                      variant="ghost"
-                      size="sm"
-                      className="h-full px-3 py-2 hover:bg-transparent"
-                    >
-                      {showPassword ? (
-                        <EyeOff className="size-4 text-muted-foreground" />
-                      ) : (
-                        <Eye className="size-4 text-muted-foreground" />
-                      )}
-                    </Button>
-                  }
-                />
-                <div className="flex justify-end">
-                  <Link
-                    href="/forgot-password"
-                    className="text-xs text-primary hover:underline font-medium"
+              <AppField
+                field={field}
+                label="Password"
+                type={showPassword ? "text" : "password"}
+                placeholder="••••••••"
+                autoComplete="current-password"
+                append={
+                  <Button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    variant="ghost"
+                    size="sm"
+                    className="h-full px-3 py-2 hover:bg-transparent"
                   >
-                    Forgot password?
-                  </Link>
-                </div>
-              </div>
+                    {showPassword ? (
+                      <EyeOff className="size-4 text-muted-foreground" />
+                    ) : (
+                      <Eye className="size-4 text-muted-foreground" />
+                    )}
+                  </Button>
+                }
+              />
             )}
           </form.Field>
 
@@ -208,10 +198,19 @@ const CandidateRegisterForm = ({ redirectPath }: RegisterProps) => {
                 disabled={!canSubmit}
                 className="w-full"
               >
-                Register <LogInIcon />
+                <UserPlus className="ml-2 size-4" /> Create Account
               </CustomSubmitButton>
             )}
           </form.Subscribe>
+          <div className="text-center text-sm mt-4 text-muted-foreground">
+            Already have an account?{" "}
+            <Link
+              href="/login"
+              className="text-primary hover:underline font-bold"
+            >
+              Login here
+            </Link>
+          </div>
         </form>
       </CardContent>
     </Card>
