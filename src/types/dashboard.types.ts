@@ -20,12 +20,10 @@ export interface BarChartData {
 }
 
 export interface IAdminDashboardData {
-  appointmentCount: number;
-  patientCount: number;
-  doctorCount: number;
-  adminCount: number;
-  superAdminCount: number;
-  paymentCount: number;
+  requestCount: number;
+  providerCount: number;
+  serviceCount: number;
+  pendingApplications: number;
   userCount: number;
   totalRevenue: number;
   barChartData: BarChartData[];

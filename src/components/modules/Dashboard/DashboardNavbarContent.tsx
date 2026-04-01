@@ -55,7 +55,6 @@ const DashboardNavbarContent = ({
         </SheetContent>
       </Sheet>
 
-      {/* Search Component */}
       <div className="flex-1 flex items-center">
         <div className="relative w-full hidden sm:block">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -63,9 +62,7 @@ const DashboardNavbarContent = ({
         </div>
       </div>
 
-      {/* Right Side Actions */}
       <div className="flex items-center gap-2">
-        {/* User Dropdown  */}
         <UserDropdown userInfo={userInfo} />
       </div>
     </div>

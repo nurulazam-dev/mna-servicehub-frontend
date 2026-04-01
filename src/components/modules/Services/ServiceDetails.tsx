@@ -1,4 +1,3 @@
-"use client";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -8,7 +7,6 @@ import {
   MapPin,
   Zap,
   MessageSquare,
-  ChevronRight,
   Calendar,
   ArrowLeft,
   Share2,
@@ -18,18 +16,15 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { IServicePayload } from "@/types/service.type";
-import { useRequestService } from "@/hooks/useRequestService";
 import ServiceRequestModal from "@/components/modules/ServiceRequest/ServiceRequestModal";
 import { formatDate } from "@/lib/utils";
+import { getUserInfo } from "@/services/auth.services";
 
-export default function ServiceDetails({
+export default async function ServiceDetails({
   service,
 }: {
   service: IServicePayload;
 }) {
-  const { isOpen, setIsOpen, selectedService, handleRequestClick } =
-    useRequestService();
-
   if (!service) {
     return (
       <div className="h-screen flex flex-col items-center justify-center gap-4">
@@ -41,6 +36,8 @@ export default function ServiceDetails({
       </div>
     );
   }
+
+  const user = await getUserInfo();
 
   return (
     <div className="min-h-screen bg-background pb-20">
@@ -207,18 +204,15 @@ export default function ServiceDetails({
                   </div>
                 </div>
 
-                <div className="pt-4 space-y-3">
-                  <Button
-                    onClick={() => handleRequestClick(service)}
-                    className="w-full h-14 rounded-md font-black text-lg transition-all hover:-translate-y-1 group"
-                  >
-                    Request for Service
-                    <ChevronRight className="ml-2 size-5 transition-transform group-hover:translate-x-1" />
-                  </Button>
+                <div className="flex flex-col gap-4">
+                  <ServiceRequestModal
+                    customerId={user?.id}
+                    service={service}
+                  />
 
                   <Button
                     variant="outline"
-                    className="w-full h-14 rounded-md font-bold border-border hover:bg-muted text-foreground transition-all"
+                    className="w-full h-12 rounded-md font-bold border-border hover:bg-muted text-foreground transition-all"
                   >
                     <MessageSquare className="mr-2 size-5 text-primary" />
                     Chat with Admin
@@ -247,11 +241,6 @@ export default function ServiceDetails({
           </div>
         </div>
       </div>
-      <ServiceRequestModal
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-        service={selectedService}
-      />
     </div>
   );
 }

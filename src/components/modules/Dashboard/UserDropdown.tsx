@@ -1,5 +1,6 @@
 "use client";
 
+import { logoutUserAction } from "@/actions/auth.action";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,14 +13,29 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { IUserPayload } from "@/types/users.type";
-import { Key, LogOut, User } from "lucide-react";
+import { Key, Loader2, LogOut, User } from "lucide-react";
 import Link from "next/link";
+import { useTransition } from "react";
+import { toast } from "sonner";
 
 interface UserDropdownProps {
   userInfo: IUserPayload;
 }
 
 const UserDropdown = ({ userInfo }: UserDropdownProps) => {
+  const [isPending, startTransition] = useTransition();
+
+  const handleLogout = () => {
+    startTransition(async () => {
+      try {
+        await logoutUserAction();
+        toast.success("Logged out successfully");
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  };
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -81,11 +97,19 @@ const UserDropdown = ({ userInfo }: UserDropdownProps) => {
         <DropdownMenuSeparator />
 
         <DropdownMenuItem
-          onClick={() => {}}
+          disabled={isPending}
+          onClick={(e) => {
+            e.preventDefault();
+            handleLogout();
+          }}
           className="text-destructive focus:bg-destructive focus:text-white cursor-pointer"
         >
-          <LogOut className="mr-2 h-4 w-4" />
-          <span>Logout</span>
+          {isPending ? (
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+          ) : (
+            <LogOut className="mr-2 h-4 w-4" />
+          )}
+          <span>{isPending ? "Logging out..." : "Logout"}</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

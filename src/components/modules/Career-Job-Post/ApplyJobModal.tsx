@@ -60,7 +60,7 @@ const ApplyJobModal = ({ jobId, jobTitle, userId }: ApplyJobModalProps) => {
         </Button>
       </DialogTrigger>
 
-      <DialogContent className="sm:max-w-125 rounded-[2rem] border-none shadow-2xl p-8">
+      <DialogContent className="sm:max-w-110 rounded-lg border-none shadow-2xl p-10">
         <DialogHeader className="space-y-3">
           <DialogTitle className="text-3xl font-black flex items-center gap-2">
             <SendHorizontal className="text-primary size-7" /> Quick Apply
@@ -114,8 +114,8 @@ const ApplyJobModal = ({ jobId, jobTitle, userId }: ApplyJobModalProps) => {
           <div className="flex gap-3 pt-2">
             <Button
               type="button"
-              variant="ghost"
-              className="flex-1 rounded-xl h-12 font-bold hover:bg-destructive/10 hover:text-destructive"
+              variant="destructive"
+              className="flex-1 rounded-lg h-11 font-bold hover:bg-red-800 hover:text-destructive"
               onClick={() => setOpen(false)}
             >
               Cancel
@@ -126,7 +126,7 @@ const ApplyJobModal = ({ jobId, jobTitle, userId }: ApplyJobModalProps) => {
                   isPending={isSubmitting || isPending}
                   pendingLabel="Submitting..."
                   disabled={!canSubmit}
-                  className="flex-2 h-12 rounded-xl shadow-md"
+                  className="flex-2 h-11 rounded-lg"
                 >
                   Confirm Application
                 </CustomSubmitButton>

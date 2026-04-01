@@ -7,11 +7,11 @@ import {
   ArrowRight,
   MessageSquare,
   ShieldCheck,
-  Zap,
+  // Zap,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useRequestService } from "@/hooks/useRequestService";
-import ServiceRequestModal from "../ServiceRequest/ServiceRequestModal";
+// import { useRequestService } from "@/hooks/useRequestService";
+// import ServiceRequestModal from "../ServiceRequest/ServiceRequestModal";
 
 interface ServiceCardProps {
   service: {
@@ -27,8 +27,8 @@ interface ServiceCardProps {
 }
 
 export default function ServiceCard({ service, index }: ServiceCardProps) {
-  const { isOpen, setIsOpen, selectedService, handleRequestClick } =
-    useRequestService();
+  /* const { isOpen, setIsOpen, selectedService, handleRequestClick } =
+    useRequestService(); */
 
   return (
     <div
@@ -74,13 +74,13 @@ export default function ServiceCard({ service, index }: ServiceCardProps) {
         </div>
 
         <div className="flex flex-col sm:flex-row items-center gap-3 pt-4">
-          <Button
+          {/*  <Button
             className="w-full rounded-md font-bold h-10 shadow-md shadow-primary/20 hover:shadow-primary/40 transition-all duration-300 active:scale-[0.96] flex items-center justify-center gap-2 sm:flex-1"
             onClick={() => handleRequestClick(service)}
           >
             <Zap className="size-4 fill-current" />
             Request for Service
-          </Button>
+          </Button> */}
 
           <Link href={`/services/${service?.id}`} className="w-full sm:flex-1">
             <Button
@@ -93,12 +93,6 @@ export default function ServiceCard({ service, index }: ServiceCardProps) {
           </Link>
         </div>
       </div>
-
-      <ServiceRequestModal
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-        service={selectedService}
-      />
     </div>
   );
 }

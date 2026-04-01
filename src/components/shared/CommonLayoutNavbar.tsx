@@ -1,6 +1,6 @@
 "use client";
 
-import { Menu, LogOut, User, LayoutDashboard } from "lucide-react";
+import { Menu, LogOut, User, LayoutDashboard, Loader2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -33,6 +33,9 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { useUser } from "@/hooks/useUser";
 import { authClient } from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
+import { logoutUserAction } from "@/actions/auth.action";
+import { toast } from "sonner";
+import { useTransition } from "react";
 
 interface MenuItem {
   title: string;
@@ -97,16 +100,19 @@ const CommonLayoutNavbar = ({
     }
   };
 
-  const handleLogout = async () => {
-    await authClient.signOut({
-      fetchOptions: {
-        onSuccess: () => {
-          router.push("/login");
-          router.refresh();
-        },
-      },
+  const [isPending, startTransition] = useTransition();
+
+  const handleLogout = () => {
+    startTransition(async () => {
+      try {
+        await logoutUserAction();
+        toast.success("Logged out successfully");
+      } catch (error) {
+        console.log(error);
+      }
     });
   };
+
   return (
     <section
       className={cn(
@@ -204,11 +210,19 @@ const CommonLayoutNavbar = ({
                   <DropdownMenuSeparator />
 
                   <DropdownMenuItem
-                    onClick={handleLogout}
+                    disabled={isPending}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleLogout();
+                    }}
                     className="text-destructive focus:bg-destructive focus:text-white cursor-pointer"
                   >
-                    <LogOut className="mr-2 size-4" />
-                    <span>Log Out</span>
+                    {isPending ? (
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    ) : (
+                      <LogOut className="mr-2 h-4 w-4" />
+                    )}
+                    <span>{isPending ? "Logging out..." : "Logout"}</span>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -267,11 +281,20 @@ const CommonLayoutNavbar = ({
                         <span>Dashboard</span>
                       </Link>
                       <Button
-                        onClick={handleLogout}
+                        disabled={isPending}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleLogout();
+                        }}
                         variant="destructive"
                         className="w-full"
                       >
-                        <LogOut className="mr-2 size-4" /> Log Out
+                        {isPending ? (
+                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        ) : (
+                          <LogOut className="mr-2 h-4 w-4" />
+                        )}
+                        <span>{isPending ? "Logging out..." : "Logout"}</span>
                       </Button>
                     </div>
                   ) : (

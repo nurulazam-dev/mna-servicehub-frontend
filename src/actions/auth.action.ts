@@ -10,11 +10,14 @@ import { httpClient } from "@/lib/axios/httpClient";
 import { setTokenInCookies } from "@/lib/tokenUtils";
 import { ApiErrorResponse } from "@/types/api.types";
 import { ILoginResponse } from "@/types/auth.types";
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import {
   ILoginPayload,
   IRegisterCandidatePayload,
+  IRegisterCustomerPayload,
   loginZodSchema,
+  registerCustomerZodSchema,
   registerJobCandidateZodSchema,
 } from "@/zod/auth.validation";
 
@@ -87,11 +90,10 @@ export const registerCandidateAction = async (
   const parsedPayload = registerJobCandidateZodSchema.safeParse(payload);
 
   if (!parsedPayload.success) {
-    const firstError =
-      parsedPayload.error.issues[0].message || "Invalid registration data";
     return {
       success: false,
-      message: firstError,
+      message:
+        parsedPayload.error.issues[0].message || "Invalid registration data",
     };
   }
 
@@ -102,7 +104,6 @@ export const registerCandidateAction = async (
       "/auth/register-candidate",
       parsedPayload.data,
     );
-    console.log("register-candidate res=====", response);
 
     const { accessToken, refreshToken, token, user } = response.data;
     const { role, email } = user;
@@ -140,10 +141,10 @@ export const registerCandidateAction = async (
 };
 
 export const registerCustomerAction = async (
-  payload: IRegisterCandidatePayload,
+  payload: IRegisterCustomerPayload,
   redirectPath?: string,
 ): Promise<ILoginResponse | ApiErrorResponse> => {
-  const parsedPayload = registerJobCandidateZodSchema.safeParse(payload);
+  const parsedPayload = registerCustomerZodSchema.safeParse(payload);
 
   if (!parsedPayload.success) {
     const firstError =
@@ -158,10 +159,9 @@ export const registerCustomerAction = async (
 
   try {
     const response = await httpClient.post<ILoginResponse>(
-      "/auth/register-candidate",
+      "/auth/register",
       parsedPayload.data,
     );
-    console.log("register-candidate res=====", response);
 
     const { accessToken, refreshToken, token, user } = response.data;
     const { role, email } = user;
@@ -196,4 +196,73 @@ export const registerCustomerAction = async (
   }
 
   return { success: true, message: "Registration successful" };
+};
+
+export const logoutUserAction = async () => {
+  try {
+    await httpClient.post("/auth/logout");
+
+    const cookieStore = await cookies();
+
+    cookieStore.delete("accessToken");
+    cookieStore.delete("refreshToken");
+    cookieStore.delete("better-auth.session_token");
+  } catch (error) {
+    console.error("Logout failed:", error);
+  }
+
+  redirect("/login");
+};
+
+export const verifyEmailAction = async (
+  payload: { email: string; otp: string },
+  redirectPath?: string,
+): Promise<ILoginResponse | ApiErrorResponse> => {
+  if (!payload.otp || payload.otp.length !== 6) {
+    return {
+      success: false,
+      message: "Please enter a valid 6-digit OTP",
+    };
+  }
+
+  let targetUrl = "";
+
+  try {
+    const response = await httpClient.post<ILoginResponse>(
+      "/auth/verify-email",
+      payload,
+    );
+
+    const { accessToken, refreshToken, token, user } = response.data;
+    const { role } = user;
+
+    await setTokenInCookies("accessToken", accessToken);
+    await setTokenInCookies("refreshToken", refreshToken);
+    await setTokenInCookies("better-auth.session_token", token, 24 * 60 * 60);
+
+    targetUrl =
+      redirectPath && isValidRedirectForRole(redirectPath, role as UserRole)
+        ? redirectPath
+        : getDefaultDashboardRoute(role as UserRole);
+  } catch (error: any) {
+    if (error?.digest?.startsWith("NEXT_REDIRECT")) {
+      throw error;
+    }
+
+    return {
+      success: false,
+      message:
+        error?.response?.data?.message ||
+        `Verification failed: ${error.message}`,
+    };
+  }
+
+  if (targetUrl) {
+    redirect(targetUrl);
+  }
+
+  return {
+    success: true,
+    message: "Email verified and logged in successfully",
+  };
 };
