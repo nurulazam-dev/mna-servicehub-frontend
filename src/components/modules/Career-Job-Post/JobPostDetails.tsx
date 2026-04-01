@@ -201,9 +201,6 @@ export default async function JobPostDetails({
                 </p>
 
                 <div className="flex flex-col gap-4">
-                  {/*  <Button className="w-full h-14 rounded-lg text-lg font-bold shadow-lg shadow-indigo-600/20">
-                    Apply For This Job
-                  </Button> */}
                   <ApplyJobModal
                     jobId={jobPost.id}
                     jobTitle={jobPost.title}

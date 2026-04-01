@@ -14,7 +14,9 @@ import { redirect } from "next/navigation";
 import {
   ILoginPayload,
   IRegisterCandidatePayload,
+  IRegisterCustomerPayload,
   loginZodSchema,
+  registerCustomerZodSchema,
   registerJobCandidateZodSchema,
 } from "@/zod/auth.validation";
 
@@ -140,10 +142,10 @@ export const registerCandidateAction = async (
 };
 
 export const registerCustomerAction = async (
-  payload: IRegisterCandidatePayload,
+  payload: IRegisterCustomerPayload,
   redirectPath?: string,
 ): Promise<ILoginResponse | ApiErrorResponse> => {
-  const parsedPayload = registerJobCandidateZodSchema.safeParse(payload);
+  const parsedPayload = registerCustomerZodSchema.safeParse(payload);
 
   if (!parsedPayload.success) {
     const firstError =
@@ -158,10 +160,9 @@ export const registerCustomerAction = async (
 
   try {
     const response = await httpClient.post<ILoginResponse>(
-      "/auth/register-candidate",
+      "/auth/register",
       parsedPayload.data,
     );
-    console.log("register-candidate res=====", response);
 
     const { accessToken, refreshToken, token, user } = response.data;
     const { role, email } = user;
