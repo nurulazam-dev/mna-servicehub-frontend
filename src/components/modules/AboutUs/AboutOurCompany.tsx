@@ -1,4 +1,5 @@
 import { TrendingUp, Award, Globe2, History } from "lucide-react";
+import Image from "next/image";
 
 export default function AboutOurCompany() {
   return (
@@ -26,6 +27,7 @@ export default function AboutOurCompany() {
               </div>
               <div className="flex items-center gap-3 p-4 bg-muted/30 rounded-2xl">
                 <TrendingUp className="text-primary size-6" />
+
                 <span className="font-semibold">100% Growth YoY</span>
               </div>
             </div>
@@ -36,15 +38,52 @@ export default function AboutOurCompany() {
                 <div className="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity" />
                 <div className="p-8">
                   <Award className="size-12 text-primary opacity-20" />
+                  <Image
+                    src="https://res.cloudinary.com/mnaofficialbd/image/upload/v1774938516/mna-service-hub/pdfs/assets_img/cleaning_gmnejp.jpg"
+                    alt="MNA ServiceHub"
+                    fill
+                    className="object-cover transition-transform duration-10000 hover:scale-105"
+                    priority
+                  />
                 </div>
               </div>
-              <div className="h-48 bg-muted rounded-3xl" />
+              <div className="h-48 bg-accent/20 rounded-3xl relative overflow-hidden group">
+                <div className="p-8">
+                  <Globe2 className="size-12 text-primary opacity-20" />
+                  <Image
+                    src="https://res.cloudinary.com/mnaofficialbd/image/upload/v1774938514/mna-service-hub/pdfs/assets_img/roofing_so4i5w.jpg"
+                    alt="MNA ServiceHub"
+                    fill
+                    className="object-cover transition-transform duration-10000 hover:scale-105"
+                    priority
+                  />
+                </div>
+              </div>
             </div>
             <div className="space-y-4">
-              <div className="h-48 bg-muted rounded-3xl" />
+              {/* <div className="h-48 bg-muted rounded-3xl border border-red-600" /> */}
+              <div className="h-48 bg-accent/20 rounded-3xl relative overflow-hidden group">
+                <div className="p-8">
+                  <Globe2 className="size-12 text-primary opacity-20" />
+                  <Image
+                    src="https://res.cloudinary.com/mnaofficialbd/image/upload/v1774938515/mna-service-hub/pdfs/assets_img/electrical_wejdl6.png"
+                    alt="MNA ServiceHub"
+                    fill
+                    className="object-cover transition-transform duration-10000 hover:scale-105"
+                    priority
+                  />
+                </div>
+              </div>
               <div className="h-64 bg-accent/20 rounded-3xl relative overflow-hidden group">
                 <div className="p-8">
                   <Globe2 className="size-12 text-primary opacity-20" />
+                  <Image
+                    src="https://res.cloudinary.com/mnaofficialbd/image/upload/v1774938515/mna-service-hub/pdfs/assets_img/furniture-assembly_raxkae.jpg"
+                    alt="MNA ServiceHub"
+                    fill
+                    className="object-cover transition-transform duration-10000 hover:scale-105"
+                    priority
+                  />
                 </div>
               </div>
             </div>

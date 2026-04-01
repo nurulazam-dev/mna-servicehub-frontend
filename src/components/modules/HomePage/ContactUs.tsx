@@ -18,7 +18,7 @@ import { Card, CardContent } from "@/components/ui/card";
 
 const ContactUs = () => {
   return (
-    <section className="py-12 overflow-hidden">
+    <section className="pb-12 pt-6 overflow-hidden">
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto text-center mb-10 animate-in fade-in slide-in-from-bottom-4 duration-1000">
           <h2 className="text-4xl font-extrabold tracking-tight sm:text-5xl mb-4 bg-linear-to-r from-primary to-primary/60 bg-clip-text text-transparent">
