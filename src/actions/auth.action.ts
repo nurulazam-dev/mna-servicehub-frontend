@@ -138,3 +138,62 @@ export const registerCandidateAction = async (
 
   return { success: true, message: "Registration successful" };
 };
+
+export const registerCustomerAction = async (
+  payload: IRegisterCandidatePayload,
+  redirectPath?: string,
+): Promise<ILoginResponse | ApiErrorResponse> => {
+  const parsedPayload = registerJobCandidateZodSchema.safeParse(payload);
+
+  if (!parsedPayload.success) {
+    const firstError =
+      parsedPayload.error.issues[0].message || "Invalid registration data";
+    return {
+      success: false,
+      message: firstError,
+    };
+  }
+
+  let targetUrl = "";
+
+  try {
+    const response = await httpClient.post<ILoginResponse>(
+      "/auth/register-candidate",
+      parsedPayload.data,
+    );
+    console.log("register-candidate res=====", response);
+
+    const { accessToken, refreshToken, token, user } = response.data;
+    const { role, email } = user;
+
+    await setTokenInCookies("accessToken", accessToken);
+    await setTokenInCookies("refreshToken", refreshToken);
+    await setTokenInCookies("better-auth.session_token", token, 24 * 60 * 60);
+
+    if (!user.emailVerified) {
+      targetUrl = `/verify-email?email=${email}`;
+    } else {
+      targetUrl =
+        redirectPath && isValidRedirectForRole(redirectPath, role as UserRole)
+          ? redirectPath
+          : getDefaultDashboardRoute(role as UserRole);
+    }
+  } catch (error: any) {
+    if (error?.digest?.startsWith("NEXT_REDIRECT")) {
+      throw error;
+    }
+
+    return {
+      success: false,
+      message:
+        error?.response?.data?.message ||
+        `Registration failed: ${error.message}`,
+    };
+  }
+
+  if (targetUrl) {
+    redirect(targetUrl);
+  }
+
+  return { success: true, message: "Registration successful" };
+};
