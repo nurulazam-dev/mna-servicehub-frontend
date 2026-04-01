@@ -15,3 +15,15 @@ export interface IJobPostPayload {
   updatedAt: Date | string;
   applications?: IJobApplicationPayload[];
 }
+
+export interface ICreateJobPostPayload {
+  title: string;
+  description: string;
+  requirements: string;
+  location?: string;
+  serviceType: string;
+  vacancy: number;
+  salaryRange?: string | null;
+  deadline: Date | string;
+  isActive?: boolean;
+}

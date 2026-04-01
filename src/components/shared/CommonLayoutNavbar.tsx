@@ -67,7 +67,7 @@ const CommonLayoutNavbar = ({
   menu = [
     { title: "Home", url: "/" },
     { title: "Services", url: "/services" },
-    { title: "Careers", url: "/careers" },
+    { title: "Careers", url: "/job-posts" },
     { title: "About Us", url: "/about-us" },
     { title: "Contact Us", url: "/contact-us" },
   ],

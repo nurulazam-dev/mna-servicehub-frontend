@@ -43,7 +43,6 @@ export default function ServiceDetails({
 
   return (
     <div className="min-h-screen bg-background pb-20">
-      {/* 1. Top Navigation & Action Bar */}
       <div className="sticky top-0 z-50 w-full bg-background/80 backdrop-blur-md border-b border-border">
         <div className="container mx-auto px-6 h-16 flex items-center justify-between">
           <Link href="/services">
@@ -69,9 +68,7 @@ export default function ServiceDetails({
 
       <div className="container mx-auto px-6 pt-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-          {/* LEFT COLUMN - Information */}
           <div className="lg:col-span-8 space-y-8 animate-in fade-in slide-in-from-bottom-6 duration-700">
-            {/* Hero Image Section */}
             <div className="relative aspect-video w-full rounded-[2.5rem] overflow-hidden shadow-2xl border border-border/50">
               <Image
                 src={service?.imageUrl || "/placeholder-service.jpg"}
@@ -89,7 +86,6 @@ export default function ServiceDetails({
               )}
             </div>
 
-            {/* Title & Stats */}
             <div className="space-y-4">
               <h1 className="text-4xl md:text-6xl font-black tracking-tighter leading-none text-foreground">
                 {service?.name}
@@ -115,7 +111,6 @@ export default function ServiceDetails({
               </div>
             </div>
 
-            {/* Description Card */}
             <Card className="border-none bg-muted/30 rounded-[2rem] p-8">
               <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
                 <AlertCircle className="size-5 text-primary" /> Service Overview
@@ -125,7 +120,6 @@ export default function ServiceDetails({
               </p>
             </Card>
 
-            {/* Quick Benefits (Dynamic Based on Description or Static for Hub) */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {[
                 {
@@ -167,11 +161,9 @@ export default function ServiceDetails({
             </div>
           </div>
 
-          {/* RIGHT COLUMN - Sticky Booking Widget */}
           <div className="lg:col-span-4 h-fit lg:sticky lg:top-24 animate-in fade-in slide-in-from-right-8 duration-700">
             <Card className="border-none shadow-[0_32px_64px_-15px_rgba(0,0,0,0.1)] rounded-[3rem] overflow-hidden bg-card">
               <div className="bg-primary px-8 py-10 text-primary-foreground relative overflow-hidden">
-                {/* Decorative circle */}
                 <div className="absolute -top-10 -right-10 size-32 bg-white/10 rounded-full blur-2xl" />
 
                 <p className="text-xs font-black uppercase tracking-[0.2em] opacity-80 mb-2">
@@ -239,13 +231,12 @@ export default function ServiceDetails({
               </CardContent>
             </Card>
 
-            {/* Support Info */}
             <div className="mt-8 text-center p-6 bg-primary/5 rounded-[2rem] border border-primary/10">
               <p className="text-xs font-bold text-primary mb-1">
                 Need help with this service?
               </p>
               <p className="text-[11px] text-muted-foreground">
-                Call us at 24/7 Helpline: 16XXX
+                Call us at 24/7 Helpline: 18349
               </p>
             </div>
           </div>
