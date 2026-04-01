@@ -40,7 +40,7 @@ export default function Hero() {
                 <ArrowRight className="ml-2 size-4 transition-transform group-hover:translate-x-1" />
               </Button>
             </Link>
-            <Link href="/careers">
+            <Link href="/job-posts">
               <Button
                 variant="outline"
                 size="lg"

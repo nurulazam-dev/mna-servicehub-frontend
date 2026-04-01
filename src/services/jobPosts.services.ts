@@ -9,7 +9,7 @@ export const getAllJobPosts = async (queryString: string = "") => {
     const response = await httpClient.get<ApiResponse<IJobPostPayload[]>>(
       queryString ? `/job-posts?${queryString}` : "/job-posts",
     );
-    return response.data;
+    return response;
   } catch (error) {
     console.log("Error fetching job posts:", error);
     throw error;

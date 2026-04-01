@@ -15,8 +15,11 @@ const ServicesComp = () => {
 
   if (isLoading) {
     return (
-      <div className="py-12 flex justify-center items-center g-3 text-center">
-        <Loader2 /> Loading services...
+      <div className="py-12 flex flex-col justify-center items-center gap-3 text-center">
+        <Loader2 className="size-10 animate-spin text-primary" />
+        <p className="text-muted-foreground font-medium">
+          Fetching services...
+        </p>
       </div>
     );
   }
