@@ -89,7 +89,6 @@ const LoginForm = ({ redirectPath }: LoginFormProps) => {
           }}
           className="space-y-4"
         >
-          {/* Email Field */}
           <form.Field
             name="email"
             validators={{ onChange: loginZodSchema.shape.email }}
@@ -105,7 +104,6 @@ const LoginForm = ({ redirectPath }: LoginFormProps) => {
             )}
           </form.Field>
 
-          {/* Password Field */}
           <form.Field
             name="password"
             validators={{ onChange: loginZodSchema.shape.password }}
@@ -146,7 +144,6 @@ const LoginForm = ({ redirectPath }: LoginFormProps) => {
             )}
           </form.Field>
 
-          {/* Server Error Alert */}
           {serverError && (
             <Alert variant="destructive" className="py-2">
               <AlertDescription className="text-xs font-medium">
@@ -155,7 +152,6 @@ const LoginForm = ({ redirectPath }: LoginFormProps) => {
             </Alert>
           )}
 
-          {/* Submit Button */}
           <form.Subscribe selector={(s) => [s.canSubmit, s.isSubmitting]}>
             {([canSubmit, isSubmitting]) => (
               <CustomSubmitButton
@@ -164,7 +160,7 @@ const LoginForm = ({ redirectPath }: LoginFormProps) => {
                 disabled={!canSubmit}
                 className="w-full"
               >
-                Sign In <LogInIcon />
+                <LogInIcon /> Sign In
               </CustomSubmitButton>
             )}
           </form.Subscribe>
@@ -181,7 +177,6 @@ const LoginForm = ({ redirectPath }: LoginFormProps) => {
           </div>
         </div>
 
-        {/* Google Login Button */}
         <Button
           variant="outline"
           type="button"

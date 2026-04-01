@@ -96,9 +96,9 @@ const CandidateRegisterForm = ({ redirectPath }: RegisterProps) => {
             {(field) => (
               <AppField
                 field={field}
-                label="Name"
+                label="Full Name"
                 type="text"
-                placeholder="Your Name"
+                placeholder="Mr. Candidate Khan"
                 autoComplete="name"
               />
             )}
@@ -111,7 +111,7 @@ const CandidateRegisterForm = ({ redirectPath }: RegisterProps) => {
             {(field) => (
               <AppField
                 field={field}
-                label="Email"
+                label="Email Address"
                 type="email"
                 placeholder="name@example.com"
                 autoComplete="email"
@@ -180,7 +180,6 @@ const CandidateRegisterForm = ({ redirectPath }: RegisterProps) => {
             )}
           </form.Field>
 
-          {/* Server Error Alert */}
           {serverError && (
             <Alert variant="destructive" className="py-2">
               <AlertDescription className="text-xs font-medium">
@@ -189,7 +188,6 @@ const CandidateRegisterForm = ({ redirectPath }: RegisterProps) => {
             </Alert>
           )}
 
-          {/* Submit Button */}
           <form.Subscribe selector={(s) => [s.canSubmit, s.isSubmitting]}>
             {([canSubmit, isSubmitting]) => (
               <CustomSubmitButton

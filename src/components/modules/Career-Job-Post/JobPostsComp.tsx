@@ -100,7 +100,12 @@ const JobPostsComp = () => {
                       </div>
                       <div className="flex items-center gap-1.5">
                         <Users className="size-4 text-blue-500/70" />
-                        {(job as any).applications || 0} Applicants
+                        {Array.isArray((job as any).applications)
+                          ? (job as any).applications.length
+                          : typeof (job as any).applications === "object"
+                            ? 0
+                            : (job as any).applications || 0}{" "}
+                        Applicants
                       </div>
                     </div>
                   </div>
