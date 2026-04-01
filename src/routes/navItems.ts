@@ -1,5 +1,5 @@
 import { NavSection } from "@/types/dashboard.types";
-import { getDefaultDashboardRoute, UserRole } from "./authUtils";
+import { getDefaultDashboardRoute, UserRole } from "../lib/authUtils";
 
 export const getCommonNavItems = (role: UserRole): NavSection[] => {
   const defaultDashboard = getDefaultDashboardRoute(role);
@@ -100,14 +100,29 @@ export const adminNavItems: NavSection[] = [
     title: "User Management",
     items: [
       {
+        title: "Control Users",
+        href: "/admin/dashboard/users-management",
+        icon: "Users",
+      },
+      {
         title: "Admins",
         href: "/admin/dashboard/admins",
+        icon: "ShieldCheck",
+      },
+      {
+        title: "Managers",
+        href: "/admin/dashboard/managers",
         icon: "ShieldCheck",
       },
       {
         title: "Service Providers",
         href: "/admin/dashboard/providers",
         icon: "HardHat",
+      },
+      {
+        title: "Job Candidates",
+        href: "/admin/dashboard/candidates",
+        icon: "UserSearch",
       },
       {
         title: "Customers",
@@ -120,40 +135,29 @@ export const adminNavItems: NavSection[] = [
     title: "Platform Operations",
     items: [
       {
-        title: "All Categories",
-        href: "/admin/dashboard/categories",
+        title: "Services Control",
+        href: "/admin/dashboard/services",
         icon: "Layers",
       },
       {
-        title: "Service Verification",
-        href: "/admin/dashboard/verifications",
+        title: "S_Provider Schedules",
+        href: "/admin/dashboard/sp-schedules",
         icon: "UserCheck",
-      },
-      {
-        title: "Transactions",
-        href: "/admin/dashboard/transactions",
-        icon: "CreditCard",
-      },
-      {
-        title: "Platform Reports",
-        href: "/admin/dashboard/reports",
-        icon: "BarChart3",
       },
     ],
   },
   {
-    title: "User Control",
+    title: "Careers Control",
     items: [
       {
-        title: "Service Providers",
-        href: "/admin/dashboard/providers",
-        icon: "HardHat",
+        title: "Job Posts",
+        href: "/admin/dashboard/job-posts",
+        icon: "Notebook",
       },
-      { title: "Customers", href: "/admin/dashboard/customers", icon: "Users" },
       {
-        title: "Job Candidates",
-        href: "/admin/dashboard/candidates",
-        icon: "UserSearch",
+        title: "Applications",
+        href: "/admin/dashboard/applications",
+        icon: "FileUser",
       },
     ],
   },
@@ -161,13 +165,18 @@ export const adminNavItems: NavSection[] = [
     title: "Platform",
     items: [
       {
-        title: "All Bookings",
-        href: "/admin/dashboard/bookings",
+        title: "Service Requests",
+        href: "/admin/dashboard/service-request",
         icon: "CalendarDays",
       },
       {
         title: "Payments",
         href: "/admin/dashboard/payments",
+        icon: "CreditCard",
+      },
+      {
+        title: "Reviews",
+        href: "/admin/dashboard/reviews",
         icon: "CreditCard",
       },
     ],
