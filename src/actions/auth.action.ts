@@ -89,11 +89,10 @@ export const registerCandidateAction = async (
   const parsedPayload = registerJobCandidateZodSchema.safeParse(payload);
 
   if (!parsedPayload.success) {
-    const firstError =
-      parsedPayload.error.issues[0].message || "Invalid registration data";
     return {
       success: false,
-      message: firstError,
+      message:
+        parsedPayload.error.issues[0].message || "Invalid registration data",
     };
   }
 
@@ -104,7 +103,6 @@ export const registerCandidateAction = async (
       "/auth/register-candidate",
       parsedPayload.data,
     );
-    console.log("register-candidate res=====", response);
 
     const { accessToken, refreshToken, token, user } = response.data;
     const { role, email } = user;

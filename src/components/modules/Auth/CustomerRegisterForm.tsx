@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { registerCandidateAction } from "@/actions/auth.action";
+import { registerCustomerAction } from "@/actions/auth.action";
 import AppField from "@/components/shared/form/AppField";
 import CustomSubmitButton from "@/components/shared/form/CustomSubmitButton";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -14,8 +14,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import {
-  IRegisterCandidatePayload,
-  registerJobCandidateZodSchema,
+  IRegisterCustomerPayload,
+  registerCustomerZodSchema,
 } from "@/zod/auth.validation";
 
 import { useForm } from "@tanstack/react-form";
@@ -30,13 +30,13 @@ interface RegisterProps {
   redirectPath?: string;
 }
 
-const CandidateRegisterForm = ({ redirectPath }: RegisterProps) => {
+const CustomerRegisterForm = ({ redirectPath }: RegisterProps) => {
   const [serverError, setServerError] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
 
   const { mutateAsync, isPending } = useMutation({
-    mutationFn: (payload: IRegisterCandidatePayload) =>
-      registerCandidateAction(payload, redirectPath),
+    mutationFn: (payload: IRegisterCustomerPayload) =>
+      registerCustomerAction(payload, redirectPath),
     onSuccess: (result) => {
       if ("success" in result && result.success === false) {
         setServerError(result.message || "Registration failed");
@@ -55,11 +55,10 @@ const CandidateRegisterForm = ({ redirectPath }: RegisterProps) => {
       email: "",
       password: "",
       phone: "",
-      cvUrl: "",
     },
 
     validators: {
-      onSubmit: registerJobCandidateZodSchema,
+      onSubmit: registerCustomerZodSchema,
     },
 
     onSubmit: async ({ value }) => {
@@ -72,10 +71,10 @@ const CandidateRegisterForm = ({ redirectPath }: RegisterProps) => {
     <Card className="w-full max-w-md mx-auto shadow-lg border-t-4 border-t-primary">
       <CardHeader className="space-y-1 text-center">
         <CardTitle className="text-2xl font-bold tracking-tight">
-          Candidate Register
+          Register
         </CardTitle>
         <CardDescription>
-          Join MNA ServiceHub to find your next opportunity
+          Join MNA ServiceHub to get expert services
         </CardDescription>
       </CardHeader>
 
@@ -91,14 +90,14 @@ const CandidateRegisterForm = ({ redirectPath }: RegisterProps) => {
         >
           <form.Field
             name="name"
-            validators={{ onChange: registerJobCandidateZodSchema.shape.name }}
+            validators={{ onChange: registerCustomerZodSchema.shape.name }}
           >
             {(field) => (
               <AppField
                 field={field}
                 label="Full Name"
                 type="text"
-                placeholder="Mr. Candidate Khan"
+                placeholder="Mr. Customer Khan"
                 autoComplete="name"
               />
             )}
@@ -106,7 +105,7 @@ const CandidateRegisterForm = ({ redirectPath }: RegisterProps) => {
 
           <form.Field
             name="email"
-            validators={{ onChange: registerJobCandidateZodSchema.shape.email }}
+            validators={{ onChange: registerCustomerZodSchema.shape.email }}
           >
             {(field) => (
               <AppField
@@ -118,11 +117,12 @@ const CandidateRegisterForm = ({ redirectPath }: RegisterProps) => {
               />
             )}
           </form.Field>
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <form.Field
               name="password"
               validators={{
-                onChange: registerJobCandidateZodSchema.shape.password,
+                onChange: registerCustomerZodSchema.shape.password,
               }}
             >
               {(field) => (
@@ -153,9 +153,7 @@ const CandidateRegisterForm = ({ redirectPath }: RegisterProps) => {
 
             <form.Field
               name="phone"
-              validators={{
-                onChange: registerJobCandidateZodSchema.shape.phone,
-              }}
+              validators={{ onChange: registerCustomerZodSchema.shape.phone }}
             >
               {(field) => (
                 <AppField
@@ -168,20 +166,6 @@ const CandidateRegisterForm = ({ redirectPath }: RegisterProps) => {
               )}
             </form.Field>
           </div>
-          <form.Field
-            name="cvUrl"
-            validators={{ onChange: registerJobCandidateZodSchema.shape.cvUrl }}
-          >
-            {(field) => (
-              <AppField
-                field={field}
-                label="CV Url"
-                type="text"
-                placeholder="https://elctrician-position-candidate.pdf"
-                autoComplete="cvUrl"
-              />
-            )}
-          </form.Field>
 
           {serverError && (
             <Alert variant="destructive" className="py-2">
@@ -218,4 +202,4 @@ const CandidateRegisterForm = ({ redirectPath }: RegisterProps) => {
   );
 };
 
-export default CandidateRegisterForm;
+export default CustomerRegisterForm;
