@@ -213,3 +213,56 @@ export const logoutUserAction = async () => {
 
   redirect("/login");
 };
+
+export const verifyEmailAction = async (
+  payload: { email: string; otp: string },
+  redirectPath?: string,
+): Promise<ILoginResponse | ApiErrorResponse> => {
+  if (!payload.otp || payload.otp.length !== 6) {
+    return {
+      success: false,
+      message: "Please enter a valid 6-digit OTP",
+    };
+  }
+
+  let targetUrl = "";
+
+  try {
+    const response = await httpClient.post<ILoginResponse>(
+      "/auth/verify-email",
+      payload,
+    );
+
+    const { accessToken, refreshToken, token, user } = response.data;
+    const { role } = user;
+
+    await setTokenInCookies("accessToken", accessToken);
+    await setTokenInCookies("refreshToken", refreshToken);
+    await setTokenInCookies("better-auth.session_token", token, 24 * 60 * 60);
+
+    targetUrl =
+      redirectPath && isValidRedirectForRole(redirectPath, role as UserRole)
+        ? redirectPath
+        : getDefaultDashboardRoute(role as UserRole);
+  } catch (error: any) {
+    if (error?.digest?.startsWith("NEXT_REDIRECT")) {
+      throw error;
+    }
+
+    return {
+      success: false,
+      message:
+        error?.response?.data?.message ||
+        `Verification failed: ${error.message}`,
+    };
+  }
+
+  if (targetUrl) {
+    redirect(targetUrl);
+  }
+
+  return {
+    success: true,
+    message: "Email verified and logged in successfully",
+  };
+};
