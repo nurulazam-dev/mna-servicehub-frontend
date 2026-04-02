@@ -106,27 +106,27 @@ export const adminNavItems: NavSection[] = [
       },
       {
         title: "Admins",
-        href: "/admin/dashboard/admins",
+        href: "/admin/dashboard/admins-management",
         icon: "ShieldCheck",
       },
       {
         title: "Managers",
-        href: "/admin/dashboard/managers",
+        href: "/admin/dashboard/managers-management",
         icon: "ShieldCheck",
       },
       {
         title: "Service Providers",
-        href: "/admin/dashboard/providers",
+        href: "/admin/dashboard/service-providers-management",
         icon: "HardHat",
       },
       {
         title: "Job Candidates",
-        href: "/admin/dashboard/candidates",
+        href: "/admin/dashboard/job-candidates-management",
         icon: "UserSearch",
       },
       {
         title: "Customers",
-        href: "/admin/dashboard/customers",
+        href: "/admin/dashboard/customers-management",
         icon: "Users",
       },
     ],
@@ -135,13 +135,13 @@ export const adminNavItems: NavSection[] = [
     title: "Platform Operations",
     items: [
       {
-        title: "Services Control",
-        href: "/admin/dashboard/services",
+        title: "Services Management",
+        href: "/admin/dashboard/services-management",
         icon: "Layers",
       },
       {
         title: "S_Provider Schedules",
-        href: "/admin/dashboard/sp-schedules",
+        href: "/admin/dashboard/service-provider-schedules",
         icon: "UserCheck",
       },
     ],
@@ -151,12 +151,12 @@ export const adminNavItems: NavSection[] = [
     items: [
       {
         title: "Job Posts",
-        href: "/admin/dashboard/job-posts",
+        href: "/admin/dashboard/job-posts-management",
         icon: "Notebook",
       },
       {
         title: "Applications",
-        href: "/admin/dashboard/applications",
+        href: "/admin/dashboard/job-applications-management",
         icon: "FileUser",
       },
     ],
@@ -166,17 +166,17 @@ export const adminNavItems: NavSection[] = [
     items: [
       {
         title: "Service Requests",
-        href: "/admin/dashboard/service-request",
+        href: "/admin/dashboard/service-requests-management",
         icon: "CalendarDays",
       },
       {
         title: "Payments",
-        href: "/admin/dashboard/payments",
+        href: "/admin/dashboard/payments-management",
         icon: "CreditCard",
       },
       {
         title: "Reviews",
-        href: "/admin/dashboard/reviews",
+        href: "/admin/dashboard/reviews-management",
         icon: "CreditCard",
       },
     ],

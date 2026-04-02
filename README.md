@@ -18,4 +18,81 @@ MNA ServiceHub acts as a centralized digital platform that enables all local ser
 
 ---
 
+## 🔑 Verified Login Credentials (Testing)
+
+| Role                 | Email                       | Password       |
+| :------------------- | :-------------------------- | :------------- |
+| **Admin**            | `admin@servicehub.com`      | `Admin123`     |
+| **Manager**          | `manager@servicehub.com`    | `Manager123`   |
+| **Service_Provider** | `sprovider@servicehub.com`  | `Provider123`  |
+| **Job_Candidate**    | `jcandidate@servicehub.com` | `Candidate123` |
+| **Customer**         | `customer@servicehub.com`   | `Customer123`  |
+
+---
+
 # 📋 Frontend Tech Stack:
+
+---
+
+# 🚀 Local Development Setup
+
+Follow the steps below to run the project locally.
+
+---
+
+## 1️⃣ Clone Repository & Install Dependencies
+
+```bash
+git clone https://github.com/nurulazam-dev/mna-servicehub-frontend.git
+
+cd mna-servicehub-frontend
+
+pnpm install
+```
+
+---
+
+## 2️⃣ Environment Configuration
+
+Create a `.env` file in the root directory and configure the following variables:
+
+```env
+NEXT_PUBLIC_API_BASE_URL=http://localhost:5000/api/v1
+
+JWT_ACCESS_SECRET=
+
+FRONTEND_URL=http://localhost:3000
+BACKEND_URL=http://localhost:5000
+BACKEND_API_URL=http://localhost:5000
+BACKEND_AUTH_URL=http://localhost:5000
+
+CLOUDINARY_CLOUD_NAME=
+CLOUDINARY_API_KEY=
+CLOUDINARY_API_SECRET=
+
+NEXT_PUBLIC_FRONTEND=http://localhost:3000
+NEXT_PUBLIC_BACKEND=http://localhost:5000
+```
+
+---
+
+## 4️⃣ Start Development Server
+
+```bash
+pnpm dev
+```
+
+Server will run at:
+
+```
+http://localhost:3000
+```
+
+---
+
+# 👨‍💻 Author
+
+Developed and maintained by **Mohammad Nurul Azam**
+GitHub: [https://github.com/nurulazam-dev](https://github.com/nurulazam-dev)
+
+---

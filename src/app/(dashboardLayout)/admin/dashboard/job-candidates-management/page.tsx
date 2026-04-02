@@ -1,3 +1,3 @@
 export default function JobCandidatesManagementPage() {
-  return <div>ServiceProvidersManagementPage</div>;
+  return <div>JobCandidatesManagementPage</div>;
 }
