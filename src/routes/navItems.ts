@@ -100,34 +100,34 @@ export const adminNavItems: NavSection[] = [
     title: "User Management",
     items: [
       {
-        title: "Control Users",
+        title: "All Users",
         href: "/admin/dashboard/users-management",
         icon: "Users",
       },
       {
-        title: "Admins",
-        href: "/admin/dashboard/admins",
+        title: "System Admins",
+        href: "/admin/dashboard/admins-management",
         icon: "ShieldCheck",
       },
       {
         title: "Managers",
-        href: "/admin/dashboard/managers",
-        icon: "ShieldCheck",
+        href: "/admin/dashboard/managers-management",
+        icon: "UserCog",
       },
       {
         title: "Service Providers",
-        href: "/admin/dashboard/providers",
+        href: "/admin/dashboard/service-providers-management",
         icon: "HardHat",
       },
       {
         title: "Job Candidates",
-        href: "/admin/dashboard/candidates",
+        href: "/admin/dashboard/job-candidates-management",
         icon: "UserSearch",
       },
       {
         title: "Customers",
-        href: "/admin/dashboard/customers",
-        icon: "Users",
+        href: "/admin/dashboard/customers-management",
+        icon: "Contact2",
       },
     ],
   },
@@ -135,49 +135,49 @@ export const adminNavItems: NavSection[] = [
     title: "Platform Operations",
     items: [
       {
-        title: "Services Control",
-        href: "/admin/dashboard/services",
+        title: "Services Catalog",
+        href: "/admin/dashboard/services-management",
         icon: "Layers",
       },
       {
-        title: "S_Provider Schedules",
-        href: "/admin/dashboard/sp-schedules",
-        icon: "UserCheck",
+        title: "Provider Schedules",
+        href: "/admin/dashboard/service-provider-schedules",
+        icon: "CalendarRange",
+      },
+      {
+        title: "Service Requests",
+        href: "/admin/dashboard/service-requests-management",
+        icon: "BellRing",
       },
     ],
   },
   {
-    title: "Careers Control",
+    title: "Careers Recruitment",
     items: [
       {
         title: "Job Posts",
-        href: "/admin/dashboard/job-posts",
-        icon: "Notebook",
+        href: "/admin/dashboard/job-posts-management",
+        icon: "FilePlus",
       },
       {
         title: "Applications",
-        href: "/admin/dashboard/applications",
+        href: "/admin/dashboard/job-applications-management",
         icon: "FileUser",
       },
     ],
   },
   {
-    title: "Platform",
+    title: "Financials & Feedback",
     items: [
       {
-        title: "Service Requests",
-        href: "/admin/dashboard/service-request",
-        icon: "CalendarDays",
-      },
-      {
         title: "Payments",
-        href: "/admin/dashboard/payments",
+        href: "/admin/dashboard/payments-management",
         icon: "CreditCard",
       },
       {
-        title: "Reviews",
-        href: "/admin/dashboard/reviews",
-        icon: "CreditCard",
+        title: "Reviews Control",
+        href: "/admin/dashboard/reviews-management",
+        icon: "MessageSquareText",
       },
     ],
   },
@@ -185,7 +185,7 @@ export const adminNavItems: NavSection[] = [
 
 export const managerNavItems: NavSection[] = [
   {
-    title: "User Management",
+    title: "Human Resources",
     items: [
       {
         title: "Admins",
@@ -193,7 +193,7 @@ export const managerNavItems: NavSection[] = [
         icon: "ShieldCheck",
       },
       {
-        title: "Service Providers",
+        title: "Providers",
         href: "/manager/dashboard/providers",
         icon: "HardHat",
       },
@@ -205,25 +205,25 @@ export const managerNavItems: NavSection[] = [
     ],
   },
   {
-    title: "Platform Operations",
+    title: "System Operations",
     items: [
       {
-        title: "All Categories",
+        title: "Categories",
         href: "/manager/dashboard/categories",
-        icon: "Layers",
+        icon: "LayoutGrid",
       },
       {
-        title: "Service Verification",
+        title: "Verifications",
         href: "/manager/dashboard/verifications",
-        icon: "UserCheck",
+        icon: "BadgeCheck",
       },
       {
         title: "Transactions",
         href: "/manager/dashboard/transactions",
-        icon: "CreditCard",
+        icon: "Receipt",
       },
       {
-        title: "Platform Reports",
+        title: "Analytics",
         href: "/manager/dashboard/reports",
         icon: "BarChart3",
       },
@@ -271,18 +271,14 @@ export const customerNavItems: NavSection[] = [
     ],
   },
   {
-    title: "History",
+    title: "Billing & Feedback",
     items: [
       {
         title: "Payment History",
         href: "/dashboard/payments",
-        icon: "Receipt",
+        icon: "History",
       },
-      {
-        title: "My Reviews",
-        href: "/dashboard/my-reviews",
-        icon: "MessageSquareText",
-      },
+      { title: "My Reviews", href: "/dashboard/my-reviews", icon: "StarHalf" },
     ],
   },
 ];

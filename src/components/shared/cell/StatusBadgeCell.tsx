@@ -9,9 +9,9 @@ const StatusBadgeCell = ({ status }: IStatusBadgeCellProps) => {
   return (
     <Badge
       variant={
-        status === UserStatus.ACTIVE
+        status === "ACTIVE"
           ? "default"
-          : status === UserStatus.BLOCKED
+          : status === "BLOCKED"
             ? "destructive"
             : "secondary"
       }

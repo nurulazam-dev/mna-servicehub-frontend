@@ -38,23 +38,25 @@ const UserDropdown = ({ userInfo }: UserDropdownProps) => {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button
-          variant={"outline"}
-          size={"icon"}
-          className="rounded-full focus-visible:ring-0"
-        >
-          <Avatar className="h-10 w-10 border">
-            <AvatarImage
-              src={userInfo?.image || ""}
-              alt={userInfo?.name || "N/A"}
-            />
-            <AvatarFallback className="bg-primary/10">
-              <User className="size-5 text-primary" />
-            </AvatarFallback>
-          </Avatar>
-        </Button>
-      </DropdownMenuTrigger>
+      <DropdownMenuTrigger
+        render={
+          <Button
+            variant={"outline"}
+            size={"icon"}
+            className="rounded-full focus-visible:ring-0"
+          >
+            <Avatar className="h-10 w-10 border">
+              <AvatarImage
+                src={userInfo?.image || ""}
+                alt={userInfo?.name || "N/A"}
+              />
+              <AvatarFallback className="bg-primary/10">
+                <User className="size-5 text-primary" />
+              </AvatarFallback>
+            </Avatar>
+          </Button>
+        }
+      />
 
       <DropdownMenuContent align={"end"} className="w-56">
         <DropdownMenuGroup>
@@ -76,22 +78,29 @@ const UserDropdown = ({ userInfo }: UserDropdownProps) => {
         <DropdownMenuSeparator />
 
         <DropdownMenuGroup>
-          <DropdownMenuItem asChild>
-            <Link href={"/my-profile"} className="flex w-full items-center">
-              <User className="mr-2 h-4 w-4" />
-              <span>My Profile</span>
-            </Link>
-          </DropdownMenuItem>
+          <DropdownMenuItem
+            render={
+              <Link
+                href={"/my-profile"}
+                className="flex w-full items-center"
+              >
+                <User className="mr-2 h-4 w-4" />
+                <span>My Profile</span>
+              </Link>
+            }
+          />
 
-          <DropdownMenuItem asChild>
-            <Link
-              href={"/change-password"}
-              className="flex w-full items-center"
-            >
-              <Key className="mr-2 h-4 w-4" />
-              <span>Change Password</span>
-            </Link>
-          </DropdownMenuItem>
+          <DropdownMenuItem
+            render={
+              <Link
+                href={"/change-password"}
+                className="flex w-full items-center"
+              >
+                <Key className="mr-2 h-4 w-4" />
+                <span>Change Password</span>
+              </Link>
+            }
+          />
         </DropdownMenuGroup>
 
         <DropdownMenuSeparator />

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { getDashboardData } from "@/services/dashboard.services";
@@ -16,6 +17,21 @@ const AdminDashboardContent = () => {
   });
 
   const data = response?.data as IAdminDashboardData;
+  const totalRevenueRaw = (data as unknown as { totalRevenue?: unknown })
+    ?.totalRevenue;
+  const extractedTotalRevenue =
+    typeof totalRevenueRaw === "number"
+      ? totalRevenueRaw
+      : typeof totalRevenueRaw === "string"
+        ? Number(totalRevenueRaw)
+        : typeof totalRevenueRaw === "bigint"
+          ? Number(totalRevenueRaw)
+          : ((totalRevenueRaw as any)?._sum?.amount ??
+            (totalRevenueRaw as any)?.amount ??
+            0);
+  const safeTotalRevenue = Number.isFinite(Number(extractedTotalRevenue))
+    ? Number(extractedTotalRevenue)
+    : 0;
 
   if (isLoading) {
     return <DashboardSkeleton />;
@@ -80,7 +96,7 @@ const AdminDashboardContent = () => {
             style: "currency",
             currency: "USD",
             maximumFractionDigits: 0,
-          }).format(data?.totalRevenue?._sum?.amount || 0)}
+          }).format(safeTotalRevenue)}
           iconName="CircleDollarSign"
           description="Net earnings so far"
           className="border-l-violet-600"

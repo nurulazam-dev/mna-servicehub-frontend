@@ -10,6 +10,9 @@ export const useUser = () => {
       const user = await getUserInfo();
       return user;
     },
+    // Prevent SSR/build from calling `getUserInfo()` because it uses `cookies()`.
+    // Only fetch user data in the browser.
+    enabled: typeof window !== "undefined",
 
     staleTime: 1000 * 60,
     retry: false,

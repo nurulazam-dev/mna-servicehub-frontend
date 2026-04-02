@@ -40,11 +40,17 @@ const DashboardNavbarContent = ({
   return (
     <div className="flex items-center gap-4 w-full px-4 py-3 border-b bg-background">
       <Sheet open={isOpen && isMobile} onOpenChange={setIsOpen}>
-        <SheetTrigger asChild className="md:hidden">
-          <Button variant={"outline"} size={"icon"}>
-            <Menu className="h-5 w-5" />
-          </Button>
-        </SheetTrigger>
+        <SheetTrigger
+          render={
+            <Button
+              variant={"outline"}
+              size={"icon"}
+              className="md:hidden"
+            >
+              <Menu className="h-5 w-5" />
+            </Button>
+          }
+        />
 
         <SheetContent side="left" className="w-64 p-0">
           <DashboardMobileSidebar
