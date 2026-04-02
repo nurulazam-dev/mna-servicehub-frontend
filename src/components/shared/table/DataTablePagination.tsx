@@ -113,7 +113,9 @@ const DataTablePagination = <TData,>({
     });
   };
 
-  const onPageSizeSelect = (value: string) => {
+  const onPageSizeSelect = (value: string | null) => {
+    if (!value) return;
+
     if (value === "custom") {
       setIsCustomMode(true);
       setCustomPageSize(String(pageSize));

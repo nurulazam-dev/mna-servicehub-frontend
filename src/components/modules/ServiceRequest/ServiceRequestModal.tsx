@@ -65,12 +65,14 @@ export default function ServiceRequestModal({
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger asChild>
-        <Button className="w-full h-12 rounded-md font-black text-lg transition-all hover:-translate-y-1 group">
-          Request for Service
-          <ChevronRight className="ml-2 size-5 transition-transform group-hover:translate-x-1" />
-        </Button>
-      </DialogTrigger>
+      <DialogTrigger
+        render={
+          <Button className="w-full h-12 rounded-md font-black text-lg transition-all hover:-translate-y-1 group">
+            Request for Service
+            <ChevronRight className="ml-2 size-5 transition-transform group-hover:translate-x-1" />
+          </Button>
+        }
+      />
       <DialogContent className="sm:max-w-112.5 rounded-[2rem] p-0 overflow-hidden border-none shadow-2xl">
         <DialogHeader className="bg-primary p-8 text-primary-foreground relative">
           <div className="absolute top-0 right-0 p-4 opacity-10">

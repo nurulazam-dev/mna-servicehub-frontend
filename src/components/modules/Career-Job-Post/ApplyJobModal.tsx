@@ -54,11 +54,13 @@ const ApplyJobModal = ({ jobId, jobTitle, userId }: ApplyJobModalProps) => {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button className="w-full h-14 rounded-2xl text-lg font-bold shadow-lg shadow-primary/20 transition-transform active:scale-95">
-          Apply For This Job
-        </Button>
-      </DialogTrigger>
+      <DialogTrigger
+        render={
+          <Button className="w-full h-14 rounded-2xl text-lg font-bold shadow-lg shadow-primary/20 transition-transform active:scale-95">
+            Apply For This Job
+          </Button>
+        }
+      />
 
       <DialogContent className="sm:max-w-110 rounded-lg border-none shadow-2xl p-10">
         <DialogHeader className="space-y-3">

@@ -196,10 +196,12 @@ const SingleSelectFilterControl = ({
       <Select
         value={value || "all"}
         onValueChange={(nextValue) => {
-          onFilterChange(
-            filter.id,
-            nextValue === "all" ? undefined : nextValue,
-          );
+          if (!nextValue || nextValue === "all") {
+            onFilterChange(filter.id, undefined);
+            return;
+          }
+
+          onFilterChange(filter.id, nextValue);
         }}
       >
         <SelectTrigger disabled={isLoading}>
@@ -380,20 +382,22 @@ const DataTableFilters = ({
             <Popover
               key={`${filter.id}-${JSON.stringify(filterValue ?? null)}`}
             >
-              <PopoverTrigger asChild>
-                <Button
-                  variant="outline"
-                  className={triggerClass}
-                  disabled={isLoading}
-                >
-                  {filter.label}
-                  {activeCount > 0 && (
-                    <Badge className="h-5 min-w-5 px-1.5" variant="secondary">
-                      {activeCount}
-                    </Badge>
-                  )}
-                </Button>
-              </PopoverTrigger>
+              <PopoverTrigger
+                render={
+                  <Button
+                    variant="outline"
+                    className={triggerClass}
+                    disabled={isLoading}
+                  >
+                    {filter.label}
+                    {activeCount > 0 && (
+                      <Badge className="h-5 min-w-5 px-1.5" variant="secondary">
+                        {activeCount}
+                      </Badge>
+                    )}
+                  </Button>
+                }
+              />
 
               <PopoverContent align="start" className="w-80">
                 <div className="mb-3 flex items-center justify-between">

@@ -100,19 +100,19 @@ export const adminNavItems: NavSection[] = [
     title: "User Management",
     items: [
       {
-        title: "Control Users",
+        title: "All Users",
         href: "/admin/dashboard/users-management",
         icon: "Users",
       },
       {
-        title: "Admins",
+        title: "System Admins",
         href: "/admin/dashboard/admins-management",
         icon: "ShieldCheck",
       },
       {
         title: "Managers",
         href: "/admin/dashboard/managers-management",
-        icon: "ShieldCheck",
+        icon: "UserCog",
       },
       {
         title: "Service Providers",
@@ -127,7 +127,7 @@ export const adminNavItems: NavSection[] = [
       {
         title: "Customers",
         href: "/admin/dashboard/customers-management",
-        icon: "Users",
+        icon: "Contact2",
       },
     ],
   },
@@ -135,24 +135,29 @@ export const adminNavItems: NavSection[] = [
     title: "Platform Operations",
     items: [
       {
-        title: "Services Management",
+        title: "Services Catalog",
         href: "/admin/dashboard/services-management",
         icon: "Layers",
       },
       {
-        title: "S_Provider Schedules",
+        title: "Provider Schedules",
         href: "/admin/dashboard/service-provider-schedules",
-        icon: "UserCheck",
+        icon: "CalendarRange",
+      },
+      {
+        title: "Service Requests",
+        href: "/admin/dashboard/service-requests-management",
+        icon: "BellRing",
       },
     ],
   },
   {
-    title: "Careers Control",
+    title: "Careers Recruitment",
     items: [
       {
         title: "Job Posts",
         href: "/admin/dashboard/job-posts-management",
-        icon: "Notebook",
+        icon: "FilePlus",
       },
       {
         title: "Applications",
@@ -162,22 +167,17 @@ export const adminNavItems: NavSection[] = [
     ],
   },
   {
-    title: "Platform",
+    title: "Financials & Feedback",
     items: [
-      {
-        title: "Service Requests",
-        href: "/admin/dashboard/service-requests-management",
-        icon: "CalendarDays",
-      },
       {
         title: "Payments",
         href: "/admin/dashboard/payments-management",
         icon: "CreditCard",
       },
       {
-        title: "Reviews",
+        title: "Reviews Control",
         href: "/admin/dashboard/reviews-management",
-        icon: "CreditCard",
+        icon: "MessageSquareText",
       },
     ],
   },
@@ -185,7 +185,7 @@ export const adminNavItems: NavSection[] = [
 
 export const managerNavItems: NavSection[] = [
   {
-    title: "User Management",
+    title: "Human Resources",
     items: [
       {
         title: "Admins",
@@ -193,7 +193,7 @@ export const managerNavItems: NavSection[] = [
         icon: "ShieldCheck",
       },
       {
-        title: "Service Providers",
+        title: "Providers",
         href: "/manager/dashboard/providers",
         icon: "HardHat",
       },
@@ -205,25 +205,25 @@ export const managerNavItems: NavSection[] = [
     ],
   },
   {
-    title: "Platform Operations",
+    title: "System Operations",
     items: [
       {
-        title: "All Categories",
+        title: "Categories",
         href: "/manager/dashboard/categories",
-        icon: "Layers",
+        icon: "LayoutGrid",
       },
       {
-        title: "Service Verification",
+        title: "Verifications",
         href: "/manager/dashboard/verifications",
-        icon: "UserCheck",
+        icon: "BadgeCheck",
       },
       {
         title: "Transactions",
         href: "/manager/dashboard/transactions",
-        icon: "CreditCard",
+        icon: "Receipt",
       },
       {
-        title: "Platform Reports",
+        title: "Analytics",
         href: "/manager/dashboard/reports",
         icon: "BarChart3",
       },
@@ -271,18 +271,14 @@ export const customerNavItems: NavSection[] = [
     ],
   },
   {
-    title: "History",
+    title: "Billing & Feedback",
     items: [
       {
         title: "Payment History",
         href: "/dashboard/payments",
-        icon: "Receipt",
+        icon: "History",
       },
-      {
-        title: "My Reviews",
-        href: "/dashboard/my-reviews",
-        icon: "MessageSquareText",
-      },
+      { title: "My Reviews", href: "/dashboard/my-reviews", icon: "StarHalf" },
     ],
   },
 ];

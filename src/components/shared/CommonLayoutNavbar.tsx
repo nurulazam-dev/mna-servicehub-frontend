@@ -19,7 +19,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { ModeToggle } from "./ModeToggle";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -31,7 +31,7 @@ import {
 } from "../ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { useUser } from "@/hooks/useUser";
-import { authClient } from "@/lib/auth-client";
+// import { authClient } from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
 import { logoutUserAction } from "@/actions/auth.action";
 import { toast } from "sonner";
@@ -79,7 +79,7 @@ const CommonLayoutNavbar = ({
   },
   className,
 }: Navbar1Props) => {
-  const router = useRouter();
+  // const router = useRouter();
 
   const { data: user } = useUser();
 
@@ -147,12 +147,12 @@ const CommonLayoutNavbar = ({
                 {menu.map((item) => (
                   <NavigationMenuItem key={item.title}>
                     <NavigationMenuLink
-                      asChild
                       className={cn(
                         "group inline-flex h-10 w-max items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50",
                       )}
+                      href={item.url}
                     >
-                      <Link href={item.url}>{item.title}</Link>
+                      {item.title}
                     </NavigationMenuLink>
                   </NavigationMenuItem>
                 ))}
@@ -165,22 +165,24 @@ const CommonLayoutNavbar = ({
 
             {user ? (
               <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    className="relative h-10 w-10 rounded-full"
-                  >
-                    <Avatar className="h-10 w-10 border">
-                      <AvatarImage
-                        src={user?.image || ""}
-                        alt={user?.name || "N/A"}
-                      />
-                      <AvatarFallback className="bg-primary/10">
-                        <User className="size-5 text-primary" />
-                      </AvatarFallback>
-                    </Avatar>
-                  </Button>
-                </DropdownMenuTrigger>
+                <DropdownMenuTrigger
+                  render={
+                    <Button
+                      variant="ghost"
+                      className="relative h-10 w-10 rounded-full"
+                    >
+                      <Avatar className="h-10 w-10 border">
+                        <AvatarImage
+                          src={user?.image || ""}
+                          alt={user?.name || "N/A"}
+                        />
+                        <AvatarFallback className="bg-primary/10">
+                          <User className="size-5 text-primary" />
+                        </AvatarFallback>
+                      </Avatar>
+                    </Button>
+                  }
+                />
 
                 <DropdownMenuContent className="w-56" align="end">
                   <DropdownMenuGroup>
@@ -197,15 +199,18 @@ const CommonLayoutNavbar = ({
                   </DropdownMenuGroup>
                   <DropdownMenuSeparator />
                   <DropdownMenuGroup>
-                    <DropdownMenuItem asChild className="cursor-pointer">
-                      <Link
-                        href={getDashboardPath()}
-                        className="flex w-full items-center"
-                      >
-                        <LayoutDashboard className="mr-2 size-4" />
-                        <span>Dashboard</span>
-                      </Link>
-                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      className="cursor-pointer"
+                      render={
+                        <Link
+                          href={getDashboardPath()}
+                          className="flex w-full items-center"
+                        >
+                          <LayoutDashboard className="mr-2 size-4" />
+                          <span>Dashboard</span>
+                        </Link>
+                      }
+                    />
                   </DropdownMenuGroup>
                   <DropdownMenuSeparator />
 
@@ -227,9 +232,11 @@ const CommonLayoutNavbar = ({
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
-              <Button asChild variant="default" size="lg">
-                <Link href={auth.login.url}>{auth.login.title}</Link>
-              </Button>
+              <Button
+                variant="default"
+                size="lg"
+                render={<Link href={auth.login.url}>{auth.login.title}</Link>}
+              />
             )}
           </div>
         </nav>
@@ -247,11 +254,13 @@ const CommonLayoutNavbar = ({
           <div className="flex items-center gap-2">
             <ModeToggle />
             <Sheet>
-              <SheetTrigger asChild>
-                <Button variant="outline" size="icon">
-                  <Menu className="size-5" />
-                </Button>
-              </SheetTrigger>
+              <SheetTrigger
+                render={
+                  <Button variant="outline" size="icon">
+                    <Menu className="size-5" />
+                  </Button>
+                }
+              />
               <SheetContent side="right" className="w-75">
                 <SheetHeader>
                   <SheetTitle className="text-left flex items-center gap-2 text-2xl">
@@ -298,9 +307,10 @@ const CommonLayoutNavbar = ({
                       </Button>
                     </div>
                   ) : (
-                    <Button asChild className="w-full">
-                      <Link href={auth.login.url}>Login</Link>
-                    </Button>
+                    <Button
+                      className="w-full"
+                      render={<Link href={auth.login.url}>Login</Link>}
+                    />
                   )}
                 </div>
               </SheetContent>
@@ -312,14 +322,14 @@ const CommonLayoutNavbar = ({
   );
 };
 
-const renderMenuItem = (item: MenuItem) => {
+/* const renderMenuItem = (item: MenuItem) => {
   return (
     <NavigationMenuItem key={item.title}>
       <NavigationMenuLink
-        asChild
         className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-muted hover:text-accent-foreground"
+        href={item.url}
       >
-        <Link href={item.url}>{item.title}</Link>
+        {item.title}
       </NavigationMenuLink>
     </NavigationMenuItem>
   );
@@ -331,6 +341,6 @@ const renderMobileMenuItem = (item: MenuItem) => {
       {item.title}
     </Link>
   );
-};
+}; */
 
 export { CommonLayoutNavbar };

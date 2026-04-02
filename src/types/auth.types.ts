@@ -2,6 +2,8 @@ export interface ILoginResponse {
   token: string;
   accessToken: string;
   refreshToken: string;
+  success: boolean;
+  message: string;
   user: {
     needPasswordChange: boolean;
     email: string;

@@ -8,6 +8,7 @@ export type UserRole =
 export const authRoutes = [
   "/login",
   "/register",
+  "/register-customer",
   "/forgot-password",
   "/reset-password",
   "/verify-email",
@@ -48,7 +49,7 @@ export const candidateProtectedRoutes: RouteConfig = {
 };
 
 export const customerProtectedRoutes: RouteConfig = {
-  pattern: [/^\/dashboard/],
+  pattern: [/^\/dashboard/, /^\/payment/],
   exact: ["/payment/success", "/payment/cancel"],
 };
 
