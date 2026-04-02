@@ -415,34 +415,34 @@ The system ensures smooth coordination between users, managers, and service prov
 
 # 📋 Frontend Tech Stack:
 
-| Package Name                                | Purpose                                                                                         |
-| ------------------------------------------- | ----------------------------------------------------------------------------------------------- | --- |
-| **next.js 16**                              | Next.js framework for building full-stack React applications with SSR, routing, and API support |
-| **react / react-dom**                       | Core React library for building UI components                                                   |
-| **@tanstack/react-query**                   | Server state management (API data fetching, caching, synchronization)                           |
-| **@tanstack/react-query-next-experimental** | React Query integration optimized for Next.js App Router                                        |
-| **@tanstack/react-form**                    | Type-safe form state management and validation                                                  |
-| **@tanstack/react-form-nextjs**             | Next.js integration for TanStack Form                                                           |
-| **@tanstack/react-table**                   | Powerful table/data grid handling (sorting, filtering, pagination)                              |     |
-| **@tanstack/react-form-devtools**           | Devtools for debugging form state                                                               |
-| **axios**                                   | HTTP client for making API requests to backend                                                  |
-| **better-auth**                             | Authentication system (login, session, OAuth integration)                                       |
-| **jsonwebtoken**                            | JWT handling (token decode/verify on client if needed)                                          |
-| **zod**                                     | Schema validation (form validation, type-safe data parsing)                                     |
-| **date-fns**                                | Date formatting, manipulation, and utilities                                                    |
-| **react-day-picker**                        | Date picker UI component                                                                        |
-| **input-otp**                               | OTP (One-Time Password) input handling UI                                                       |
-| **recharts**                                | Charts and data visualization (dashboard analytics)                                             |
-| **lucide-react**                            | Icon library for modern UI icons                                                                |
-| **sonner**                                  | Toast notification system (alerts, success, error messages)                                     |
-| **next-themes**                             | Dark/light theme management                                                                     |
-| **@base-ui/react**                          | Accessible UI primitives (low-level UI components)                                              |
-| **shadcn**                                  | Prebuilt UI component system (built on Tailwind + Radix)                                        |
-| **vaul**                                    | Drawer/Bottom-sheet UI component (mobile-friendly modal)                                        |
-| **clsx**                                    | Utility for conditional className handling                                                      |
-| **tailwind-merge**                          | Merge Tailwind classes without conflicts                                                        |
-| **class-variance-authority (cva)**          | Manage component variants (button styles, etc.)                                                 |
-| **tw-animate-css**                          | Tailwind-based animation utilities                                                              |
+| Package Name                                | Purpose                                                                    |
+| ------------------------------------------- | -------------------------------------------------------------------------- |
+| **next (Next.js 16)**                       | Full-stack React framework with App Router, SSR, routing, and API handling |
+| **react / react-dom**                       | Core libraries for building interactive UI components                      |
+| **@tanstack/react-query**                   | Server state management (data fetching, caching, synchronization)          |
+| **@tanstack/react-query-next-experimental** | Optimized React Query integration for Next.js App Router                   |
+| **@tanstack/react-form**                    | Type-safe form state management and validation                             |
+| **@tanstack/react-form-nextjs**             | Next.js integration for TanStack Form                                      |
+| **@tanstack/react-table**                   | Advanced table/data grid (sorting, filtering, pagination)                  |
+| **@tanstack/react-form-devtools**           | Devtools for debugging and inspecting form state                           |
+| **axios**                                   | Promise-based HTTP client for API communication                            |
+| **better-auth**                             | Authentication system (session management, OAuth, secure login)            |
+| **jsonwebtoken**                            | JWT handling (token decoding and verification if needed)                   |
+| **zod**                                     | Schema validation and type-safe data parsing                               |
+| **date-fns**                                | Lightweight date manipulation and formatting utilities                     |
+| **react-day-picker**                        | Flexible and customizable date picker component                            |
+| **input-otp**                               | OTP input handling for authentication flows                                |
+| **recharts**                                | Data visualization and charts (dashboard analytics)                        |
+| **lucide-react**                            | Modern and customizable icon library                                       |
+| **sonner**                                  | Toast notification system (success, error, alerts)                         |
+| **next-themes**                             | Theme management (dark/light mode support)                                 |
+| **@base-ui/react**                          | Accessible low-level UI primitives                                         |
+| **shadcn**                                  | Prebuilt UI components using Tailwind CSS and Radix UI                     |
+| **vaul**                                    | Drawer / bottom-sheet UI component (mobile-friendly modals)                |
+| **clsx**                                    | Utility for conditional className composition                              |
+| **tailwind-merge**                          | Intelligent merging of Tailwind CSS classes                                |
+| **class-variance-authority (cva)**          | Utility for managing component style variants                              |
+| **tw-animate-css**                          | Tailwind-based animation utilities                                         |
 
 ---
 
