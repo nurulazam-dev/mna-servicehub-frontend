@@ -27,7 +27,7 @@ import AdminDeleteUserDialog from "./AdminDeleteUserDialog";
 const DEFAULT_PAGE = 1;
 const DEFAULT_LIMIT = 10;
 const USER_FILTER_DEFINITIONS = [
-  serverManagedFilter.single(""),
+  serverManagedFilter.single("status"),
   serverManagedFilter.multi(""),
 ];
 
@@ -113,6 +113,22 @@ export default function UsersTable({
 
   const meta: PaginationMeta | undefined = userDataResponse?.meta ?? undefined;
 
+  const filterConfigs = useMemo<DataTableFilterConfig[]>(() => {
+    return [
+      {
+        id: "status",
+        label: "Status",
+        type: "single-select",
+        options: [
+          { label: "Active", value: "ACTIVE" },
+          { label: "Blocked", value: "BLOCKED" },
+          { label: "Deleted", value: "DELETED" },
+          { label: "Other", value: "OTHER" },
+        ],
+      },
+    ];
+  }, []);
+
   const filterValuesForTable = useMemo<DataTableFilterValues>(() => {
     return {
       status: filterValues.status || "",
@@ -142,7 +158,7 @@ export default function UsersTable({
           onDebouncedChange: handleDebouncedSearchChange,
         }}
         filters={{
-          configs: USER_FILTER_DEFINITIONS,
+          configs: filterConfigs,
           values: filterValuesForTable,
           onFilterChange: handleFilterChange,
           onClearAll: clearAllFilters,
