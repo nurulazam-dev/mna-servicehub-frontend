@@ -46,7 +46,6 @@ export default function ViewUserProfileModel({
 
   const hasError = data && !data.success;
   const userDetails = data && data.success ? data.data : null;
-  console.log("userDetails====", userDetails);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>

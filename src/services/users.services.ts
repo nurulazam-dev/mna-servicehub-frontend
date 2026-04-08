@@ -66,7 +66,8 @@ export const adminDeleteUserService = async (id: string) => {
     const response = await httpClient.patch<ApiResponse<{ message: string }>>(
       `/users/delete/${id}`,
     );
-    return response.data;
+
+    return response;
   } catch (error) {
     console.error("Error deleting user:", error);
     throw error;

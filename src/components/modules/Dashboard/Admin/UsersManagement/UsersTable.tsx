@@ -28,29 +28,8 @@ const DEFAULT_PAGE = 1;
 const DEFAULT_LIMIT = 10;
 const USER_FILTER_DEFINITIONS = [
   serverManagedFilter.single("status"),
-  serverManagedFilter.multi(""),
+  serverManagedFilter.multi("role"),
 ];
-
-/* const USER_FILTER_DEFINITIONS: DataTableFilterConfig[] = [
-  serverManagedFilter.single({
-    id: "status",    
-    label: "Status",   
-    options: [
-      { label: "Active", value: "ACTIVE" },
-      { label: "Blocked", value: "BLOCKED" },
-    ],
-  }),
-  serverManagedFilter.multi({
-    id: "role",        
-    label: "User Role",
-    options: [
-      { label: "Admin", value: "ADMIN" },
-      { label: "Manager", value: "MANAGER" },
-      { label: "Provider", value: "SERVICE_PROVIDER" },
-      { label: "Customer", value: "CUSTOMER" },
-    ],
-  }),
-]; */
 
 export default function UsersTable({
   initialQueryString,
@@ -124,6 +103,17 @@ export default function UsersTable({
           { label: "Blocked", value: "BLOCKED" },
           { label: "Deleted", value: "DELETED" },
           { label: "Other", value: "OTHER" },
+        ],
+      },
+      {
+        id: "role",
+        label: "User Role",
+        type: "multi-select",
+        options: [
+          { label: "Admin", value: "ADMIN" },
+          { label: "Manager", value: "MANAGER" },
+          { label: "Provider", value: "SERVICE_PROVIDER" },
+          { label: "Customer", value: "CUSTOMER" },
         ],
       },
     ];
