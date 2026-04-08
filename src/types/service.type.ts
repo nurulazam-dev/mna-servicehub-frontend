@@ -20,6 +20,15 @@ export interface IServicePayload {
   updatedAt: Date | string;
 }
 
+export interface IUpdateServicePayload {
+  id?: string | number;
+  name?: string;
+  description?: string;
+  imageUrl?: string | null;
+  isActive?: boolean;
+  isDeleted?: boolean;
+}
+
 export interface ICreateServicePayload {
   name: string;
   description: string;

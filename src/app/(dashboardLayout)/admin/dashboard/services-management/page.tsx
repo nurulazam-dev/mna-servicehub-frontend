@@ -34,7 +34,7 @@ export default async function ServicesManagementPage({
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({
-    queryKey: ["all-services"],
+    queryKey: ["services"],
     queryFn: () => getAllServices(queryString),
     staleTime: 30 * 1000,
     gcTime: 5 * 60 * 1000,

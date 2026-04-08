@@ -2,14 +2,18 @@
 
 import { httpClient } from "@/lib/axios/httpClient";
 import { ApiResponse } from "@/types/api.types";
-import { ICreateServicePayload, IServicePayload } from "@/types/service.type";
+import {
+  ICreateServicePayload,
+  IServicePayload,
+  IUpdateServicePayload,
+} from "@/types/service.type";
 
 export const getAllServices = async (queryString: string = "") => {
   try {
     const response = await httpClient.get<ApiResponse<IServicePayload[]>>(
       queryString ? `/services?${queryString}` : "/services",
     );
-    return response.data;
+    return response;
   } catch (error) {
     console.log("Error fetching services:", error);
     throw error;
@@ -31,7 +35,7 @@ export const createService = async (payload: ICreateServicePayload) => {
 
 export const updateService = async (
   id: string,
-  payload: ICreateServicePayload,
+  payload: IUpdateServicePayload,
 ) => {
   try {
     const response = await httpClient.patch<IServicePayload>(
