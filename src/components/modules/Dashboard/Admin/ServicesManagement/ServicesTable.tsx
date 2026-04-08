@@ -85,7 +85,9 @@ export default function ServicesTable({
     queryFn: () => getAllServices(queryString),
   });
 
-  const services = serviceDataResponse?.data ?? [];
+  const servicesData = Array.isArray(serviceDataResponse?.data)
+    ? serviceDataResponse.data
+    : [];
 
   const meta: PaginationMeta | undefined =
     serviceDataResponse?.meta ?? undefined;
@@ -113,7 +115,7 @@ export default function ServicesTable({
   return (
     <>
       <DataTable
-        data={services}
+        data={servicesData}
         columns={servicesColumns}
         isLoading={isLoading || isFetching || isRouteRefreshPending}
         emptyMessage="No services found."

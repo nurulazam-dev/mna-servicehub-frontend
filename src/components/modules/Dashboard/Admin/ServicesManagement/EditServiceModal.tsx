@@ -13,10 +13,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect } from "react";
 import { toast } from "sonner";
-import { cn } from "@/lib/utils";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogDescription,
   DialogHeader,
@@ -32,6 +30,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
+import { Settings2 } from "lucide-react";
 
 interface EditServiceFormModalProps {
   open: boolean;
@@ -47,26 +46,6 @@ const getInitialValues = (
   imageUrl: service?.imageUrl ?? "",
   isActive: service?.isActive ?? false,
 });
-
-const getErrorMessage = (error: unknown): string => {
-  if (typeof error === "string") {
-    return error;
-  }
-
-  if (error && typeof error === "object" && "message" in error) {
-    return String(error.message);
-  }
-
-  return "Invalid input";
-};
-
-const FieldMessage = ({ error }: { error: unknown }) => {
-  if (!error) {
-    return null;
-  }
-
-  return <p className="text-sm text-destructive">{getErrorMessage(error)}</p>;
-};
 
 export default function EditServiceModal({
   open,
@@ -90,20 +69,13 @@ export default function EditServiceModal({
     defaultValues: getInitialValues(service),
     onSubmit: async ({ value }) => {
       if (!service) {
-        toast.error("Service not found");
+        toast.error("Service context not found");
         return;
       }
 
-      const payload: IUpdateServicePayload = {
-        name: value.name,
-        description: value.description,
-        imageUrl: value.imageUrl,
-        isActive: value.isActive,
-      };
-
       const result = await mutateAsync({
         serviceId: String(service.id),
-        payload,
+        payload: value as IUpdateServicePayload,
       });
 
       if (!result.success) {
@@ -114,18 +86,13 @@ export default function EditServiceModal({
       toast.success(result.message || "Service updated successfully");
       onOpenChange(false);
       form.reset();
-
       void queryClient.invalidateQueries({ queryKey: ["services"] });
-      void queryClient.refetchQueries({
-        queryKey: ["services"],
-        type: "active",
-      });
       router.refresh();
     },
   });
 
   useEffect(() => {
-    if (open) {
+    if (open && service) {
       form.reset(getInitialValues(service));
     }
   }, [service, form, open]);
@@ -133,161 +100,147 @@ export default function EditServiceModal({
   const handleOpenChange = useCallback(
     (nextOpen: boolean) => {
       onOpenChange(nextOpen);
-      if (!nextOpen) {
-        form.reset();
-      }
+      if (!nextOpen) form.reset();
     },
     [form, onOpenChange],
   );
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogContent className="max-h-[90vh] w-[calc(100vw-1.5rem)] max-w-[calc(100vw-1.5rem)] gap-0 overflow-hidden p-0 sm:w-[calc(100vw-3rem)] sm:max-w-[calc(100vw-3rem)] md:w-[calc(100vw-4rem)] md:max-w-[calc(100vw-4rem)] lg:w-[min(92vw,78rem)] lg:max-w-[min(92vw,78rem)] xl:w-[min(88vw,88rem)] xl:max-w-[min(88vw,88rem)] 2xl:w-[min(84vw,96rem)] 2xl:max-w-[min(84vw,96rem)]">
-        <DialogHeader className="border-b px-6 py-5 pr-14">
-          <DialogTitle>Edit User</DialogTitle>
-          <DialogDescription>
-            Update user profile information and details.
-          </DialogDescription>
+      <DialogContent className="max-w-150 p-0 overflow-hidden gap-0 border-none shadow-2xl">
+        <DialogHeader className="px-6 py-6 bg-muted/30 border-b">
+          <div className="flex items-center gap-3">
+            <div className="p-2 bg-primary/10 rounded-lg">
+              <Settings2 className="w-5 h-5 text-primary" />
+            </div>
+            <div>
+              <DialogTitle className="text-xl font-bold">
+                Edit Service
+              </DialogTitle>
+              <DialogDescription className="text-sm">
+                Modify the details of your service offering below.
+              </DialogDescription>
+            </div>
+          </div>
         </DialogHeader>
 
-        <ScrollArea className="max-h-[calc(90vh-5.5rem)]">
-          <div className="px-6 py-5">
-            <form
-              method="POST"
-              action="#"
-              noValidate
-              onSubmit={(event) => {
-                event.preventDefault();
-                event.stopPropagation();
-                form.handleSubmit();
-              }}
-              className="space-y-5"
-            >
-              <div className="grid gap-4 md:grid-cols-2">
-                <form.Field
-                  name="name"
-                  validators={{ onChange: updateServiceZodSchema.shape.name }}
-                >
-                  {(field) => (
-                    <AppField
-                      field={field}
-                      label="Full Name"
-                      placeholder="Enter doctor name"
-                    />
-                  )}
-                </form.Field>
-                <form.Field
-                  name="description"
-                  validators={{
-                    onChange: updateServiceZodSchema.shape.description,
-                  }}
-                >
-                  {(field) => (
-                    <AppField
-                      field={field}
-                      label="Description"
-                      placeholder="Enter service description"
-                    />
-                  )}
-                </form.Field>
+        <ScrollArea className="max-h-[80vh]">
+          <form
+            onSubmit={(event) => {
+              event.preventDefault();
+              event.stopPropagation();
+              form.handleSubmit();
+            }}
+            className="p-6 space-y-6"
+          >
+            <div className="grid gap-6">
+              {/* Service Name */}
+              <form.Field
+                name="name"
+                validators={{ onChange: updateServiceZodSchema.shape.name }}
+              >
+                {(field) => (
+                  <AppField
+                    field={field}
+                    label="Service Name"
+                    placeholder="e.g. Premium Healthcare"
+                  />
+                )}
+              </form.Field>
 
-                <form.Field
-                  name="imageUrl"
-                  validators={{
-                    onChange: updateServiceZodSchema.shape.imageUrl,
-                  }}
-                >
-                  {(field) => (
-                    <AppField
-                      field={field}
-                      label="Image URL"
-                      placeholder="Enter image URL"
-                    />
-                  )}
-                </form.Field>
+              {/* Image URL */}
+              <form.Field
+                name="imageUrl"
+                validators={{ onChange: updateServiceZodSchema.shape.imageUrl }}
+              >
+                {(field) => (
+                  <AppField
+                    field={field}
+                    label="Cover Image URL"
+                    placeholder="https://example.com/image.jpg"
+                  />
+                )}
+              </form.Field>
 
-                <form.Field
-                  name="isActive"
-                  validators={{
-                    onChange: updateServiceZodSchema.shape.isActive,
-                  }}
-                >
-                  {(field) => {
-                    const firstError =
-                      field.state.meta.isTouched &&
-                      field.state.meta.errors.length > 0
-                        ? field.state.meta.errors[0]
-                        : null;
+              {/* Description */}
+              <form.Field
+                name="description"
+                validators={{
+                  onChange: updateServiceZodSchema.shape.description,
+                }}
+              >
+                {(field) => (
+                  <AppField
+                    field={field}
+                    label="Description"
+                    placeholder="Provide a detailed description of the service..."
+                  />
+                )}
+              </form.Field>
 
-                    return (
-                      <div className="space-y-1.5">
-                        <Label
-                          htmlFor="edit-service-isActive"
-                          className={cn(firstError && "text-destructive")}
-                        >
-                          Active Status
-                        </Label>
-                        <Select
-                          value={field.state.value}
-                          onValueChange={(value) => {
-                            field.handleChange(
-                              value as IUpdateServicePayload["isActive"],
-                            );
-                            field.handleBlur();
-                          }}
-                        >
-                          <SelectTrigger
-                            id="edit-user-role"
-                            className={cn(
-                              "w-full",
-                              firstError && "border-destructive",
-                            )}
-                          >
-                            <SelectValue placeholder="Select active status" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value={true}>Active</SelectItem>
-                            <SelectItem value={false}>Inactive</SelectItem>
-                          </SelectContent>
-                        </Select>
-                        <FieldMessage error={firstError} />
-                      </div>
-                    );
-                  }}
-                </form.Field>
-              </div>
-
-              <div className="flex items-center justify-end gap-3 border-t pt-4">
-                <DialogClose>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    disabled={isPending}
-                    onClick={() => onOpenChange(false)}
-                  >
-                    Cancel
-                  </Button>
-                </DialogClose>
-
-                <form.Subscribe
-                  selector={(state) =>
-                    [state.canSubmit, state.isSubmitting] as const
-                  }
-                >
-                  {([canSubmit, isSubmitting]) => (
-                    <CustomSubmitButton
-                      isPending={isSubmitting || isPending}
-                      pendingLabel="Updating user..."
-                      disabled={!canSubmit}
-                      className="w-auto min-w-36"
+              {/* Status Select */}
+              <form.Field name="isActive">
+                {(field) => (
+                  <div className="space-y-2">
+                    <Label htmlFor="status" className="font-semibold text-sm">
+                      Publication Status
+                    </Label>
+                    <Select
+                      value={String(field.state.value)}
+                      onValueChange={(val) =>
+                        field.handleChange(val === "true")
+                      }
                     >
-                      Update User
-                    </CustomSubmitButton>
-                  )}
-                </form.Subscribe>
-              </div>
-            </form>
-          </div>
+                      <SelectTrigger id="status" className="w-full h-11">
+                        <SelectValue placeholder="Select status" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="true">
+                          <span className="flex items-center gap-2">
+                            <span className="w-2 h-2 rounded-full bg-green-500" />
+                            Active & Public
+                          </span>
+                        </SelectItem>
+                        <SelectItem value="false">
+                          <span className="flex items-center gap-2">
+                            <span className="w-2 h-2 rounded-full bg-slate-400" />
+                            Inactive / Hidden
+                          </span>
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                )}
+              </form.Field>
+            </div>
+
+            <div className="flex items-center justify-end gap-3 pt-6 border-t">
+              <Button
+                type="button"
+                variant="ghost"
+                disabled={isPending}
+                onClick={() => onOpenChange(false)}
+                className="px-6"
+              >
+                Cancel
+              </Button>
+
+              <form.Subscribe
+                selector={(state) => [state.canSubmit, state.isSubmitting]}
+              >
+                {([canSubmit, isSubmitting]) => (
+                  <CustomSubmitButton
+                    isPending={isSubmitting || isPending}
+                    pendingLabel="Saving changes..."
+                    disabled={!canSubmit}
+                    className="min-w-35 shadow-lg shadow-primary/20"
+                  >
+                    Save Changes
+                  </CustomSubmitButton>
+                )}
+              </form.Subscribe>
+            </div>
+          </form>
         </ScrollArea>
       </DialogContent>
     </Dialog>
