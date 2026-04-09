@@ -39,7 +39,7 @@ export const updateService = async (
 ) => {
   try {
     const response = await httpClient.patch<IServicePayload>(
-      `/services/${id}`,
+      `/services/update/${id}`,
       payload,
     );
     return response;

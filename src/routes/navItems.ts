@@ -104,31 +104,31 @@ export const adminNavItems: NavSection[] = [
         href: "/admin/dashboard/users-management",
         icon: "Users",
       },
-      {
+      /* {
         title: "System Admins",
         href: "/admin/dashboard/admins-management",
         icon: "ShieldCheck",
-      },
-      {
+      }, */
+      /* {
         title: "Managers",
         href: "/admin/dashboard/managers-management",
         icon: "UserCog",
-      },
-      {
+      }, */
+      /* {
         title: "Service Providers",
         href: "/admin/dashboard/service-providers-management",
         icon: "HardHat",
-      },
+      }, */
       {
         title: "Job Candidates",
         href: "/admin/dashboard/job-candidates-management",
         icon: "UserSearch",
       },
-      {
+      /* {
         title: "Customers",
         href: "/admin/dashboard/customers-management",
         icon: "Contact2",
-      },
+      }, */
     ],
   },
   {
@@ -139,11 +139,11 @@ export const adminNavItems: NavSection[] = [
         href: "/admin/dashboard/services-management",
         icon: "Layers",
       },
-      {
+      /* {
         title: "Provider Schedules",
         href: "/admin/dashboard/service-provider-schedules",
         icon: "CalendarRange",
-      },
+      }, */
       {
         title: "Service Requests",
         href: "/admin/dashboard/service-requests-management",
@@ -187,11 +187,11 @@ export const managerNavItems: NavSection[] = [
   {
     title: "Human Resources",
     items: [
-      {
+      /*  {
         title: "Admins",
         href: "/manager/dashboard/admins",
         icon: "ShieldCheck",
-      },
+      }, */
       {
         title: "Providers",
         href: "/manager/dashboard/providers",

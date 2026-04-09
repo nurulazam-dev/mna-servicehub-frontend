@@ -9,7 +9,6 @@ export interface IServicePayload {
   averageRating: number;
   totalReviews: number;
   isActive: boolean;
-  isDeleted: boolean;
   _count?: {
     reviews: number;
     serviceRequests: number;

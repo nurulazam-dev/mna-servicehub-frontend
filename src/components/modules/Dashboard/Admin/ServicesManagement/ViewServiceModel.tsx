@@ -160,11 +160,6 @@ export default function ViewServiceModel({
                           : "Hidden from customers"}
                       </span>
                     </p>
-                    <p className="mt-1 text-xs text-muted-foreground italic">
-                      {serviceDetails.isDeleted
-                        ? "Note: This service is marked for deletion."
-                        : "Service is in healthy state."}
-                    </p>
                   </div>
 
                   <div className="rounded-lg border p-4 shadow-sm">

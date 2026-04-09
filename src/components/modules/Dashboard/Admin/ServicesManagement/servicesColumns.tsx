@@ -85,16 +85,4 @@ export const servicesColumns: ColumnDef<IServicePayload>[] = [
       );
     },
   },
-
-  {
-    id: "status",
-    header: "Status",
-    cell: ({ row }) => {
-      return (
-        <Badge variant={row.original.isDeleted ? "destructive" : "outline"}>
-          {row.original.isDeleted ? "Deleted" : "Active"}
-        </Badge>
-      );
-    },
-  },
 ];
