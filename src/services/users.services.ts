@@ -7,7 +7,7 @@ import { IAdminUpdateUserPayload, IUserPayload } from "@/types/users.type";
 
 export async function getAllUsers(queryString: string) {
   try {
-    const response = await httpClient.get<IUserPayload[]>(
+    const response = await httpClient.get<ApiResponse<IUserPayload[]>>(
       queryString ? `/users?${queryString}` : "/users",
     );
 
