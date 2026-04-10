@@ -35,10 +35,11 @@ export default function DeleteServiceDialog({
   });
 
   const handleConfirmDelete = async () => {
-    if (!service) {
-      toast.error("Service not found");
+    if (!service || !service.isActive) {
+      toast.error("Service not found or already deleted");
       return;
     }
+
     const result = await mutateAsync(String(service.id));
 
     if (!result.success) {

@@ -40,6 +40,11 @@ export default function AdminDeleteUserDialog({
       return;
     }
 
+    if (user.isDeleted || user.status === "DELETED") {
+      toast.error("User already deleted");
+      return;
+    }
+
     const result = await mutateAsync(String(user.id));
 
     if (!result.success) {
