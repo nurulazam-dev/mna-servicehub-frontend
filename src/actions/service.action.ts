@@ -1,5 +1,6 @@
 import {
   createService,
+  deleteService,
   getServiceById,
   updateService,
 } from "@/services/servicesData.services";
@@ -98,23 +99,23 @@ export const updateServiceAction = async (
   }
 };
 
-/* export const adminDeleteUserAction = async (
+export const deleteServiceAction = async (
   id: string,
 ): Promise<ApiResponse<{ message: string }> | ApiErrorResponse> => {
   if (!id) {
     return {
       success: false,
-      message: "Invalid user id",
+      message: "Invalid service id",
     };
   }
 
   try {
-    const result = await adminDeleteUserService(id);
+    const result = await deleteService(id);
     return result;
   } catch (error: unknown) {
     return {
       success: false,
-      message: getActionErrorMessage(error, "Failed to delete user"),
+      message: getActionErrorMessage(error, "Failed to delete service"),
     };
   }
-}; */
+};

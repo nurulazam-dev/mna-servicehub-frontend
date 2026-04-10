@@ -58,3 +58,16 @@ export const getServiceById = async (id: string) => {
     throw error;
   }
 };
+
+export const deleteService = async (id: string) => {
+  try {
+    const response = await httpClient.patch<ApiResponse<{ message: string }>>(
+      `/services/delete/${id}`,
+    );
+
+    return response;
+  } catch (error) {
+    console.error("Error deleting service:", error);
+    throw error;
+  }
+};

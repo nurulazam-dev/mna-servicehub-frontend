@@ -22,6 +22,7 @@ import CreateServiceModal from "./CreateServiceModal";
 import EditServiceModal from "./EditServiceModal";
 import ViewServiceModel from "./ViewServiceModel";
 import { servicesColumns } from "./servicesColumns";
+import DeleteServiceDialog from "./DeleteServiceDialog";
 
 const DEFAULT_PAGE = 1;
 const DEFAULT_LIMIT = 10;
@@ -37,9 +38,9 @@ export default function ServicesTable({
   const {
     viewingItem,
     editingItem,
-    // deletingItem,
-    // isDeleteDialogOpen,
-    // onDeleteOpenChange,
+    deletingItem,
+    isDeleteDialogOpen,
+    onDeleteOpenChange,
     isViewDialogOpen,
     isEditModalOpen,
     onViewOpenChange,
@@ -148,11 +149,11 @@ export default function ServicesTable({
         onOpenChange={onEditOpenChange}
         service={editingItem}
       />
-      {/*  <DeleteServiceDialog
+      <DeleteServiceDialog
         open={isDeleteDialogOpen}
         onOpenChange={onDeleteOpenChange}
         service={deletingItem}
-      /> */}
+      />
       <ViewServiceModel
         open={isViewDialogOpen}
         onOpenChange={onViewOpenChange}
