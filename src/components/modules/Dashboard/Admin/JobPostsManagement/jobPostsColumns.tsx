@@ -69,7 +69,19 @@ export const jobPostsColumns: ColumnDef<IJobPostPayload>[] = [
       </Badge>
     ),
   },
-
+  {
+    id: "applications",
+    accessorKey: "applications",
+    header: "Applied",
+    cell: ({ row }) => (
+      <div className="flex items-center gap-2">
+        <Users className="size-3.5 text-muted-foreground" />
+        <span className="text-sm font-medium">
+          {row.original.applications?.length || 0} Candidates
+        </span>
+      </div>
+    ),
+  },
   {
     id: "deadline",
     accessorKey: "deadline",
