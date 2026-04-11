@@ -19,10 +19,10 @@ import { useMemo } from "react";
 import { IJobPostPayload } from "@/types/jobPost.type";
 import { jobPostsColumns } from "./jobPostsColumns";
 import CreateJobPostModal from "./CreateJobPostModal";
-import EditJobPostModal from "./EditJobPostModal";
 import DeleteJobPostDialog from "./DeleteJobPostDialog";
 import ViewJobPostModal from "./ViewJobPostModal";
-import { getAllJobPosts } from "@/services/jobPosts.services";
+import UpdateJobPostModal from "./UpdateJobPostModal";
+import { getAllJobPostsService } from "@/services/jobPosts.services";
 
 const DEFAULT_PAGE = 1;
 const DEFAULT_LIMIT = 10;
@@ -85,10 +85,12 @@ export default function JobPostsTable({
     isFetching,
   } = useQuery({
     queryKey: ["job-posts", queryString],
-    queryFn: () => getAllJobPosts(queryString),
+    queryFn: () => getAllJobPostsService(queryString),
   });
 
-  const jobPosts = jobPostsDataResponse?.data ?? [];
+  const jobPosts = Array.isArray(jobPostsDataResponse?.data)
+    ? jobPostsDataResponse.data
+    : [];
 
   const meta: PaginationMeta | undefined =
     jobPostsDataResponse?.meta ?? undefined;
@@ -165,7 +167,7 @@ export default function JobPostsTable({
         meta={meta}
         actions={tableActions}
       />
-      <EditJobPostModal
+      <UpdateJobPostModal
         open={isEditModalOpen}
         onOpenChange={onEditOpenChange}
         jobPost={editingItem}

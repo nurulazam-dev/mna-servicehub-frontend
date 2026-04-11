@@ -1,5 +1,6 @@
 import JobPostsTable from "@/components/modules/Dashboard/Admin/JobPostsManagement/JobPostsTable";
-import { getAllJobPosts } from "@/services/jobPosts.services";
+import { getAllJobPostsService } from "@/services/jobPosts.services";
+
 import {
   dehydrate,
   HydrationBoundary,
@@ -35,7 +36,7 @@ export default async function JobPostsManagementPage({
 
   await queryClient.prefetchQuery({
     queryKey: ["job-posts", queryString],
-    queryFn: () => getAllJobPosts(queryString),
+    queryFn: () => getAllJobPostsService(queryString),
     staleTime: 30 * 1000,
     gcTime: 5 * 60 * 1000,
   });

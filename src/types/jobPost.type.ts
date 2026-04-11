@@ -26,4 +26,21 @@ export interface ICreateJobPostPayload {
   salaryRange?: string | null;
   deadline: Date | string;
   isActive?: boolean;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
+}
+
+export interface IUpdateJobPostPayload {
+  id?: string;
+  title?: string;
+  description?: string;
+  requirements?: string;
+  location?: string;
+  serviceType?: string;
+  vacancy?: number;
+  salaryRange?: string | null;
+  deadline?: Date | string;
+  isActive?: boolean;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
 }

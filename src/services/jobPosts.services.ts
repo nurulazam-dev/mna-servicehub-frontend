@@ -3,9 +3,13 @@
 
 import { httpClient } from "@/lib/axios/httpClient";
 import { ApiResponse } from "@/types/api.types";
-import { ICreateJobPostPayload, IJobPostPayload } from "@/types/jobPost.type";
+import {
+  ICreateJobPostPayload,
+  IJobPostPayload,
+  IUpdateJobPostPayload,
+} from "@/types/jobPost.type";
 
-export const getAllJobPosts = async (queryString: string) => {
+export const getAllJobPostsService = async (queryString: string) => {
   try {
     const response = await httpClient.get<ApiResponse<IJobPostPayload[]>>(
       queryString ? `/job-posts?${queryString}` : "/job-posts",
@@ -22,7 +26,7 @@ export const getAllJobPosts = async (queryString: string) => {
   }
 };
 
-export const createJobPost = async (payload: ICreateJobPostPayload) => {
+export const createJobPostService = async (payload: ICreateJobPostPayload) => {
   try {
     const response = await httpClient.post<ICreateJobPostPayload>(
       "/job-posts/create-job-post",
@@ -35,12 +39,12 @@ export const createJobPost = async (payload: ICreateJobPostPayload) => {
   }
 };
 
-export const updateJobPost = async (
+export const updateJobPostService = async (
   id: string,
-  payload: ICreateJobPostPayload,
+  payload: IUpdateJobPostPayload,
 ) => {
   try {
-    const response = await httpClient.patch<ICreateJobPostPayload>(
+    const response = await httpClient.patch<IUpdateJobPostPayload>(
       `/job-posts/update/${id}`,
       payload,
     );
@@ -51,7 +55,7 @@ export const updateJobPost = async (
   }
 };
 
-export const getJobPostById = async (id: string) => {
+export const getJobPostService = async (id: string) => {
   try {
     const response = await httpClient.get<IJobPostPayload>(`/job-posts/${id}`);
     return response;
@@ -61,7 +65,7 @@ export const getJobPostById = async (id: string) => {
   }
 };
 
-export const deleteJobPostById = async (id: string) => {
+export const deleteJobPostService = async (id: string) => {
   try {
     const response = await httpClient.patch<
       ApiResponse<{

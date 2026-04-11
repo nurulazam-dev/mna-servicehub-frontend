@@ -17,7 +17,7 @@ import { Button } from "@/components/ui/button";
 import AppField from "@/components/shared/form/AppField";
 import CustomSubmitButton from "@/components/shared/form/CustomSubmitButton";
 import { SendHorizontal, Paperclip } from "lucide-react";
-import { applyJobAction } from "@/actions/job.action";
+import { applyJobAction } from "@/actions/jobApplication.action";
 
 interface ApplyJobModalProps {
   userId: string;
