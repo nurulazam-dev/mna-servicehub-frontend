@@ -27,7 +27,7 @@ export const createJobPostZodSchema = z.object({
     .min(2, "Service type must be at least 2 characters")
     .max(100, "Service type must not exceed 100 characters"),
 
-  vacancy: z
+  vacancy: z.coerce
     .number()
     .int("Vacancy must be an integer")
     .positive("Vacancy must be greater than 0")

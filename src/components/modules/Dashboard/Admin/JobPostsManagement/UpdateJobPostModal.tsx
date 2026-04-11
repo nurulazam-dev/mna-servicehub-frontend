@@ -46,6 +46,23 @@ const getInitialValues = (
   isActive: jobPost?.isActive ?? true,
 });
 
+const zodValidator = (schema: any) => {
+  return ({ value }: { value: unknown }) => {
+    const result = schema.safeParse(value);
+    return result.success ? undefined : result.error.issues[0]?.message;
+  };
+};
+
+const zodFormValidator = (schema: any) => {
+  return ({ value }: { value: unknown }) => {
+    const result = schema.safeParse(value);
+    if (!result.success) {
+      return result.error.formErrors.fieldErrors;
+    }
+    return undefined;
+  };
+};
+
 export default function UpdateJobPostModal({
   open,
   onOpenChange,
@@ -63,9 +80,21 @@ export default function UpdateJobPostModal({
       payload: IUpdateJobPostPayload;
     }) => updateJobPostService(jobPostId, payload),
   });
+  /* 
+ vacancy: z
+    .number()
+    .int("Vacancy must be an integer")
+    .positive("Vacancy must be greater than 0")
+    .optional(),
 
+    =========
+      vacancy?: number;
+*/
   const form = useForm({
     defaultValues: getInitialValues(jobPost),
+    validators: {
+      onSubmit: zodFormValidator(updateJobPostZodSchema),
+    },
     onSubmit: async ({ value }) => {
       if (!jobPost) {
         toast.error("Job post not found");
@@ -145,7 +174,9 @@ export default function UpdateJobPostModal({
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <form.Field
                 name="title"
-                validators={{ onChange: updateJobPostZodSchema.shape.title }}
+                validators={{
+                  onChange: zodValidator(updateJobPostZodSchema.shape.title),
+                }}
               >
                 {(field) => (
                   <AppField
@@ -159,7 +190,9 @@ export default function UpdateJobPostModal({
               <form.Field
                 name="serviceType"
                 validators={{
-                  onChange: updateJobPostZodSchema.shape.serviceType,
+                  onChange: zodValidator(
+                    updateJobPostZodSchema.shape.serviceType,
+                  ),
                 }}
               >
                 {(field) => (
@@ -173,7 +206,7 @@ export default function UpdateJobPostModal({
               <form.Field
                 name="location"
                 validators={{
-                  onChange: updateJobPostZodSchema.shape.location,
+                  onChange: zodValidator(updateJobPostZodSchema.shape.location),
                 }}
               >
                 {(field) => (
@@ -189,13 +222,27 @@ export default function UpdateJobPostModal({
               </form.Field>
               <form.Field
                 name="vacancy"
-                /* validators={{
-                  onChange: updateJobPostZodSchema.shape.vacancy,
-                }} */
                 validators={{
+                  /* onChange: ({ value }) => {
+                    const result = zodValidator(
+                      updateJobPostZodSchema.shape.vacancy,
+                    )({ value });
+
+                    return result;
+                  }, */
+
                   onChange: ({ value }) => {
+                    const parsedValue =
+                      typeof value === "number"
+                        ? value
+                        : value
+                          ? Number(value)
+                          : undefined;
+
                     const result =
-                      updateJobPostZodSchema.shape.vacancy.safeParse(value);
+                      updateJobPostZodSchema.shape.vacancy.safeParse(
+                        parsedValue,
+                      );
 
                     return result.success
                       ? undefined
@@ -215,7 +262,9 @@ export default function UpdateJobPostModal({
               <form.Field
                 name="salaryRange"
                 validators={{
-                  onChange: updateJobPostZodSchema.shape.salaryRange,
+                  onChange: zodValidator(
+                    updateJobPostZodSchema.shape.salaryRange,
+                  ),
                 }}
               >
                 {(field) => (
@@ -231,17 +280,13 @@ export default function UpdateJobPostModal({
               </form.Field>
               <form.Field
                 name="deadline"
-                /*  validators={{
-                  onChange: updateJobPostZodSchema.shape.deadline,
-                }} */
                 validators={{
                   onChange: ({ value }) => {
-                    const result =
-                      updateJobPostZodSchema.shape.deadline.safeParse(value);
+                    const result = zodValidator(
+                      updateJobPostZodSchema.shape.deadline,
+                    )({ value });
 
-                    return result.success
-                      ? undefined
-                      : result.error.issues[0]?.message;
+                    return result;
                   },
                 }}
               >
@@ -260,7 +305,9 @@ export default function UpdateJobPostModal({
                 <form.Field
                   name="description"
                   validators={{
-                    onChange: updateJobPostZodSchema.shape.description,
+                    onChange: zodValidator(
+                      updateJobPostZodSchema.shape.description,
+                    ),
                   }}
                 >
                   {(field) => (
@@ -275,7 +322,9 @@ export default function UpdateJobPostModal({
                 <form.Field
                   name="requirements"
                   validators={{
-                    onChange: updateJobPostZodSchema.shape.requirements,
+                    onChange: zodValidator(
+                      updateJobPostZodSchema.shape.requirements,
+                    ),
                   }}
                 >
                   {(field) => (

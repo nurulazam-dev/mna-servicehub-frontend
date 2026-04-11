@@ -187,9 +187,6 @@ const CreateJobPostModal = () => {
 
               <form.Field
                 name="vacancy"
-                /* validators={{
-                  onChange: createJobPostZodSchema.shape.vacancy,
-                }} */
                 validators={{
                   onChange: ({ value }) => {
                     const result = zodValidator(
