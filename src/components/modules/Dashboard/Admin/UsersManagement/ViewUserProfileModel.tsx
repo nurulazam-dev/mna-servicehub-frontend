@@ -7,6 +7,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { ApiResponse } from "@/types/api.types";
 import { IUserPayload } from "@/types/users.type";
 import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
@@ -45,7 +46,8 @@ export default function ViewUserProfileModel({
   });
 
   const hasError = data && !data.success;
-  const userDetails = data && data.success ? data.data : null;
+  const userDetails =
+    data && data.success ? (data as ApiResponse<IUserPayload>).data : null;
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>

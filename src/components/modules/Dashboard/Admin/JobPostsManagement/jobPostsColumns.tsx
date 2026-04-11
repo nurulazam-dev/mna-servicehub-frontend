@@ -2,7 +2,7 @@ import DateCell from "@/components/shared/cell/DateCell";
 import { Badge } from "@/components/ui/badge";
 import { IJobPostPayload } from "@/types/jobPost.type";
 import { ColumnDef } from "@tanstack/react-table";
-import { Banknote, Users } from "lucide-react";
+import { Users } from "lucide-react";
 
 export const jobPostsColumns: ColumnDef<IJobPostPayload>[] = [
   {
@@ -45,8 +45,7 @@ export const jobPostsColumns: ColumnDef<IJobPostPayload>[] = [
     accessorKey: "salaryRange",
     header: "Salary",
     cell: ({ row }) => (
-      <div className="flex items-center gap-1.5 text-sm text-green-600 font-medium">
-        <Banknote className="size-4" />
+      <div className=" text-sm text-green-600 font-medium">
         <span>{row.original.salaryRange || "Negotiable"}</span>
       </div>
     ),

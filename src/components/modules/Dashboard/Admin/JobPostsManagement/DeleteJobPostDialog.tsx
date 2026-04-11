@@ -1,6 +1,6 @@
 "use client";
 
-import { adminDeleteUserAction } from "@/actions/user.action";
+import { deleteJobPostAction } from "@/actions/jobPost.action";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -11,52 +11,55 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { IUserPayload } from "@/types/users.type";
+import { IJobPostPayload } from "@/types/jobPost.type";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
-interface DeleteUserConfirmationDialogProps {
+interface DeleteJobPostConfirmationDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  user: IUserPayload | null;
+  jobPost: IJobPostPayload | null;
 }
 
 export default function DeleteJobPostDialog({
   open,
   onOpenChange,
-  user,
-}: DeleteUserConfirmationDialogProps) {
+  jobPost,
+}: DeleteJobPostConfirmationDialogProps) {
   const queryClient = useQueryClient();
   const router = useRouter();
 
   const { mutateAsync, isPending } = useMutation({
-    mutationFn: adminDeleteUserAction,
+    mutationFn: deleteJobPostAction,
   });
 
   const handleConfirmDelete = async () => {
-    if (!user) {
-      toast.error("User not found");
+    if (!jobPost) {
+      toast.error("job post not found");
       return;
     }
 
-    if (user.isDeleted || user.status === "DELETED") {
-      toast.error("User already deleted");
+    if (!jobPost.isActive) {
+      toast.error("Job post already deleted");
       return;
     }
 
-    const result = await mutateAsync(String(user.id));
+    const result = await mutateAsync(String(jobPost.id));
 
     if (!result.success) {
-      toast.error(result.message || "Failed to delete user");
+      toast.error(result.message || "Failed to delete job post");
       return;
     }
 
-    toast.success(result.message || "User deleted successfully");
+    toast.success(result.message || "Job Post deleted successfully");
     onOpenChange(false);
 
-    void queryClient.invalidateQueries({ queryKey: ["users"] });
-    void queryClient.refetchQueries({ queryKey: ["users"], type: "active" });
+    void queryClient.invalidateQueries({ queryKey: ["job-posts"] });
+    void queryClient.refetchQueries({
+      queryKey: ["job-posts"],
+      type: "active",
+    });
     router.refresh();
   };
 
@@ -64,10 +67,10 @@ export default function DeleteJobPostDialog({
     <AlertDialog open={open} onOpenChange={onOpenChange}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Delete User</AlertDialogTitle>
+          <AlertDialogTitle>Delete Job Post</AlertDialogTitle>
           <AlertDialogDescription>
-            Are you sure you want to delete {user?.name ?? "this user"}? This
-            action will mark the user as deleted.
+            Are you sure you want to delete {jobPost?.title ?? "this job post"}?
+            This action will mark the user as deleted.
           </AlertDialogDescription>
         </AlertDialogHeader>
 

@@ -8,6 +8,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { ApiResponse } from "@/types/api.types";
 import { IServicePayload } from "@/types/service.type";
 import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
@@ -48,7 +49,8 @@ export default function ViewServiceModel({
   });
 
   const hasError = data && !data.success;
-  const serviceDetails = data && data.success ? data.data : null;
+  const serviceDetails =
+    data && data.success ? (data as ApiResponse<IServicePayload>).data : null;
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
