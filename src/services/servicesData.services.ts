@@ -2,14 +2,18 @@
 
 import { httpClient } from "@/lib/axios/httpClient";
 import { ApiResponse } from "@/types/api.types";
-import { ICreateServicePayload, IServicePayload } from "@/types/service.type";
+import {
+  ICreateServicePayload,
+  IServicePayload,
+  IUpdateServicePayload,
+} from "@/types/service.type";
 
 export const getAllServices = async (queryString: string = "") => {
   try {
     const response = await httpClient.get<ApiResponse<IServicePayload[]>>(
       queryString ? `/services?${queryString}` : "/services",
     );
-    return response.data;
+    return response;
   } catch (error) {
     console.log("Error fetching services:", error);
     throw error;
@@ -31,11 +35,11 @@ export const createService = async (payload: ICreateServicePayload) => {
 
 export const updateService = async (
   id: string,
-  payload: ICreateServicePayload,
+  payload: IUpdateServicePayload,
 ) => {
   try {
     const response = await httpClient.patch<IServicePayload>(
-      `/services/${id}`,
+      `/services/update/${id}`,
       payload,
     );
     return response;
@@ -51,6 +55,19 @@ export const getServiceById = async (id: string) => {
     return service;
   } catch (error) {
     console.log("Error fetching service by id:", error);
+    throw error;
+  }
+};
+
+export const deleteService = async (id: string) => {
+  try {
+    const response = await httpClient.patch<ApiResponse<{ message: string }>>(
+      `/services/delete/${id}`,
+    );
+
+    return response;
+  } catch (error) {
+    console.error("Error deleting service:", error);
     throw error;
   }
 };

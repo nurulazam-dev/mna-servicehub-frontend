@@ -3,10 +3,10 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 interface UserInfoCellProps {
   name: string;
   email: string;
-  profilePhoto?: string;
+  image?: string | null | undefined;
 }
 
-const UserInfoCell = ({ name, email, profilePhoto }: UserInfoCellProps) => {
+const UserInfoCell = ({ name, email, image }: UserInfoCellProps) => {
   const initials = name
     .split(" ")
     .map((part) => part.charAt(0).toUpperCase())
@@ -16,7 +16,7 @@ const UserInfoCell = ({ name, email, profilePhoto }: UserInfoCellProps) => {
   return (
     <div className="flex items-center gap-3">
       <Avatar className="h-10 w-10">
-        <AvatarImage src={profilePhoto || undefined} alt={name} />
+        <AvatarImage src={image || undefined} alt={name} />
         <AvatarFallback>{initials}</AvatarFallback>
       </Avatar>
 

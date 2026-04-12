@@ -4,7 +4,6 @@
 import { registerCustomerAction } from "@/actions/auth.action";
 import AppField from "@/components/shared/form/AppField";
 import CustomSubmitButton from "@/components/shared/form/CustomSubmitButton";
-import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -23,7 +22,7 @@ import { useMutation } from "@tanstack/react-query";
 
 import { Eye, EyeOff, UserPlus } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 interface RegisterProps {
@@ -48,7 +47,11 @@ const CustomerRegisterForm = ({ redirectPath }: RegisterProps) => {
       setServerError(error?.message || "Something went wrong during login");
     },
   });
-
+  useEffect(() => {
+    if (serverError) {
+      toast.error(serverError);
+    }
+  }, [serverError]);
   const form = useForm({
     defaultValues: {
       name: "",
@@ -166,14 +169,6 @@ const CustomerRegisterForm = ({ redirectPath }: RegisterProps) => {
               )}
             </form.Field>
           </div>
-
-          {serverError && (
-            <Alert variant="destructive" className="py-2">
-              <AlertDescription className="text-xs font-medium">
-                {serverError}
-              </AlertDescription>
-            </Alert>
-          )}
 
           <form.Subscribe selector={(s) => [s.canSubmit, s.isSubmitting]}>
             {([canSubmit, isSubmitting]) => (

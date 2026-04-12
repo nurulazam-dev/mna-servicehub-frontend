@@ -41,12 +41,18 @@ export type IUpdateUserPayload = Partial<
 >;
 
 export interface IAdminUpdateUserPayload {
+  id?: string | number;
   name?: string;
   phone?: string;
-  address?: string;
+  address?: string | null;
   role?: UserRole;
   status?: UserStatus;
   emailVerified?: boolean;
+}
+
+export interface IAdminDeleteUserPayload {
+  id?: string | number;
+  isDeleted?: boolean;
 }
 
 export interface ISessionPayload {

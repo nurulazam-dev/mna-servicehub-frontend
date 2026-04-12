@@ -9,7 +9,6 @@ export interface IServicePayload {
   averageRating: number;
   totalReviews: number;
   isActive: boolean;
-  isDeleted: boolean;
   _count?: {
     reviews: number;
     serviceRequests: number;
@@ -18,6 +17,15 @@ export interface IServicePayload {
   reviews?: IReviewPayload[];
   createdAt: Date | string;
   updatedAt: Date | string;
+}
+
+export interface IUpdateServicePayload {
+  id?: string | number;
+  name?: string;
+  description?: string;
+  imageUrl?: string | null;
+  isActive?: boolean;
+  isDeleted?: boolean;
 }
 
 export interface ICreateServicePayload {

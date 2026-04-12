@@ -1,15 +1,15 @@
 import {
-  adminDeleteUserService,
-  adminUpdateUser,
-  createStaff,
-  getUserById,
-} from "@/services/users.services";
+  createService,
+  deleteService,
+  getServiceById,
+  updateService,
+} from "@/services/servicesData.services";
 import { ApiErrorResponse, ApiResponse } from "@/types/api.types";
-import { IAdminUpdateUserPayload, IUserPayload } from "@/types/users.type";
+import { IServicePayload, IUpdateServicePayload } from "@/types/service.type";
 import {
-  adminUpdateUserZodSchema,
-  registerStaffZodSchema,
-} from "@/zod/user.validation";
+  createServiceZodSchema,
+  updateServiceZodSchema,
+} from "@/zod/service.validation";
 
 const getActionErrorMessage = (error: unknown, fallbackMessage: string) => {
   if (
@@ -34,10 +34,10 @@ const getActionErrorMessage = (error: unknown, fallbackMessage: string) => {
   return fallbackMessage;
 };
 
-export const createStaffAction = async (
-  payload: IUserPayload,
-): Promise<ApiResponse<IUserPayload> | ApiErrorResponse> => {
-  const parsedPayload = registerStaffZodSchema.safeParse(payload);
+export const createServiceAction = async (
+  payload: IServicePayload,
+): Promise<ApiResponse<IServicePayload> | ApiErrorResponse> => {
+  const parsedPayload = createServiceZodSchema.safeParse(payload);
 
   if (!parsedPayload.success) {
     return {
@@ -47,40 +47,40 @@ export const createStaffAction = async (
   }
 
   try {
-    return await createStaff(parsedPayload.data as IUserPayload);
+    return await createService(parsedPayload.data as IServicePayload);
   } catch (error: unknown) {
     return {
       success: false,
-      message: getActionErrorMessage(error, "Failed to create staff member"),
+      message: getActionErrorMessage(error, "Failed to create service"),
     };
   }
 };
 
-export const getUserByIdAction = async (
+export const getServiceByIdAction = async (
   id: string,
-): Promise<ApiResponse<IUserPayload> | ApiErrorResponse> => {
+): Promise<ApiResponse<IServicePayload> | ApiErrorResponse> => {
   if (!id) {
     return {
       success: false,
-      message: "Invalid user id",
+      message: "Invalid service id",
     };
   }
 
   try {
-    return await getUserById(id);
+    return await getServiceById(id);
   } catch (error: unknown) {
     return {
       success: false,
-      message: getActionErrorMessage(error, "Failed to fetch user details"),
+      message: getActionErrorMessage(error, "Failed to fetch service details"),
     };
   }
 };
 
-export const adminUpdateUserAction = async (
+export const updateServiceAction = async (
   id: string,
-  payload: IAdminUpdateUserPayload,
-): Promise<ApiResponse<IUserPayload> | ApiErrorResponse> => {
-  const parsedPayload = adminUpdateUserZodSchema.safeParse(payload);
+  payload: IUpdateServicePayload,
+): Promise<ApiResponse<IServicePayload> | ApiErrorResponse> => {
+  const parsedPayload = updateServiceZodSchema.safeParse(payload);
 
   if (!parsedPayload.success) {
     return {
@@ -90,32 +90,32 @@ export const adminUpdateUserAction = async (
   }
 
   try {
-    return await adminUpdateUser(id, parsedPayload.data);
+    return await updateService(id, parsedPayload.data);
   } catch (error: unknown) {
     return {
       success: false,
-      message: getActionErrorMessage(error, "Failed to update user"),
+      message: getActionErrorMessage(error, "Failed to update service"),
     };
   }
 };
 
-export const adminDeleteUserAction = async (
+export const deleteServiceAction = async (
   id: string,
 ): Promise<ApiResponse<{ message: string }> | ApiErrorResponse> => {
   if (!id) {
     return {
       success: false,
-      message: "Invalid user id",
+      message: "Invalid service id",
     };
   }
 
   try {
-    const result = await adminDeleteUserService(id);
+    const result = await deleteService(id);
     return result;
   } catch (error: unknown) {
     return {
       success: false,
-      message: getActionErrorMessage(error, "Failed to delete user"),
+      message: getActionErrorMessage(error, "Failed to delete service"),
     };
   }
 };
