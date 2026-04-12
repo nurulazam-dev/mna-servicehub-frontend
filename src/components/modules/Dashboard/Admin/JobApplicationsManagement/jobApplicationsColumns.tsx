@@ -174,7 +174,9 @@ export const jobApplicationsColumns: ColumnDef<IJobApplicationPayload>[] = [
     header: "Feedback",
     cell: ({ row }) => (
       <span className="text-xs text-muted-foreground italic truncate max-w-37.5 block">
-        {row.original.feedback?.slice(0, 40) || "No feedback provided"}
+        {row.original.feedback?.slice(0, 40) || (
+          <p className="text-yellow-600">No feedback provided</p>
+        )}
       </span>
     ),
   },

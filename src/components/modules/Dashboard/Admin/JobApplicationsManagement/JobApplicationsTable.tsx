@@ -80,6 +80,7 @@ export default function JobApplicationsTable({
   } = useQuery({
     queryKey: ["job-applications", queryString],
     queryFn: () => getAllJobApplicationsService(queryString),
+    placeholderData: (previousData) => previousData,
   });
   const jobApplications = Array.isArray(jobApplicationsDataResponse?.data?.data)
     ? jobApplicationsDataResponse.data.data
@@ -128,7 +129,7 @@ export default function JobApplicationsTable({
         }}
         search={{
           initialValue: searchTermFromUrl,
-          placeholder: "Search job applications...",
+          placeholder: "Search job application by userId or appId...",
           debounceMs: 700,
           onDebouncedChange: handleDebouncedSearchChange,
         }}

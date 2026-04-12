@@ -125,20 +125,30 @@ export default function UpdateJobApplicationModal({
         payload,
       });
 
-      if (!result.success) {
-        toast.error(result.message || "Failed to update job Application");
+      console.log("Result from action:", result);
+
+      if (!result || result.success === false) {
+        toast.error(result?.message || "Failed to update job Application");
         return;
       }
 
       toast.success(result.message || "Job Application updated successfully");
       onOpenChange(false);
+
       form.reset();
 
-      void queryClient.invalidateQueries({ queryKey: ["job-applications"] });
+      /*  void queryClient.invalidateQueries({ queryKey: ["job-applications"] });
       void queryClient.refetchQueries({
         queryKey: ["job-applications"],
         type: "active",
       });
+       */
+
+      await queryClient.invalidateQueries({
+        queryKey: ["job-applications"],
+        exact: false,
+      });
+
       router.refresh();
     },
   });
