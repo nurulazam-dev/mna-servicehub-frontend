@@ -86,7 +86,6 @@ export default function JobApplicationsTable({
     : [];
 
   // console.log("jobApplicationsDataResponse===", jobApplicationsDataResponse);
-  console.log("JA data===", jobApplications);
 
   const meta: PaginationMeta | undefined =
     jobApplicationsDataResponse?.data?.meta ?? undefined;

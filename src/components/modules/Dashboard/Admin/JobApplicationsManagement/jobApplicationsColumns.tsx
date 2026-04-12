@@ -64,18 +64,26 @@ export const jobApplicationsColumns: ColumnDef<IJobApplicationPayload>[] = [
     cell: ({ row }) => {
       const jobPost = row.original.jobPost;
       return (
-        <div className="flex flex-col gap-1">
-          <span className="font-semibold text-sm text-primary line-clamp-1">
-            {jobPost?.title}
-          </span>
-          <div className="flex items-center gap-2 text-[10px] text-muted-foreground uppercase tracking-wider">
-            <span className="bg-slate-100 px-1.5 py-0.5 rounded">
-              {jobPost?.serviceType}
-            </span>
-            <span>•</span>
-            <span>{jobPost?.location || "Remote"}</span>
-          </div>
-        </div>
+        <>
+          {jobPost ? (
+            <div className="flex flex-col gap-1">
+              <span className="font-semibold text-sm text-primary line-clamp-1">
+                {jobPost?.title}
+              </span>
+              <div className="flex items-center gap-2 text-[10px] text-muted-foreground uppercase tracking-wider">
+                <span className="bg-slate-100 px-1.5 py-0.5 rounded">
+                  {jobPost?.serviceType}
+                </span>
+                <span>•</span>
+                <span>{jobPost?.location || "Remote"}</span>
+              </div>
+            </div>
+          ) : (
+            <div>
+              <span className="text-slate-400">N/A</span>
+            </div>
+          )}
+        </>
       );
     },
   },
@@ -100,7 +108,7 @@ export const jobApplicationsColumns: ColumnDef<IJobApplicationPayload>[] = [
   {
     id: "status",
     accessorKey: "status",
-    header: "App. Status",
+    header: "Status",
     cell: ({ row }) => {
       const statusValue = row.original.status;
 
@@ -123,7 +131,7 @@ export const jobApplicationsColumns: ColumnDef<IJobApplicationPayload>[] = [
     },
   },
 
-  {
+  /*  {
     id: "salaryRange",
     header: "Salary",
     cell: ({ row }) => (
@@ -131,13 +139,33 @@ export const jobApplicationsColumns: ColumnDef<IJobApplicationPayload>[] = [
         {row.original.jobPost?.salaryRange || "Negotiable"}
       </span>
     ),
+  }, */
+
+  {
+    id: "deadline",
+    header: "Deadline",
+    cell: ({ row }) => {
+      const deadline = row.original.jobPost?.deadline;
+      return (
+        <>
+          {deadline ? (
+            <DateCell date={deadline} formatString="mm-dd-yy" />
+          ) : (
+            <div>
+              <span className="text-slate-400">N/A</span>
+            </div>
+          )}
+        </>
+      );
+    },
   },
 
   {
     id: "createdAt",
     header: "Applied Date",
     cell: ({ row }) => (
-      <DateCell date={row.original.createdAt} formatString="MMM dd, yyyy" />
+      // <DateCell date={row.original.createdAt} formatString="MMM dd, yyyy" />
+      <DateCell date={row.original.createdAt} formatString="mm-dd-yy" />
     ),
   },
 
@@ -146,7 +174,7 @@ export const jobApplicationsColumns: ColumnDef<IJobApplicationPayload>[] = [
     header: "Feedback",
     cell: ({ row }) => (
       <span className="text-xs text-muted-foreground italic truncate max-w-37.5 block">
-        {row.original.feedback || "No feedback provided"}
+        {row.original.feedback?.slice(0, 40) || "No feedback provided"}
       </span>
     ),
   },

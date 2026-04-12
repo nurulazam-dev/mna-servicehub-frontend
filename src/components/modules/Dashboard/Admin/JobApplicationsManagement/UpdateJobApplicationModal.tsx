@@ -17,33 +17,36 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import CustomSubmitButton from "@/components/shared/form/CustomSubmitButton";
 import AppField from "@/components/shared/form/AppField";
-import { IJobPostPayload, IUpdateJobPostPayload } from "@/types/jobPost.type";
 import {
-  IUpdateJobPostFormValues,
-  updateJobPostZodSchema,
-} from "@/zod/jobPost.validation";
-import { updateJobPostService } from "@/services/jobPosts.services";
-import { CircleDollarSign, MapPin } from "lucide-react";
+  IJobApplicationPayload,
+  IUpdateJobApplicationPayload,
+} from "@/types/jobApplication.type";
+import {
+  IUpdateJobApplicationFormValues,
+  updateJobApplicationZodSchema,
+} from "@/zod/jobApplication.validation";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
+import { cn } from "@/lib/utils";
+import { updateJobApplicationAction } from "@/actions/jobApplication.action";
 
-interface UpdateJobPostFormModalProps {
+interface UpdateJobApplicationFormModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  jobPost: IJobPostPayload | null;
+  jobApplication: IJobApplicationPayload | null;
 }
 
 const getInitialValues = (
-  jobPost: IJobPostPayload | null,
-): IUpdateJobPostFormValues => ({
-  title: jobPost?.title ?? "",
-  description: jobPost?.description ?? "",
-  requirements: jobPost?.requirements ?? "",
-  location: jobPost?.location ?? "",
-  serviceType: jobPost?.serviceType ?? "",
-  vacancy: jobPost?.vacancy ?? 1,
-  salaryRange: jobPost?.salaryRange ?? "",
-  deadline:
-    jobPost?.deadline ?? (new Date().toISOString().split("T")[0] as any),
-  isActive: jobPost?.isActive ?? true,
+  jobApplication: IJobApplicationPayload | null,
+): IUpdateJobApplicationFormValues => ({
+  status: jobApplication?.status ?? "PENDING",
+  feedback: jobApplication?.feedback ?? "",
 });
 
 const zodValidator = (schema: any) => {
@@ -63,73 +66,77 @@ const zodFormValidator = (schema: any) => {
   };
 };
 
+const getErrorMessage = (error: unknown): string => {
+  if (typeof error === "string") {
+    return error;
+  }
+
+  if (error && typeof error === "object" && "message" in error) {
+    return String(error.message);
+  }
+
+  return "Invalid input";
+};
+
+const FieldMessage = ({ error }: { error: unknown }) => {
+  if (!error) {
+    return null;
+  }
+
+  return <p className="text-sm text-destructive">{getErrorMessage(error)}</p>;
+};
+
 export default function UpdateJobApplicationModal({
   open,
   onOpenChange,
-  jobPost,
-}: UpdateJobPostFormModalProps) {
+  jobApplication,
+}: UpdateJobApplicationFormModalProps) {
   const queryClient = useQueryClient();
   const router = useRouter();
 
   const { mutateAsync, isPending } = useMutation({
     mutationFn: ({
-      jobPostId,
+      jobApplicationId,
       payload,
     }: {
-      jobPostId: string;
-      payload: IUpdateJobPostPayload;
-    }) => updateJobPostService(jobPostId, payload),
+      jobApplicationId: string;
+      payload: IUpdateJobApplicationPayload;
+    }) => updateJobApplicationAction(jobApplicationId, payload),
   });
-  /* 
- vacancy: z
-    .number()
-    .int("Vacancy must be an integer")
-    .positive("Vacancy must be greater than 0")
-    .optional(),
 
-    =========
-      vacancy?: number;
-*/
   const form = useForm({
-    defaultValues: getInitialValues(jobPost),
+    defaultValues: getInitialValues(jobApplication),
     validators: {
-      onSubmit: zodFormValidator(updateJobPostZodSchema),
+      onSubmit: zodFormValidator(updateJobApplicationZodSchema),
     },
     onSubmit: async ({ value }) => {
-      if (!jobPost) {
-        toast.error("Job post not found");
+      if (!jobApplication) {
+        toast.error("Job application not found");
         return;
       }
 
-      const payload: IUpdateJobPostPayload = {
-        title: value.title,
-        description: value.description,
-        requirements: value.requirements,
-        location: value.location,
-        serviceType: value.serviceType,
-        vacancy: value.vacancy,
-        salaryRange: value.salaryRange,
-        deadline: value.deadline,
-        isActive: value.isActive,
+      const payload: IUpdateJobApplicationPayload = {
+        status: value.status as IUpdateJobApplicationPayload["status"],
+        feedback: value.feedback || null,
       };
 
       const result = await mutateAsync({
-        jobPostId: String(jobPost.id),
+        jobApplicationId: String(jobApplication.id),
         payload,
       });
 
       if (!result.success) {
-        toast.error(result.message || "Failed to update job post");
+        toast.error(result.message || "Failed to update job Application");
         return;
       }
 
-      toast.success(result.message || "Job post updated successfully");
+      toast.success(result.message || "Job Application updated successfully");
       onOpenChange(false);
       form.reset();
 
-      void queryClient.invalidateQueries({ queryKey: ["job-posts"] });
+      void queryClient.invalidateQueries({ queryKey: ["job-applications"] });
       void queryClient.refetchQueries({
-        queryKey: ["job-posts"],
+        queryKey: ["job-applications"],
         type: "active",
       });
       router.refresh();
@@ -138,9 +145,9 @@ export default function UpdateJobApplicationModal({
 
   useEffect(() => {
     if (open) {
-      form.reset(getInitialValues(jobPost));
+      form.reset(getInitialValues(jobApplication));
     }
-  }, [jobPost, form, open]);
+  }, [jobApplication, form, open]);
 
   const handleOpenChange = useCallback(
     (nextOpen: boolean) => {
@@ -156,9 +163,9 @@ export default function UpdateJobApplicationModal({
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent className="max-h-[90vh] w-[calc(100vw-1.5rem)] max-w-[calc(100vw-1.5rem)] gap-0 overflow-hidden p-0 sm:w-[calc(100vw-3rem)] sm:max-w-[calc(100vw-3rem)] md:w-[calc(100vw-4rem)] md:max-w-[calc(100vw-4rem)] lg:w-[min(92vw,78rem)] lg:max-w-[min(92vw,78rem)] xl:w-[min(88vw,88rem)] xl:max-w-[min(88vw,88rem)] 2xl:w-[min(84vw,96rem)] 2xl:max-w-[min(84vw,96rem)]">
         <DialogHeader className="border-b px-6 py-5 pr-14">
-          <DialogTitle>Update Job Post</DialogTitle>
+          <DialogTitle>Update Job Application</DialogTitle>
           <DialogDescription>
-            Update job post information and details.
+            Update job application information and details.
           </DialogDescription>
         </DialogHeader>
 
@@ -171,171 +178,74 @@ export default function UpdateJobApplicationModal({
             }}
             className="p-6 space-y-6"
           >
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div className="space-y-5">
               <form.Field
-                name="title"
+                name="status"
                 validators={{
-                  onChange: zodValidator(updateJobPostZodSchema.shape.title),
+                  onChange: updateJobApplicationZodSchema.shape.status,
                 }}
               >
-                {(field) => (
-                  <AppField
-                    field={field}
-                    label="Job Title"
-                    placeholder="e.g. Senior Software Engineer"
-                  />
-                )}
+                {(field) => {
+                  const firstError =
+                    field.state.meta.isTouched &&
+                    field.state.meta.errors.length > 0
+                      ? field.state.meta.errors[0]
+                      : null;
+
+                  return (
+                    <div className="space-y-1.5">
+                      <Label
+                        htmlFor="edit-application-status"
+                        className={cn(firstError && "text-destructive")}
+                      >
+                        Application Status
+                      </Label>
+                      <Select
+                        value={field.state.value}
+                        onValueChange={(value) => {
+                          field.handleChange(
+                            value as IUpdateJobApplicationPayload["status"],
+                          );
+                          field.handleBlur();
+                        }}
+                      >
+                        <SelectTrigger
+                          id="edit-application-status"
+                          className={cn(
+                            "w-full",
+                            firstError && "border-destructive",
+                          )}
+                        >
+                          <SelectValue placeholder="Select status" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="PENDING">Pending</SelectItem>
+                          <SelectItem value="ACCEPTED">Accepted</SelectItem>
+                          <SelectItem value="REJECTED">Rejected</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <FieldMessage error={firstError} />
+                    </div>
+                  );
+                }}
               </form.Field>
 
               <form.Field
-                name="serviceType"
+                name="feedback"
                 validators={{
                   onChange: zodValidator(
-                    updateJobPostZodSchema.shape.serviceType,
+                    updateJobApplicationZodSchema.shape.feedback,
                   ),
                 }}
               >
                 {(field) => (
                   <AppField
                     field={field}
-                    label="Service Type"
-                    placeholder="e.g. Full-time, Contract"
+                    label="Job Application Feedback"
+                    placeholder="Add the Job Application Feedback"
                   />
                 )}
               </form.Field>
-              <form.Field
-                name="location"
-                validators={{
-                  onChange: zodValidator(updateJobPostZodSchema.shape.location),
-                }}
-              >
-                {(field) => (
-                  <div className="relative">
-                    <AppField
-                      field={field}
-                      label="Location"
-                      placeholder="e.g. Remote or Dhaka, BD"
-                    />
-                    <MapPin className="absolute right-3 top-9 size-4 text-muted-foreground/50" />
-                  </div>
-                )}
-              </form.Field>
-              <form.Field
-                name="vacancy"
-                validators={{
-                  /* onChange: ({ value }) => {
-                    const result = zodValidator(
-                      updateJobPostZodSchema.shape.vacancy,
-                    )({ value });
-
-                    return result;
-                  }, */
-
-                  onChange: ({ value }) => {
-                    const parsedValue =
-                      typeof value === "number"
-                        ? value
-                        : value
-                          ? Number(value)
-                          : undefined;
-
-                    const result =
-                      updateJobPostZodSchema.shape.vacancy.safeParse(
-                        parsedValue,
-                      );
-
-                    return result.success
-                      ? undefined
-                      : result.error.issues[0]?.message;
-                  },
-                }}
-              >
-                {(field) => (
-                  <AppField
-                    field={field}
-                    label="Vacancy Count"
-                    type="number"
-                    placeholder="Number of seats"
-                  />
-                )}
-              </form.Field>
-              <form.Field
-                name="salaryRange"
-                validators={{
-                  onChange: zodValidator(
-                    updateJobPostZodSchema.shape.salaryRange,
-                  ),
-                }}
-              >
-                {(field) => (
-                  <div className="relative">
-                    <AppField
-                      field={field}
-                      label="Salary Range"
-                      placeholder="e.g. 50k - 80k BDT"
-                    />
-                    <CircleDollarSign className="absolute right-3 top-9 size-4 text-muted-foreground/50" />
-                  </div>
-                )}
-              </form.Field>
-              <form.Field
-                name="deadline"
-                validators={{
-                  onChange: ({ value }) => {
-                    const result = zodValidator(
-                      updateJobPostZodSchema.shape.deadline,
-                    )({ value });
-
-                    return result;
-                  },
-                }}
-              >
-                {(field) => (
-                  <div className="relative">
-                    <AppField
-                      field={field}
-                      label="Application Deadline"
-                      type="date"
-                    />
-                  </div>
-                )}
-              </form.Field>
-
-              <div className="space-y-5">
-                <form.Field
-                  name="description"
-                  validators={{
-                    onChange: zodValidator(
-                      updateJobPostZodSchema.shape.description,
-                    ),
-                  }}
-                >
-                  {(field) => (
-                    <AppField
-                      field={field}
-                      label="Job Description"
-                      placeholder="What will the person do in this role?"
-                    />
-                  )}
-                </form.Field>
-
-                <form.Field
-                  name="requirements"
-                  validators={{
-                    onChange: zodValidator(
-                      updateJobPostZodSchema.shape.requirements,
-                    ),
-                  }}
-                >
-                  {(field) => (
-                    <AppField
-                      field={field}
-                      label="Requirements"
-                      placeholder="Skills, experience, or certifications needed..."
-                    />
-                  )}
-                </form.Field>
-              </div>
             </div>
 
             <div className="flex items-center justify-end gap-3 pt-6 border-t">

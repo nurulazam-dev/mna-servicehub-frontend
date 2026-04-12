@@ -47,6 +47,6 @@ export const updateJobApplicationZodSchema = z.object({
     .optional(),
 });
 
-export type IUpdateJobApplicationPayload = z.infer<
+export type IUpdateJobApplicationFormValues = z.infer<
   typeof updateJobApplicationZodSchema
 >;

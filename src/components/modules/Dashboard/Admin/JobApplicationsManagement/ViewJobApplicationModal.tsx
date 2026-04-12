@@ -81,7 +81,6 @@ export default function ViewJobApplicationModal({
             {!isLoading && !isFetching && jobApplicationDetails && (
               <>
                 <div className="space-y-8 animate-in fade-in duration-500">
-                  {/* Top Section: User & Status */}
                   <div className="flex flex-col md:flex-row justify-between items-start gap-6 bg-slate-700 p-6 rounded-2xl border">
                     <div className="flex gap-4">
                       <div className="size-16 rounded-full bg-primary/10 flex items-center justify-center text-primary text-2xl font-bold border-2 border-primary/20">
@@ -99,7 +98,8 @@ export default function ViewJobApplicationModal({
                           )}
                         </h3>
                         <p className="text-slate-500 font-medium">
-                          {jobApplicationDetails.user?.email}
+                          {jobApplicationDetails.user?.email} -{" "}
+                          {jobApplicationDetails.user?.phone}
                         </p>
                         <div className="flex items-center gap-3 mt-2">
                           <Badge

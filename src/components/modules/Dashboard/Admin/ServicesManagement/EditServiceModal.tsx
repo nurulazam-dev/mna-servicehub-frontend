@@ -134,7 +134,6 @@ export default function EditServiceModal({
             className="p-6 space-y-6"
           >
             <div className="grid gap-6">
-              {/* Service Name */}
               <form.Field
                 name="name"
                 validators={{ onChange: updateServiceZodSchema.shape.name }}
@@ -148,7 +147,6 @@ export default function EditServiceModal({
                 )}
               </form.Field>
 
-              {/* Image URL */}
               <form.Field
                 name="imageUrl"
                 validators={{ onChange: updateServiceZodSchema.shape.imageUrl }}
@@ -162,7 +160,6 @@ export default function EditServiceModal({
                 )}
               </form.Field>
 
-              {/* Description */}
               <form.Field
                 name="description"
                 validators={{
@@ -178,7 +175,6 @@ export default function EditServiceModal({
                 )}
               </form.Field>
 
-              {/* Status Select */}
               <form.Field name="isActive">
                 {(field) => (
                   <div className="space-y-2">
