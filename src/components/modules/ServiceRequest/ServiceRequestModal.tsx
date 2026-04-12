@@ -20,7 +20,7 @@ import {
   serviceRequestZodSchema,
   IServiceRequestPayload,
 } from "@/zod/serviceRequest.validation";
-import { createServiceRequestAction } from "@/actions/serviceRequest.action";
+import { applyServiceRequestAction } from "@/actions/serviceRequest.action";
 import { IServicePayload } from "@/types/service.type";
 import { Button } from "@/components/ui/button";
 
@@ -37,7 +37,7 @@ export default function ServiceRequestModal({
 
   const { mutateAsync, isPending } = useMutation({
     mutationFn: (payload: IServiceRequestPayload) =>
-      createServiceRequestAction(payload),
+      applyServiceRequestAction(payload),
 
     onSuccess: (res) => {
       if (res.success) {

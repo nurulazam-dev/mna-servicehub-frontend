@@ -11,7 +11,7 @@ import {
   ChevronRight,
   SearchIcon,
 } from "lucide-react";
-import { getAllJobPosts } from "@/services/jobPosts.services";
+import { getAllJobPostsService } from "@/services/jobPosts.services";
 import { IJobPostPayload } from "@/types/jobPost.type";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -22,7 +22,7 @@ import { formatFullDate } from "@/lib/utils";
 const JobPostsComp = () => {
   const { data, isLoading, isError } = useQuery({
     queryKey: ["job-posts"],
-    queryFn: () => getAllJobPosts(""),
+    queryFn: () => getAllJobPostsService(""),
   });
 
   if (isLoading) {

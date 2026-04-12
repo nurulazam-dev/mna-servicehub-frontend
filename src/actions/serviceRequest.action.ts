@@ -5,7 +5,7 @@ import { httpClient } from "@/lib/axios/httpClient";
 import { IServiceRequestPayload } from "@/zod/serviceRequest.validation";
 import { revalidatePath } from "next/cache";
 
-export const createServiceRequestAction = async (
+export const applyServiceRequestAction = async (
   payload: IServiceRequestPayload,
 ) => {
   try {

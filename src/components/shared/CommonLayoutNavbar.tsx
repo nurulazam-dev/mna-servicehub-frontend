@@ -1,13 +1,25 @@
 "use client";
 
-import { Menu, LogOut, User, LayoutDashboard, Loader2 } from "lucide-react";
+import {
+  Menu,
+  LogOut,
+  User,
+  LayoutDashboard,
+  Loader2,
+  ShieldCheck,
+  FileText,
+  HelpCircle,
+  Info,
+} from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
   NavigationMenu,
+  NavigationMenuContent,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
+  NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import {
   Sheet,
@@ -73,6 +85,7 @@ const CommonLayoutNavbar = ({
     { title: "Careers", url: "/job-posts" },
     { title: "About Us", url: "/about-us" },
     { title: "Contact Us", url: "/contact-us" },
+    { title: "Blogs", url: "/blogs" },
   ],
   auth = {
     login: { title: "Login", url: "/login" },
@@ -156,6 +169,52 @@ const CommonLayoutNavbar = ({
                     </NavigationMenuLink>
                   </NavigationMenuItem>
                 ))}
+                {/* ===================== */}
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger className="bg-transparent">
+                    Explore
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <ul className="grid w-36 gap-0.5 p-1 md:w-42 lg:w-46">
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <Link
+                            href="/privacy-policy"
+                            className="flex select-none items-center gap-2 rounded-md p-1 text-sm font-medium leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                          >
+                            <ShieldCheck className="size-4" />
+                            <span>Privacy Policy</span>
+                          </Link>
+                        </NavigationMenuLink>
+                      </li>
+
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <Link
+                            href="/terms-conditions"
+                            className="flex select-none items-center gap-2 rounded-md p-1 text-sm font-medium leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                          >
+                            <FileText className="size-4" />
+                            <span>Terms of Conditions</span>
+                          </Link>
+                        </NavigationMenuLink>
+                      </li>
+
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <Link
+                            href="/refund-cancellation-policy"
+                            className="flex select-none items-center gap-2 rounded-md p-1 text-sm font-medium leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                          >
+                            <HelpCircle className="size-4" />
+                            <span>Refund Policy</span>
+                          </Link>
+                        </NavigationMenuLink>
+                      </li>
+                    </ul>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+                {/* ===================== */}
               </NavigationMenuList>
             </NavigationMenu>
           </div>
