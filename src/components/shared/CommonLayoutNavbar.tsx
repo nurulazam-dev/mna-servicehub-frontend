@@ -9,7 +9,6 @@ import {
   ShieldCheck,
   FileText,
   HelpCircle,
-  Info,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -103,7 +102,7 @@ const CommonLayoutNavbar = ({
       case "MANAGER":
         return "/manager/dashboard";
       case "SERVICE_PROVIDER":
-        return "/provider/dashboard";
+        return "/service-provider/dashboard";
       case "JOB_CANDIDATE":
         return "/candidate/dashboard";
       case "CUSTOMER":
@@ -125,6 +124,24 @@ const CommonLayoutNavbar = ({
       }
     });
   };
+
+  const policyData = [
+    {
+      title: "Privacy Policy",
+      url: "/privacy-policy",
+      icon: <ShieldCheck className="size-4" />,
+    },
+    {
+      title: "Terms of Conditions",
+      url: "/terms-conditions",
+      icon: <FileText className="size-4" />,
+    },
+    {
+      title: "Refund Policy",
+      url: "/refund-cancellation-policy",
+      icon: <HelpCircle className="size-4" />,
+    },
+  ];
 
   return (
     <section
@@ -169,59 +186,36 @@ const CommonLayoutNavbar = ({
                     </NavigationMenuLink>
                   </NavigationMenuItem>
                 ))}
-                {/* ===================== */}
                 <NavigationMenuItem>
                   <NavigationMenuTrigger className="bg-transparent">
                     Explore
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
                     <ul className="grid w-36 gap-0.5 p-1 md:w-42 lg:w-46">
-                      <li>
-                        <NavigationMenuLink asChild>
-                          <Link
-                            href="/privacy-policy"
-                            className="flex select-none items-center gap-2 rounded-md p-1 text-sm font-medium leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                          >
-                            <ShieldCheck className="size-4" />
-                            <span>Privacy Policy</span>
-                          </Link>
-                        </NavigationMenuLink>
-                      </li>
-
-                      <li>
-                        <NavigationMenuLink asChild>
-                          <Link
-                            href="/terms-conditions"
-                            className="flex select-none items-center gap-2 rounded-md p-1 text-sm font-medium leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                          >
-                            <FileText className="size-4" />
-                            <span>Terms of Conditions</span>
-                          </Link>
-                        </NavigationMenuLink>
-                      </li>
-
-                      <li>
-                        <NavigationMenuLink asChild>
-                          <Link
-                            href="/refund-cancellation-policy"
-                            className="flex select-none items-center gap-2 rounded-md p-1 text-sm font-medium leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                          >
-                            <HelpCircle className="size-4" />
-                            <span>Refund Policy</span>
-                          </Link>
-                        </NavigationMenuLink>
-                      </li>
+                      {policyData.map((i) => (
+                        <li key={i.url}>
+                          <NavigationMenuLink
+                            render={
+                              <Link
+                                href={i.url}
+                                className="flex select-none items-center gap-2 rounded-md p-1 text-sm font-medium leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                              >
+                                {i.icon}
+                                <span>{i.title}</span>
+                              </Link>
+                            }
+                          />
+                        </li>
+                      ))}
                     </ul>
                   </NavigationMenuContent>
                 </NavigationMenuItem>
-                {/* ===================== */}
               </NavigationMenuList>
             </NavigationMenu>
           </div>
 
           <div className="flex items-center gap-3">
             <ModeToggle />
-
             {user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger
@@ -380,26 +374,5 @@ const CommonLayoutNavbar = ({
     </section>
   );
 };
-
-/* const renderMenuItem = (item: MenuItem) => {
-  return (
-    <NavigationMenuItem key={item.title}>
-      <NavigationMenuLink
-        className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-muted hover:text-accent-foreground"
-        href={item.url}
-      >
-        {item.title}
-      </NavigationMenuLink>
-    </NavigationMenuItem>
-  );
-};
-
-const renderMobileMenuItem = (item: MenuItem) => {
-  return (
-    <Link key={item.title} href={item.url} className="text-md font-semibold">
-      {item.title}
-    </Link>
-  );
-}; */
 
 export { CommonLayoutNavbar };

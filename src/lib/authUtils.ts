@@ -39,7 +39,7 @@ export const managerProtectedRoutes: RouteConfig = {
 };
 
 export const providerProtectedRoutes: RouteConfig = {
-  pattern: [/^\/provider/],
+  pattern: [/^\/service-provider/],
   exact: [],
 };
 
@@ -95,7 +95,7 @@ export const getDefaultDashboardRoute = (role: UserRole) => {
     case "MANAGER":
       return "/manager/dashboard";
     case "SERVICE_PROVIDER":
-      return "/provider/dashboard";
+      return "/service-provider/dashboard";
     case "JOB_CANDIDATE":
       return "/candidate/dashboard";
     case "CUSTOMER":

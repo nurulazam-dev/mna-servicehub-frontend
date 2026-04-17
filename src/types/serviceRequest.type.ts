@@ -36,3 +36,10 @@ export interface IServiceRequestPayload {
   payment?: IPaymentPayload;
   review?: IReviewPayload | null;
 }
+
+export interface IApplyServiceRequestPayload {
+  serviceDescription: string;
+  serviceAddress: string;
+  activePhone: string;
+  serviceId?: string | undefined;
+}

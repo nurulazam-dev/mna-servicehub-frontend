@@ -16,7 +16,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { IServicePayload } from "@/types/service.type";
-import ServiceRequestModal from "@/components/modules/ServiceRequest/ServiceRequestModal";
+import ApplyServiceRequestModal from "@/components/modules/Dashboard/Customer/MySRequestsByCustomer/ApplyServiceRequestModal";
 import { formatDate } from "@/lib/utils";
 import { getUserInfo } from "@/services/auth.services";
 
@@ -205,7 +205,7 @@ export default async function ServiceDetails({
                 </div>
 
                 <div className="flex flex-col gap-4">
-                  <ServiceRequestModal
+                  <ApplyServiceRequestModal
                     customerId={user?.id}
                     service={service}
                   />

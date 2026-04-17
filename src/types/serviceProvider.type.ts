@@ -15,7 +15,6 @@ export interface IServiceProviderPayload {
 
   // Relations
   schedules?: any[];
-  assignedJobs?: any[];
   reviews?: any[];
 }
 

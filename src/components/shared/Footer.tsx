@@ -11,22 +11,30 @@ import {
 
 const footerLinks = {
   company: [
-    { label: "About Us", href: "/about" },
+    { label: "About Us", href: "/about-us" },
     { label: "Our Services", href: "/services" },
     { label: "Careers", href: "/job-posts" },
-    { label: "Contact", href: "/contact" },
+    { label: "Contact", href: "/contact-us" },
   ],
   support: [
-    { label: "Help Center", href: "/help" },
-    { label: "Privacy Policy", href: "/privacy" },
-    { label: "Terms of Service", href: "/terms" },
-    { label: "Trust & Safety", href: "/safety" },
+    { label: "Help Center", href: "/contact-us" },
+    { label: "Privacy Policy", href: "/privacy-policy" },
+    { label: "Terms of Service", href: "/terms-conditions" },
+    { label: "Refund Policy", href: "/refund-cancellation-policy" },
   ],
   social: [
-    { icon: Facebook, href: "#", label: "Facebook" },
-    { icon: Twitter, href: "#", label: "Twitter" },
-    { icon: Linkedin, href: "#", label: "LinkedIn" },
-    { icon: Github, href: "#", label: "GitHub" },
+    {
+      icon: Facebook,
+      href: "https://www.facebook.com/nurulazam.dev",
+      label: "Facebook",
+    },
+    { icon: Twitter, href: "https://x.com/nurulazam_dev", label: "Twitter" },
+    {
+      icon: Linkedin,
+      href: "linkedin.com/in/nurulazam-dev",
+      label: "LinkedIn",
+    },
+    { icon: Github, href: "https://github.com/nurulazam-dev", label: "GitHub" },
   ],
 };
 
@@ -34,7 +42,7 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="border-t bg-background pt-10 pb-6 transition-colors">
+    <footer className="border-t pt-10 pb-6 transition-colors">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4">
           <div className="space-y-4">
@@ -130,14 +138,11 @@ export default function Footer() {
               © {currentYear} MNA ServiceHub. All rights reserved.
             </p>
             <div className="flex gap-6 text-xs text-muted-foreground">
-              <Link href="/privacy" className="hover:text-primary">
+              <Link href="/privacy-policy" className="hover:text-primary">
                 Privacy Policy
               </Link>
-              <Link href="/terms" className="hover:text-primary">
+              <Link href="/terms-conditions" className="hover:text-primary">
                 Terms of Use
-              </Link>
-              <Link href="/cookies" className="hover:text-primary">
-                Cookie Settings
               </Link>
             </div>
           </div>

@@ -1,5 +1,5 @@
-import JobPostsTable from "@/components/modules/Dashboard/Admin/JobPostsManagement/JobPostsTable";
-import { getAllJobPostsService } from "@/services/jobPosts.services";
+import MyAllSRsByCustomerTable from "@/components/modules/Dashboard/Customer/MySRequestsByCustomer/MyAllSRsByCustomerTable";
+import { getMyAllServiceRequestByCustomerService } from "@/services/serviceRequest.services";
 
 import {
   dehydrate,
@@ -35,15 +35,15 @@ export default async function MyServiceRequestsPage({
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({
-    queryKey: ["my-service-requests", queryString],
-    queryFn: () => getMyAllServiceRequestsService(queryString),
+    queryKey: ["my-service-requests-customer", queryString],
+    queryFn: () => getMyAllServiceRequestByCustomerService(queryString),
     staleTime: 30 * 1000,
     gcTime: 5 * 60 * 1000,
   });
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <MyAllServiceRequestsTable initialQueryString={queryString} />
+      <MyAllSRsByCustomerTable initialQueryString={queryString} />
     </HydrationBoundary>
   );
 }

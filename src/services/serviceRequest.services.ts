@@ -3,12 +3,16 @@
 
 import { httpClient } from "@/lib/axios/httpClient";
 import { ApiResponse } from "@/types/api.types";
-import {
+/* import {
   ICreateJobPostPayload,
   IJobPostPayload,
   IUpdateJobPostPayload,
-} from "@/types/jobPost.type";
-import { IServiceRequestPayload } from "@/types/serviceRequest.type";
+} from "@/types/jobPost.type"; */
+import {
+  IApplyServiceRequestPayload,
+  IServiceRequestPayload,
+} from "@/types/serviceRequest.type";
+import { IServiceRequestUpdatePayload } from "@/zod/serviceRequest.validation";
 
 export const getAllServiceRequestsService = async (queryString: string) => {
   try {
@@ -28,7 +32,7 @@ export const getAllServiceRequestsService = async (queryString: string) => {
   }
 };
 
-export const getMyServiceRequestByCustomerService = async (
+export const getMyAllServiceRequestByCustomerService = async (
   queryString: string,
 ) => {
   try {
@@ -36,8 +40,8 @@ export const getMyServiceRequestByCustomerService = async (
       ApiResponse<IServiceRequestPayload[]>
     >(
       queryString
-        ? `/service-requests/my-service-requests?${queryString}`
-        : "/service-requests/my-service-requests",
+        ? `/service-requests/my-service-requests-customer?${queryString}`
+        : "/service-requests/my-service-requests-customer",
     );
     return response;
   } catch (error: any) {
@@ -52,8 +56,44 @@ export const getMyServiceRequestByCustomerService = async (
   }
 };
 
+/* export const getMyAllServiceRequestByCustomerService = async (
+  queryString: string,
+) => {
+  try {
+    const response = await httpClient.get<
+      ApiResponse<IServiceRequestPayload[]>
+    >(
+      queryString
+        ? `/service-requests/my-service-requests-customer?${queryString}`
+        : "/service-requests/my-service-requests-customer",
+    );
+    return response;
+  } catch (error: any) {
+    return {
+      success: false,
+      message:
+        error.message ||
+        "An error occurred while fetching customer own service requests data.",
+      data: null,
+      meta: null,
+    };
+  }
+}; */
+
+export const getServiceRequestByIdService = async (id: string) => {
+  try {
+    const response = await httpClient.get<ApiResponse<IServiceRequestPayload>>(
+      `/service-requests/${id}`,
+    );
+    return response;
+  } catch (error: any) {
+    console.log("Error fetching job application by id:", error);
+    throw error;
+  }
+};
+
 export const applyServiceRequestService = async (
-  payload: ICreateJobPostPayload,
+  payload: IApplyServiceRequestPayload,
 ) => {
   try {
     const response = await httpClient.post<IServiceRequestPayload>(
@@ -67,23 +107,23 @@ export const applyServiceRequestService = async (
   }
 };
 
-export const updateJobPostService = async (
+export const updateServiceRequestService = async (
   id: string,
-  payload: IUpdateJobPostPayload,
+  payload: IServiceRequestUpdatePayload,
 ) => {
   try {
-    const response = await httpClient.patch<IUpdateJobPostPayload>(
-      `/job-posts/update/${id}`,
+    const response = await httpClient.patch<IServiceRequestUpdatePayload>(
+      `/service-requests/update-service-request/${id}`,
       payload,
     );
     return response;
   } catch (error) {
-    console.log("Error updating job-post:", error);
+    console.log("Error updating service request:", error);
     throw error;
   }
 };
 
-export const getJobPostService = async (id: string) => {
+/* export const getJobPostService = async (id: string) => {
   try {
     const response = await httpClient.get<IJobPostPayload>(`/job-posts/${id}`);
     return response;
@@ -91,19 +131,19 @@ export const getJobPostService = async (id: string) => {
     console.log("Error fetching job post by id:", error);
     throw error;
   }
-};
+}; */
 
-export const deleteJobPostService = async (id: string) => {
+export const cancelServiceRequestService = async (id: string) => {
   try {
     const response = await httpClient.patch<
       ApiResponse<{
         message: string;
       }>
-    >(`/job-posts/delete/${id}`);
+    >(`/service-requests/cancel/${id}`);
 
     return response;
   } catch (error) {
-    console.log("Error fetching job post by id:", error);
+    console.log("Error fetching service request by id:", error);
     throw error;
   }
 };

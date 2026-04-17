@@ -28,7 +28,7 @@ export default async function JobPostDetails({
 
   return (
     <div className="min-h-screen bg-muted/30 pb-20">
-      <div className="sticky top-0 z-50 w-full bg-background/80 backdrop-blur-md border-b">
+      <div className="sticky top-0 z-50 w-full  backdrop-blur-md border-b">
         <div className="container mx-auto px-6 h-16 flex items-center justify-between">
           <Link href="/job-posts">
             <Button
@@ -77,13 +77,13 @@ export default async function JobPostDetails({
               </div>
             </div>
 
-            <Card className="p-8 md:p-12 border-none shadow-lg shadow-primary/5 rounded-lg text-justify">
+            <Card className="p-8 md:p-12 border-none shadow-lg shadow-primary/5 rounded-lg text-justify bg-slate-100 dark:bg-slate-900">
               <div className="prose prose-slate max-w-none dark:prose-invert">
                 <div className="prose prose-slate max-w-none dark:prose-invert">
                   <h3 className="text-2xl font-bold mb-4">Job Description</h3>
 
                   <div className="space-y-6">
-                    <p className="text-muted-foreground leading-relaxed whitespace-pre-wrap">
+                    <p className="text-slate-700 dark:text-slate-300 leading-relaxed whitespace-pre-wrap">
                       We are looking for a dedicated{" "}
                       <span className="text-primary font-bold">
                         {jobPost?.title}
@@ -164,7 +164,7 @@ export default async function JobPostDetails({
 
           <div className="lg:col-span-1">
             <div className="sticky top-24 space-y-6">
-              <Card className="p-8 border-t-4 border-t-primary shadow-2xl rounded-lg">
+              <Card className="p-8 border-t-4 border-t-primary shadow-2xl rounded-lg bg-slate-100 dark:bg-slate-900">
                 <h4 className="text-xl md:text-2xl font-bold">
                   Interested in this role?
                 </h4>
@@ -196,7 +196,7 @@ export default async function JobPostDetails({
                   </Link>
                 </div>
 
-                <div className="mt-8 p-4 bg-muted/50 rounded-2xl border border-dashed">
+                <div className="mt-8 p-4 rounded-2xl border border-dashed">
                   <p className="text-[11px] text-center text-muted-foreground leading-relaxed">
                     By clicking Apply, you agree to our{" "}
                     <span className="underline">Terms of Service</span> and{" "}
@@ -205,7 +205,7 @@ export default async function JobPostDetails({
                 </div>
               </Card>
 
-              <Card className="p-6 rounded-lg border-none">
+              <Card className="p-6 rounded-lg border-none bg-slate-100 dark:bg-slate-900">
                 <h4 className="font-bold mb-4 flex items-center gap-2">
                   <Briefcase className="size-4" /> Hiring Activity
                 </h4>
