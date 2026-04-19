@@ -53,7 +53,7 @@ export const getServiceScheduleById = async (id: string) => {
     );
     return data;
   } catch (error) {
-    console.log("Error fetching user by id:", error);
+    console.log("Error fetching schedule by id:", error);
     throw error;
   }
 };

@@ -83,7 +83,6 @@ export default function MyAllSchedulesTable({
   const mySchedules = Array.isArray(mySchedulesDataRes?.data?.data)
     ? mySchedulesDataRes.data?.data
     : [];
-  console.log("mySchedulesDataRes=======", mySchedulesDataRes);
 
   const meta: PaginationMeta | undefined =
     mySchedulesDataRes?.data?.meta ?? undefined;

@@ -32,7 +32,6 @@ export const updateServiceRequestByManagementZodSchema = z
     rejectionReason: z
       .string()
       .trim()
-      .min(5, "Rejection reason must be at least 5 characters")
       .max(500, "Rejection reason must not exceed 500 characters")
       .optional(),
 

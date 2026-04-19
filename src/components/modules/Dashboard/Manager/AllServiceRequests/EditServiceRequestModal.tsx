@@ -170,6 +170,7 @@ export default function EditServiceRequestModal({
                 const schedules = Array.isArray(schedulesData?.data)
                   ? schedulesData.data
                   : [];
+                console.log("schedules=======", schedules);
 
                 return (
                   <div className="space-y-6">
@@ -276,17 +277,26 @@ export default function EditServiceRequestModal({
                                   />
                                 </SelectTrigger>
                                 <SelectContent>
-                                  {schedules.map((s: any) => (
-                                    <SelectItem key={s.id} value={s.id}>
-                                      {s.scheduleDate
-                                        ? format(
-                                            new Date(s.scheduleDate),
-                                            "PPP",
-                                          )
-                                        : ""}{" "}
-                                      | {s.startTime} - {s.endTime}
-                                    </SelectItem>
-                                  ))}
+                                  {schedules
+                                    .filter((s: any) => s.isBooked === false)
+                                    .map((s: any) => (
+                                      <SelectItem key={s.id} value={s.id}>
+                                        {s.scheduleDate
+                                          ? format(
+                                              new Date(s.scheduleDate),
+                                              "PPP",
+                                            )
+                                          : ""}{" "}
+                                        | {s.startTime} - {s.endTime}
+                                      </SelectItem>
+                                    ))}
+
+                                  {schedules.filter((s: any) => !s.isBooked)
+                                    .length === 0 && (
+                                    <div className="p-2 text-center text-sm text-muted-foreground">
+                                      No available slots
+                                    </div>
+                                  )}
                                 </SelectContent>
                               </Select>
                             </div>

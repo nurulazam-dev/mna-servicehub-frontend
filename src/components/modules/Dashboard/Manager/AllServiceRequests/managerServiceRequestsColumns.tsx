@@ -30,8 +30,8 @@ export const managerServiceRequestsColumns: ColumnDef<IServiceRequestPayload>[] 
               {service?.name || "Service Requested"}
             </span>
             <div className="flex items-center">
-              <Badge
-                className={`font-semibold ${
+              <p
+                className={`rounded-lg px-2 text-[11px] ${
                   isDeleted
                     ? "bg-red-100 text-red-700 hover:bg-red-100"
                     : status === "COMPLETED"
@@ -44,7 +44,7 @@ export const managerServiceRequestsColumns: ColumnDef<IServiceRequestPayload>[] 
                 }`}
               >
                 {isDeleted ? "CANCELLED" : status}
-              </Badge>
+              </p>
             </div>
           </div>
         );
