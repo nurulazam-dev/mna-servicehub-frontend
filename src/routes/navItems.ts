@@ -4,10 +4,12 @@ import { getDefaultDashboardRoute, UserRole } from "../lib/authUtils";
 export const getCommonNavItems = (role: UserRole): NavSection[] => {
   const defaultDashboard = getDefaultDashboardRoute(role);
 
-  const profilePath =
+  /*  const profilePath =
     role === "CUSTOMER"
       ? "/dashboard/profile"
-      : `/${role.toLowerCase().replace("_", "-")}/dashboard/profile`;
+      : `/${role.toLowerCase().replace("_", "-")}/dashboard/profile`; */
+
+  const profilePath = "/profile/me";
 
   return [
     {

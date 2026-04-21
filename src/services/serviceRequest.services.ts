@@ -12,7 +12,10 @@ import {
   IApplyServiceRequestPayload,
   IServiceRequestPayload,
 } from "@/types/serviceRequest.type";
-import { IServiceRequestUpdatePayload } from "@/zod/serviceRequest.validation";
+import {
+  IServiceRequestUpdateCostBySPPayload,
+  IServiceRequestUpdatePayload,
+} from "@/zod/serviceRequest.validation";
 
 export const getAllServiceRequestsService = async (queryString: string) => {
   try {
@@ -114,6 +117,23 @@ export const updateServiceRequestService = async (
       `/service-requests/update-service-request/${id}`,
       payload,
     );
+    return response;
+  } catch (error) {
+    console.log("Error updating service request:", error);
+    throw error;
+  }
+};
+
+export const updateServiceRequestCostBySPService = async (
+  id: string,
+  payload: IServiceRequestUpdateCostBySPPayload,
+) => {
+  try {
+    const response =
+      await httpClient.patch<IServiceRequestUpdateCostBySPPayload>(
+        `/service-requests/update-service-request-cost/${id}`,
+        payload,
+      );
     return response;
   } catch (error) {
     console.log("Error updating service request:", error);

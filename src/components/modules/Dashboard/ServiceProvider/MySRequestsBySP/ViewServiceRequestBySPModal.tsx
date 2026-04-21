@@ -27,10 +27,10 @@ import {
   Wrench,
 } from "lucide-react";
 
-interface ViewServiceRequestByCustomerDialogProps {
+interface ViewServiceRequestBySPDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  myServiceRequest: IServiceRequestPayload | null;
+  mySRequest: IServiceRequestPayload | null;
 }
 
 const formatDateTime = (value?: string | Date | null) => {
@@ -41,19 +41,17 @@ const formatDateTime = (value?: string | Date | null) => {
     : format(dateValue, "MMM dd, yyyy hh:mm a");
 };
 
-export default function ViewServiceRequestByCustomerModal({
+export default function ViewServiceRequestBySPModal({
   open,
   onOpenChange,
-  myServiceRequest,
-}: ViewServiceRequestByCustomerDialogProps) {
-  const myServiceRequestId = myServiceRequest
-    ? String(myServiceRequest.id)
-    : "";
+  mySRequest,
+}: ViewServiceRequestBySPDialogProps) {
+  const serviceRequestId = mySRequest ? String(mySRequest.id) : "";
 
   const { data, isLoading, isFetching } = useQuery({
-    queryKey: ["my-service-request-details", myServiceRequestId],
-    queryFn: () => getServiceRequestByIdAction(myServiceRequestId),
-    enabled: open && myServiceRequestId.length > 0,
+    queryKey: ["my-request-sp-details", serviceRequestId],
+    queryFn: () => getServiceRequestByIdAction(serviceRequestId),
+    enabled: open && serviceRequestId.length > 0,
     staleTime: 1000 * 60,
   });
 
@@ -77,7 +75,7 @@ export default function ViewServiceRequestByCustomerModal({
               <DialogDescription className="font-medium">
                 Tracking ID:{" "}
                 <span className="text-indigo-600 font-mono select-all">
-                  #{myServiceRequestId.slice(0, 8)}
+                  #{serviceRequestId.slice(0, 8)}
                 </span>
               </DialogDescription>
             </div>
@@ -153,26 +151,22 @@ export default function ViewServiceRequestByCustomerModal({
 
                     <section>
                       <h4 className="font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
-                        <User className="size-5 text-indigo-500" /> Assigned
-                        Expert
+                        <User className="size-5 text-indigo-500" /> Customer
                       </h4>
-                      {details.provider ? (
+                      {details.customer ? (
                         <div className="flex items-center gap-4 p-4 rounded-2xl border border-indigo-100 bg-indigo-50/30">
                           <div className="size-12 rounded-full bg-indigo-600 flex items-center justify-center text-white font-bold">
-                            {details?.provider?.user?.name?.charAt(0)}
+                            {details?.customer?.name?.charAt(0)}
                           </div>
                           <div>
                             <p className="font-black text-slate-900 dark:text-white">
-                              {details?.provider?.user?.name}
+                              {details?.customer?.name}
                             </p>
                             <p className="font-semibold text-slate-700 dark:text-slate-400">
-                              {details?.provider?.user?.email}
+                              {details?.customer?.email}
                             </p>
                             <p className="font-semibold text-slate-700 dark:text-slate-400">
-                              {details?.provider?.user?.phone}
-                            </p>
-                            <p className="text-xs font-bold dark:text-slate-300 text-slate-600 uppercase tracking-tighter">
-                              Certified Professional
+                              {details?.customer?.phone}
                             </p>
                           </div>
                         </div>

@@ -1,7 +1,7 @@
 import MyProfile from "@/components/modules/Dashboard/Common/MyProfile";
 import { getUserInfo } from "@/services/auth.services";
 
-export default async function CustomerProfilePage() {
+export default async function ProfilePage() {
   const userData = await getUserInfo();
 
   return (

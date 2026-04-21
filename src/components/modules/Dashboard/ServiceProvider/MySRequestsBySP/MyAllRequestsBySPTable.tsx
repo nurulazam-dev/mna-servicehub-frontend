@@ -19,6 +19,8 @@ import { useMemo } from "react";
 import { IServiceRequestPayload } from "@/types/serviceRequest.type";
 import { getMyAllRequestsBySPService } from "@/services/serviceRequest.services";
 import { mySRequestsBySPColumns } from "./mySRequestsBySPColumns";
+import ViewServiceRequestBySPModal from "./ViewServiceRequestBySPModal";
+import UpdateServiceRequestBySPDialog from "./UpdateServiceRequestBySPDialog";
 // import { getMyAllServiceRequestByCustomerService } from "@/services/serviceRequest.services";
 // import { myServiceRequestsCustomerColumns } from "./myServiceRequestsCustomerColumns";
 // import ViewServiceRequestByCustomerModal from "./ViewServiceRequestByCustomerModal";
@@ -36,12 +38,12 @@ export default function MyAllRequestsBySPTable({
 }) {
   const searchParams = useSearchParams();
   const {
-    // viewingItem,
-    // isViewDialogOpen,
-    // onViewOpenChange,
-    // editingItem,
-    // isEditModalOpen,
-    // onEditOpenChange,
+    viewingItem,
+    isViewDialogOpen,
+    onViewOpenChange,
+    editingItem,
+    isEditModalOpen,
+    onEditOpenChange,
     tableActions,
   } = useRowActionModalState<IServiceRequestPayload>();
 
@@ -150,16 +152,16 @@ export default function MyAllRequestsBySPTable({
         meta={meta}
         actions={tableActions}
       />
-      {/* <CancelServiceRequestDialog
-        open={isDeleteDialogOpen}
-        onOpenChange={onDeleteOpenChange}
-        myServiceRequest={deletingItem}
-      /> */}
-      {/* <ViewServiceRequestByCustomerModal
+      <UpdateServiceRequestBySPDialog
+        open={isEditModalOpen}
+        onOpenChange={onEditOpenChange}
+        mySRequest={editingItem}
+      />
+      <ViewServiceRequestBySPModal
         open={isViewDialogOpen}
         onOpenChange={onViewOpenChange}
-        myServiceRequest={viewingItem}
-      /> */}
+        mySRequest={viewingItem}
+      />
     </>
   );
 }

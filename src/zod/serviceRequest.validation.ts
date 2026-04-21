@@ -56,3 +56,36 @@ export const updateServiceRequestByManagementZodSchema = z
 export type IServiceRequestUpdatePayload = z.infer<
   typeof updateServiceRequestByManagementZodSchema
 >;
+
+export const updateServiceCostBySPZodSchema = z
+  .object({
+    serviceCharge: z
+      .number({
+        error: "Service charge must be a number",
+      })
+      .min(0, "Service charge cannot be negative"),
+
+    productCost: z
+      .number({
+        error: "Product cost must be a number",
+      })
+      .min(0, "Product cost cannot be negative"),
+
+    additionalCost: z
+      .number({
+        error: "Additional cost must be a number",
+      })
+      .min(0, "Additional cost cannot be negative"),
+  })
+  .refine(
+    (data) =>
+      data.serviceCharge > 0 || data.productCost > 0 || data.additionalCost > 0,
+    {
+      message: "At least one cost must be greater than 0",
+      path: ["serviceCharge"],
+    },
+  );
+
+export type IServiceRequestUpdateCostBySPPayload = z.infer<
+  typeof updateServiceCostBySPZodSchema
+>;
