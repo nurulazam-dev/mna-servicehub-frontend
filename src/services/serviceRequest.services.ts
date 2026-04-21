@@ -56,16 +56,14 @@ export const getMyAllServiceRequestByCustomerService = async (
   }
 };
 
-/* export const getMyAllServiceRequestByCustomerService = async (
-  queryString: string,
-) => {
+export const getMyAllRequestsBySPService = async (queryString: string) => {
   try {
     const response = await httpClient.get<
       ApiResponse<IServiceRequestPayload[]>
     >(
       queryString
-        ? `/service-requests/my-service-requests-customer?${queryString}`
-        : "/service-requests/my-service-requests-customer",
+        ? `/service-requests/my-service-requests-sp?${queryString}`
+        : "/service-requests/my-service-requests-sp",
     );
     return response;
   } catch (error: any) {
@@ -73,12 +71,12 @@ export const getMyAllServiceRequestByCustomerService = async (
       success: false,
       message:
         error.message ||
-        "An error occurred while fetching customer own service requests data.",
+        "An error occurred while fetching SP own service requests data.",
       data: null,
       meta: null,
     };
   }
-}; */
+};
 
 export const getServiceRequestByIdService = async (id: string) => {
   try {

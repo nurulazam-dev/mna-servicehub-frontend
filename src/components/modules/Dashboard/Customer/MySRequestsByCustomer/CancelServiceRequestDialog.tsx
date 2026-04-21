@@ -39,69 +39,7 @@ export default function CancelServiceRequestDialog({
       toast.error("service request not found");
       return;
     }
-    console.log("c myServiceRequest==", myServiceRequest);
-    /* 
-output:
-c myServiceRequest== 
-Object
-activePhone
-: 
-"01984587545"
-costBreakdown
-: 
-null
-createdAt
-: 
-"2026-04-12T05:34:29.794Z"
-customerId
-: 
-"GbXGDNZYIMPoHw3Qfg0P712gFK2fl1QJ"
-id
-: 
-"90609450-b4b6-4652-ba08-91597111b5ab"
-isDeleted
-: 
-false
-paymentStatus
-: 
-"UNPAID"
-provider
-: 
-null
-providerId
-: 
-null
-rejectionReason
-: 
-null
-review
-: 
-null
-schedule
-: 
-null
-scheduleId
-: 
-null
-service
-: 
-{name: 'Full House Sanitization', imageUrl: 'https://images.unsplash.com/photo-1584622781564-1d9876a13d00?q=80&w=2000'}
-serviceAddress
-: 
-"raozan"
-serviceDescription
-: 
-"Not working properly"
-serviceId
-: 
-"973785b6-b6e6-4695-abb1-e2f66b3de829"
-status
-: 
-"PENDING"
-updatedAt
-: 
-"2026-04-12T05:34:29.794Z"
-*/
+
     if (myServiceRequest.isDeleted === true) {
       toast.error("service request already cancelled");
       return;
