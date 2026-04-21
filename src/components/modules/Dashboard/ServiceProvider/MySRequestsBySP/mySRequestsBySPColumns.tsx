@@ -1,8 +1,16 @@
-// import DateCell from "@/components/shared/cell/DateCell";
 import { Badge } from "@/components/ui/badge";
 import { IServiceRequestPayload } from "@/types/serviceRequest.type";
 import { ColumnDef } from "@tanstack/react-table";
-import { CreditCard, User, Mail, StarHalf, PhoneCall } from "lucide-react";
+import {
+  CreditCard,
+  User,
+  Mail,
+  StarHalf,
+  PhoneCall,
+  Calendar,
+  ShieldQuestionMark,
+} from "lucide-react";
+import { format } from "date-fns";
 
 export const mySRequestsBySPColumns: ColumnDef<IServiceRequestPayload>[] = [
   {
@@ -20,9 +28,20 @@ export const mySRequestsBySPColumns: ColumnDef<IServiceRequestPayload>[] = [
     accessorKey: "service",
     header: "Service Details",
     cell: ({ row }) => {
-      const service = row.original.service;
-      const status = row.original.status;
-      const isDeleted = row.original.isDeleted;
+      const { service, status, isDeleted } = row.original;
+
+      let badgeClass = "bg-slate-100 text-slate-700";
+
+      if (isDeleted || status === "CANCELLED" || status === "REJECTED") {
+        badgeClass = "bg-red-100 text-red-700 hover:bg-red-200";
+      } else if (status === "COMPLETED") {
+        badgeClass = "bg-green-100 text-green-700 hover:bg-green-200";
+      } else if (status === "ACCEPTED") {
+        badgeClass = "bg-blue-100 text-blue-700 hover:bg-blue-200";
+      } else if (status === "PENDING") {
+        badgeClass = "bg-amber-100 text-amber-700 hover:bg-amber-200";
+      }
+
       return (
         <div className="flex flex-col gap-1">
           <span className="font-bold text-sm text-primary line-clamp-1">
@@ -30,17 +49,7 @@ export const mySRequestsBySPColumns: ColumnDef<IServiceRequestPayload>[] = [
           </span>
           <div className="flex items-center">
             <Badge
-              className={`font-semibold ${
-                isDeleted
-                  ? "bg-red-100 text-red-700 hover:bg-red-100"
-                  : status === "COMPLETED"
-                    ? "bg-green-100 text-green-700 hover:bg-green-100"
-                    : status === "PENDING"
-                      ? "bg-blue-100 text-blue-700 hover:bg-blue-100"
-                      : status === "CANCELLED"
-                        ? "bg-red-100 text-red-700 hover:bg-red-100"
-                        : "bg-slate-100 text-slate-700"
-              }`}
+              className={`font-semibold border-none text-[10px] h-4 ${badgeClass}`}
             >
               {isDeleted ? "CANCELLED" : status}
             </Badge>
@@ -55,66 +64,84 @@ export const mySRequestsBySPColumns: ColumnDef<IServiceRequestPayload>[] = [
     header: "Customer",
     cell: ({ row }) => {
       const customer = row.original.customer;
-      const status = row.original.customer?.status;
-      /* status="ACTIVE" | "BLOCKED" | "DELETED"; */
+      const customerStatus = customer?.isDeleted ? "DELETED" : "ACTIVE";
+
       return (
-        <>
+        <div className="flex flex-col gap-1">
           {customer ? (
-            <div>
+            <>
               <div className="flex items-center gap-2 text-sm">
                 <User className="size-3.5 text-slate-400" />
                 <span className="font-medium">{customer.name}</span>
               </div>
-              <div className="flex items-center">
+              <div className="flex items-center gap-1">
+                <ShieldQuestionMark className="size-3.5 text-slate-400" />
+
                 <Badge
-                  className={`font-semibold ${
-                    status
-                      ? "bg-red-100 text-red-700 hover:bg-red-100"
-                      : status === "ACTIVE"
-                        ? "bg-green-100 text-green-700 hover:bg-green-100"
-                        : status === "BLOCKED"
-                          ? "bg-blue-100 text-blue-700 hover:bg-blue-100"
-                          : "bg-slate-100 text-slate-700"
+                  variant="outline"
+                  className={`text-[10px] h-4 ${
+                    customer.isDeleted
+                      ? "text-red-600 border-red-200 bg-red-50"
+                      : "text-green-600 border-green-200 bg-green-50"
                   }`}
                 >
-                  {status ? "DELETED" : status}
+                  {customerStatus}
                 </Badge>
               </div>
-            </div>
+            </>
           ) : (
-            "N/A"
+            <span className="text-xs text-muted-foreground">Guest User</span>
           )}
-        </>
+        </div>
       );
     },
   },
   {
     id: "contact",
     accessorKey: "contact",
-    header: "Contact",
+    header: "Contact Info",
     cell: ({ row }) => {
-      const customer = row.original.customer;
+      const { customer, activePhone } = row.original;
       return (
-        <>
-          {customer ? (
-            <div>
-              <div className="flex items-center gap-2 text-sm">
-                <Mail className="size-3.5 text-slate-400" />
-                <span className="font-medium">{customer.email}</span>
-              </div>
-              <div className="flex items-center gap-2 text-sm">
-                <PhoneCall className="size-3.5 text-slate-400" />
-                <span className="font-medium">{customer.phone}</span>
-              </div>
-            </div>
-          ) : (
-            "N/A"
-          )}
-        </>
+        <div className="flex flex-col gap-1">
+          <div className="flex items-center gap-2 text-xs text-muted-foreground">
+            <Mail className="size-3 text-slate-400" />
+            <span className="truncate max-w-[150px]">
+              {customer?.email || "N/A"}
+            </span>
+          </div>
+          <div className="flex items-center gap-2 text-xs font-medium">
+            <PhoneCall className="size-3 text-slate-400" />
+            <span>{activePhone || customer?.phone || "N/A"}</span>
+          </div>
+        </div>
       );
     },
   },
-
+  {
+    id: "schedule",
+    header: "Schedule",
+    cell: ({ row }) => {
+      const schedule = row.original.schedule;
+      return (
+        <div className="flex flex-col text-xs gap-1">
+          {schedule ? (
+            <>
+              <div className="flex items-center gap-1.5 font-medium">
+                <Calendar className="size-3 text-primary" />
+                {format(new Date(schedule.scheduleDate), "dd MMM, yy")}
+              </div>
+              <div className="text-muted-foreground ml-4">
+                {schedule.startTime} - {schedule.endTime}
+              </div>
+            </>
+          ) : (
+            <span className="text-muted-foreground">Not Scheduled</span>
+          )}
+        </div>
+      );
+    },
+  },
   {
     id: "cost",
     accessorKey: "costBreakdown",
@@ -132,37 +159,37 @@ export const mySRequestsBySPColumns: ColumnDef<IServiceRequestPayload>[] = [
     id: "paymentStatus",
     accessorKey: "paymentStatus",
     header: "Payment",
-    cell: ({ row }) => (
-      <Badge
-        variant="outline"
-        className={`text-[10px] font-bold uppercase ${
-          row.original.paymentStatus === "PAID"
-            ? "bg-emerald-50 text-emerald-600 border-emerald-200 dark:bg-emerald-500/10"
-            : "bg-amber-50 text-amber-600 border-amber-200 dark:bg-amber-500/10"
-        }`}
-      >
-        <CreditCard className="size-3 mr-1" />
-        {row.original.paymentStatus}
-      </Badge>
-    ),
+    cell: ({ row }) => {
+      const isPaid = row.original.paymentStatus === "PAID";
+      return (
+        <Badge
+          variant="outline"
+          className={`text-[10px] font-semibold uppercase ${
+            isPaid
+              ? "bg-emerald-50 text-emerald-600 border-emerald-200"
+              : "bg-amber-50 text-amber-600 border-amber-200"
+          }`}
+        >
+          <CreditCard className="size-3 mr-1" />
+          {row.original.paymentStatus}
+        </Badge>
+      );
+    },
   },
   {
     id: "review",
     accessorKey: "review",
-    header: "Review",
-    cell: ({ row }) => (
-      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-        <StarHalf className="size-3.5" />
-        <span>{row.original.review?.rating || "N/A"}</span>
-      </div>
-    ),
+    header: "Rating",
+    cell: ({ row }) => {
+      const rating = row.original.review?.rating;
+      return (
+        <div className="flex items-center gap-1.5 text-sm font-semibold">
+          <StarHalf
+            className={`size-3.5 ${rating ? "text-orange-500 fill-orange-500" : "text-muted-foreground"}`}
+          />
+          <span>{rating ? rating.toFixed(1) : "N/A"}</span>
+        </div>
+      );
+    },
   },
-  /* {
-    id: "createdAt",
-    accessorKey: "createdAt",
-    header: "Requested On",
-    cell: ({ row }) => (
-      <DateCell date={row.original.createdAt} formatString="MMM dd, yyyy" />
-    ),
-  }, */
 ];
