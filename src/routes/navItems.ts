@@ -78,11 +78,11 @@ export const providerNavItems: NavSection[] = [
         href: "/service-provider/dashboard/my-reviews",
         icon: "Star",
       },
-      /* {
+      {
         title: "Applied Jobs",
-        href: "/service-provider/dashboard/applied-jobs",
+        href: "/service-provider/dashboard/my-applied-jobs",
         icon: "Activity",
-      }, */
+      },
     ],
   },
 ];

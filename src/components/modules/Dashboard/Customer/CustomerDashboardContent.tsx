@@ -9,9 +9,9 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { IDashboardStatsDataPayload } from "@/types/dashboard.types";
 import DashboardBanner from "../DashboardBanner";
 
-const AdminDashboardContent = () => {
+const CustomerDashboardContent = () => {
   const { data: response, isLoading } = useQuery({
-    queryKey: ["admin-dashboard-data"],
+    queryKey: ["customer-dashboard-data"],
     queryFn: getDashboardData,
     refetchOnWindowFocus: false,
   });
@@ -34,52 +34,26 @@ const AdminDashboardContent = () => {
     <div className="space-y-8 p-6">
       <DashboardBanner />
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
         <StatsCard
-          title="Total Services"
-          value={data?.serviceCount || 0}
+          title="Total Requests"
+          value={data?.totalRequests || 0}
           iconName="LayoutGrid"
           description="Live services in categories"
           className="border-l-blue-500"
         />
 
         <StatsCard
-          title="Service Requests"
-          value={data?.requestCount || 0}
+          title="Active Requests"
+          value={data?.activeRequests || 0}
           iconName="Activity"
           description="Total orders received"
-          trend={{ value: "12%", isPositive: true }}
           className="border-l-rose-500"
         />
 
         <StatsCard
-          title="Total Users"
-          value={data?.userCount || 0}
-          iconName="Users"
-          description="Registered customers"
-          trend={{ value: "5%", isPositive: true }}
-          className="border-l-indigo-600"
-        />
-
-        <StatsCard
-          title="Providers"
-          value={data?.providerCount || 0}
-          iconName="ShieldCheck"
-          description="Active verified partners"
-          className="border-l-emerald-500"
-        />
-
-        <StatsCard
-          title="Pending Apps"
-          value={data?.pendingApplications || 0}
-          iconName="FileSearch"
-          description="Awaiting review"
-          className="border-l-amber-500"
-        />
-
-        <StatsCard
-          title="Total Revenue"
-          value={formatCurrency(data?.totalRevenue as number)}
+          title="Total Spent"
+          value={formatCurrency(data?.totalSpent as number)}
           iconName="CircleDollarSign"
           description="Net earnings so far"
           className="border-l-4 border-l-violet-600 shadow-sm"
@@ -119,4 +93,4 @@ const DashboardSkeleton = () => (
   </div>
 );
 
-export default AdminDashboardContent;
+export default CustomerDashboardContent;
