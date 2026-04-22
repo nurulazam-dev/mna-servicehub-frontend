@@ -1,3 +1,4 @@
+import CandidateDashboardContent from "@/components/modules/Dashboard/Customer/CandidateDashboardContent";
 import { getDashboardData } from "@/services/dashboard.services";
 import {
   dehydrate,
@@ -17,7 +18,7 @@ export default async function CandidateDashboardPage() {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      {/* <CandidateDashboardContent /> */}
+      <CandidateDashboardContent />
     </HydrationBoundary>
   );
 }

@@ -42,7 +42,7 @@ const ServiceRequestBarChart = ({ data }: ServiceRequestBarChartProps) => {
 
   if (!hasData) {
     return (
-      <Card className="col-span-4 shadow-sm border-muted/40">
+      <Card className="col-span-4">
         <CardHeader>
           <CardTitle className="text-xl font-bold">
             Service Request Trends

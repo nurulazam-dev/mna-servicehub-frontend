@@ -1,3 +1,4 @@
+import ProviderDashboardContent from "@/components/modules/Dashboard/ServiceProvider/ProviderDashboardContent";
 import { getDashboardData } from "@/services/dashboard.services";
 import {
   dehydrate,
@@ -17,7 +18,7 @@ export default async function ProviderDashboardPage() {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      {/* <ProviderDashboardContent /> */}
+      <ProviderDashboardContent />
     </HydrationBoundary>
   );
 }

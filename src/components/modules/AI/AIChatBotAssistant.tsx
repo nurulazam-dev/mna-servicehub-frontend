@@ -20,7 +20,7 @@ export default function AIChatBotAssistant() {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "bot",
-      text: "Welcome! I am MNA ServiceHub AI. I can assist you with any local service-related information. How can I help you today?",
+      text: "Welcome! I am MNA ServiceHub. I can assist you with any local service-related information. How can I help you today?",
     },
   ]);
   const [input, setInput] = useState("");
@@ -91,7 +91,7 @@ export default function AIChatBotAssistant() {
               </div>
               <div>
                 <h3 className="font-black text-sm tracking-tight leading-none mb-1">
-                  MNA ServiceHub AI
+                  MNA ServiceHub
                 </h3>
                 <div className="flex items-center gap-1.5">
                   <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />

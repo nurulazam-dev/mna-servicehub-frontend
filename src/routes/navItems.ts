@@ -204,11 +204,11 @@ export const managerNavItems: NavSection[] = [
         href: "/manager/dashboard/service-requests",
         icon: "ClipboardList",
       },
-      /*  {
+      {
         title: "Providers Schedules",
         href: "/manager/dashboard/providers-schedules",
         icon: "LayoutGrid",
-      }, */
+      },
       /* {
         title: "Categories",
         href: "/manager/dashboard/categories",

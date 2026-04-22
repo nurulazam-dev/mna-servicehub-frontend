@@ -5,13 +5,13 @@ import { useQuery } from "@tanstack/react-query";
 import StatsCard from "../StatsCard";
 import ServiceRequestBarChart from "../ServiceRequestBarChart";
 import ServiceRequestPieChart from "../ServiceRequestPieChart";
-import { Skeleton } from "@/components/ui/skeleton";
 import { IDashboardStatsDataPayload } from "@/types/dashboard.types";
 import DashboardBanner from "../DashboardBanner";
+import DashboardSkeleton from "../DashboardSkeleton";
 
-const AdminDashboardContent = () => {
+const ManagerDashboardContent = () => {
   const { data: response, isLoading } = useQuery({
-    queryKey: ["admin-dashboard-data"],
+    queryKey: ["manager-dashboard-data"],
     queryFn: getDashboardData,
     refetchOnWindowFocus: false,
   });
@@ -101,22 +101,4 @@ const AdminDashboardContent = () => {
   );
 };
 
-const DashboardSkeleton = () => (
-  <div className="space-y-8 p-6">
-    <div className="space-y-2">
-      <Skeleton className="h-8 w-62.5" />
-      <Skeleton className="h-4 w-87.5" />
-    </div>
-    <div className="grid gap-4 md:grid-cols-4">
-      {[1, 2, 3, 4].map((i) => (
-        <Skeleton key={i} className="h-32 w-full rounded-2xl" />
-      ))}
-    </div>
-    <div className="grid gap-6 md:grid-cols-12">
-      <Skeleton className="md:col-span-8 h-100 rounded-2xl" />
-      <Skeleton className="md:col-span-4 h-100 rounded-2xl" />
-    </div>
-  </div>
-);
-
-export default AdminDashboardContent;
+export default ManagerDashboardContent;
