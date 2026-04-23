@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import {
   Mail,
   Phone,
@@ -37,7 +36,6 @@ const ContactUs = () => {
               Contact Information
             </h3> */}
 
-            {/* Info Cards */}
             <div className="group">
               <Card className="border-none bg-card/50 backdrop-blur-sm transition-all duration-300 hover:bg-accent/10 hover:translate-x-2">
                 <CardContent className="px-6 py-2 flex items-center gap-4">
@@ -47,7 +45,7 @@ const ContactUs = () => {
                   <div>
                     <h4 className="font-semibold text-lg">Email Us</h4>
                     <p className="text-muted-foreground select-all">
-                      support@mna-servicehub.com
+                      admin@servicehub.com
                     </p>
                     <p className="text-xs text-primary mt-1 flex items-center gap-1 font-medium">
                       <CheckCircle2 className="size-3" /> Average response: 2h
@@ -106,7 +104,7 @@ const ContactUs = () => {
           </div>
 
           <div className="lg:col-span-7 animate-in fade-in slide-in-from-right-8 duration-1000 delay-300">
-            <div className="bg-card rounded-md p-8 shadow-xl shadow-primary/5 border border-border/50 relative overflow-hidden group">
+            <div className="rounded-md p-8 shadow-xl shadow-primary/5 border border-border/50 relative overflow-hidden group">
               <div className="absolute -top-24 -right-24 w-48 h-48 bg-primary/5 rounded-full blur-3xl transition-all group-hover:bg-primary/10" />
 
               <form className="space-y-6 relative z-10">

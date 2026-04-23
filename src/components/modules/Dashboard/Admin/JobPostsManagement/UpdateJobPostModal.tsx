@@ -80,16 +80,7 @@ export default function UpdateJobPostModal({
       payload: IUpdateJobPostPayload;
     }) => updateJobPostService(jobPostId, payload),
   });
-  /* 
- vacancy: z
-    .number()
-    .int("Vacancy must be an integer")
-    .positive("Vacancy must be greater than 0")
-    .optional(),
 
-    =========
-      vacancy?: number;
-*/
   const form = useForm({
     defaultValues: getInitialValues(jobPost),
     validators: {

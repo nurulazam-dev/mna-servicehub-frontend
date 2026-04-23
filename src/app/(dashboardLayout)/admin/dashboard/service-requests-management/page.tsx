@@ -1,3 +1,3 @@
 export default function ServiceRequestsManagementPage() {
-  return <div>ServiceRequestsManagementPage</div>;
+  return <div>Service Requests Management Page - coming soon...</div>;
 }

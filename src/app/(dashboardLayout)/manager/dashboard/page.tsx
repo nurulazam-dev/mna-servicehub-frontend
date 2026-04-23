@@ -1,3 +1,4 @@
+import ManagerDashboardContent from "@/components/modules/Dashboard/Manager/ManagerDashboardContent";
 import { getDashboardData } from "@/services/dashboard.services";
 import {
   dehydrate,
@@ -17,7 +18,7 @@ export default async function ManagerDashboardPage() {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      {/* <ManagerDashboardContent /> */}
+      <ManagerDashboardContent />
     </HydrationBoundary>
   );
 }

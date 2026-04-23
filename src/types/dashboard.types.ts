@@ -19,7 +19,7 @@ export interface BarChartData {
   count: number;
 }
 
-export interface IAdminDashboardData {
+/* export interface IDashboardStatsDataPayload {
   requestCount: number;
   providerCount: number;
   serviceCount: number;
@@ -28,4 +28,29 @@ export interface IAdminDashboardData {
   totalRevenue: number;
   barChartData: BarChartData[];
   pieChartData: PieChartData[];
+} */
+
+export interface IDashboardStatsDataPayload {
+  userCount?: number;
+  providerCount?: number;
+  requestCount?: number;
+  serviceCount?: number;
+  pendingApplications?: number;
+  totalRevenue?: number | { _sum: { amount: number | null } };
+
+  totalAssignedRequests?: number;
+  completedRequests?: number;
+  reviewCount?: number;
+  averageRating?: number;
+
+  totalJobApplied?: number;
+  acceptedApplications?: number;
+  rejectedApplications?: number;
+
+  totalRequests?: number;
+  activeRequests?: number;
+  totalSpent?: number;
+
+  requestStatusDistribution?: { status: string; count: number }[];
+  monthlyRequests?: { month: string; count: number }[];
 }

@@ -62,7 +62,7 @@ const ApplyJobModal = ({ jobId, jobTitle, userId }: ApplyJobModalProps) => {
         }
       />
 
-      <DialogContent className="sm:max-w-110 rounded-lg border-none shadow-2xl p-10">
+      <DialogContent className="sm:max-w-110 rounded-lg border-none shadow-2xl p-10 bg-slate-100 dark:bg-slate-900">
         <DialogHeader className="space-y-3">
           <DialogTitle className="text-3xl font-black flex items-center gap-2">
             <SendHorizontal className="text-primary size-7" /> Quick Apply

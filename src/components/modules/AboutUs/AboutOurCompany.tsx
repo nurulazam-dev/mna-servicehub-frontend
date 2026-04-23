@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function AboutOurCompany() {
   return (
-    <section className="py-12 bg-background">
+    <section className="py-12">
       <div className="container mx-auto px-6">
         <div className="flex flex-col lg:flex-row gap-16 items-center">
           <div className="lg:w-1/2 space-y-6 animate-in fade-in slide-in-from-left-10 duration-700">

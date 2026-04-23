@@ -74,7 +74,7 @@ const CandidateRegisterForm = ({ redirectPath }: RegisterProps) => {
   });
 
   return (
-    <Card className="w-full max-w-md mx-auto shadow-lg border-t-4 border-t-primary">
+    <Card className="w-full max-w-md mx-auto shadow-lg border-t-4 border-t-primary bg-slate-100 dark:bg-slate-900">
       <CardHeader className="space-y-1 text-center">
         <CardTitle className="text-2xl font-bold tracking-tight">
           Candidate Register

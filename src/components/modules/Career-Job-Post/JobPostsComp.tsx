@@ -11,7 +11,7 @@ import {
   ChevronRight,
   SearchIcon,
 } from "lucide-react";
-import { getAllJobPosts } from "@/services/jobPosts.services";
+import { getAllJobPostsService } from "@/services/jobPosts.services";
 import { IJobPostPayload } from "@/types/jobPost.type";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -22,7 +22,7 @@ import { formatFullDate } from "@/lib/utils";
 const JobPostsComp = () => {
   const { data, isLoading, isError } = useQuery({
     queryKey: ["job-posts"],
-    queryFn: () => getAllJobPosts(""),
+    queryFn: () => getAllJobPostsService(""),
   });
 
   if (isLoading) {
@@ -68,9 +68,9 @@ const JobPostsComp = () => {
             jobPosts.map((job: IJobPostPayload) => (
               <Card
                 key={job.id}
-                className="group p-1 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300 border-muted-foreground/10 overflow-hidden"
+                className="group p-1 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300 border-muted-foreground/10 overflow-hidden bg-slate-200 dark:bg-slate-900"
               >
-                <div className="flex flex-col md:flex-row items-start md:items-center justify-between p-5 md:p-6 bg-card hover:bg-muted/10 transition-colors rounded-xl">
+                <div className="flex flex-col md:flex-row items-start md:items-center justify-between p-5 md:p-6 hover:bg-muted/10 transition-colors rounded-xl">
                   <div className="flex-1 space-y-3">
                     <div className="flex flex-wrap items-center gap-2">
                       <h3 className="text-xl font-bold group-hover:text-primary transition-colors">

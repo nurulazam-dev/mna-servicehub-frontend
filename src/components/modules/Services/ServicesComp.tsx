@@ -32,7 +32,7 @@ const ServicesComp = () => {
     );
   }
 
-  const services: IServicePayload[] = (data as any) || [];
+  const services: IServicePayload[] = (data?.data as any) || [];
 
   return (
     <div className="py-12">

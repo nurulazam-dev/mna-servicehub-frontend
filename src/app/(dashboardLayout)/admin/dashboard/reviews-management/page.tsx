@@ -1,3 +1,3 @@
 export default function ReviewsManagementPage() {
-  return <div>ReviewsManagementPage</div>;
+  return <div>Reviews Management Page - coming soon...</div>;
 }

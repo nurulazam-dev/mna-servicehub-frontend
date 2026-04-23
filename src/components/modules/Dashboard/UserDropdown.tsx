@@ -80,10 +80,7 @@ const UserDropdown = ({ userInfo }: UserDropdownProps) => {
         <DropdownMenuGroup>
           <DropdownMenuItem
             render={
-              <Link
-                href={"/my-profile"}
-                className="flex w-full items-center"
-              >
+              <Link href={"/profile/me"} className="flex w-full items-center">
                 <User className="mr-2 h-4 w-4" />
                 <span>My Profile</span>
               </Link>

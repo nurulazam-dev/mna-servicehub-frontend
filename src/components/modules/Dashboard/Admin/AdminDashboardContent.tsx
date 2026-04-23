@@ -1,13 +1,13 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { getDashboardData } from "@/services/dashboard.services";
-import { IAdminDashboardData } from "@/types/dashboard.types";
 import { useQuery } from "@tanstack/react-query";
 import StatsCard from "../StatsCard";
 import ServiceRequestBarChart from "../ServiceRequestBarChart";
 import ServiceRequestPieChart from "../ServiceRequestPieChart";
-import { Skeleton } from "@/components/ui/skeleton";
+import { IDashboardStatsDataPayload } from "@/types/dashboard.types";
+import DashboardBanner from "../DashboardBanner";
+import DashboardSkeleton from "../DashboardSkeleton";
 
 const AdminDashboardContent = () => {
   const { data: response, isLoading } = useQuery({
@@ -16,22 +16,15 @@ const AdminDashboardContent = () => {
     refetchOnWindowFocus: false,
   });
 
-  const data = response?.data as IAdminDashboardData;
-  const totalRevenueRaw = (data as unknown as { totalRevenue?: unknown })
-    ?.totalRevenue;
-  const extractedTotalRevenue =
-    typeof totalRevenueRaw === "number"
-      ? totalRevenueRaw
-      : typeof totalRevenueRaw === "string"
-        ? Number(totalRevenueRaw)
-        : typeof totalRevenueRaw === "bigint"
-          ? Number(totalRevenueRaw)
-          : ((totalRevenueRaw as any)?._sum?.amount ??
-            (totalRevenueRaw as any)?.amount ??
-            0);
-  const safeTotalRevenue = Number.isFinite(Number(extractedTotalRevenue))
-    ? Number(extractedTotalRevenue)
-    : 0;
+  const data = response?.data as IDashboardStatsDataPayload;
+
+  const formatCurrency = (value: number = 0) => {
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+      maximumFractionDigits: 0,
+    }).format(value);
+  };
 
   if (isLoading) {
     return <DashboardSkeleton />;
@@ -39,19 +32,14 @@ const AdminDashboardContent = () => {
 
   return (
     <div className="space-y-8 p-6">
-      <div className="flex flex-col gap-1">
-        <h1 className="text-3xl font-black tracking-tight">Admin Dashboard</h1>
-        <p className="text-muted-foreground">
-          Welcome back! Here is what is happening at MNA ServiceHub.
-        </p>
-      </div>
+      <DashboardBanner />
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         <StatsCard
           title="Total Services"
           value={data?.serviceCount || 0}
           iconName="LayoutGrid"
-          description="Live services in catalog"
+          description="Live services in categories"
           className="border-l-blue-500"
         />
 
@@ -91,47 +79,26 @@ const AdminDashboardContent = () => {
 
         <StatsCard
           title="Total Revenue"
-          // value={`$${data?.totalRevenue || 0}`}
-          value={new Intl.NumberFormat("en-US", {
-            style: "currency",
-            currency: "USD",
-            maximumFractionDigits: 0,
-          }).format(safeTotalRevenue)}
+          value={formatCurrency(data?.totalRevenue as number)}
           iconName="CircleDollarSign"
           description="Net earnings so far"
-          className="border-l-violet-600"
+          className="border-l-4 border-l-violet-600 shadow-sm"
         />
       </div>
 
       <div className="grid gap-6 md:grid-cols-12">
         <div className="md:col-span-7 lg:col-span-8">
-          <ServiceRequestBarChart data={data?.barChartData || []} />
+          <ServiceRequestBarChart data={data?.monthlyRequests || []} />
         </div>
 
         <div className="md:col-span-5 lg:col-span-4">
-          <ServiceRequestPieChart data={data?.pieChartData || []} />
+          <ServiceRequestPieChart
+            data={data?.requestStatusDistribution || []}
+          />
         </div>
       </div>
     </div>
   );
 };
-
-const DashboardSkeleton = () => (
-  <div className="space-y-8 p-6">
-    <div className="space-y-2">
-      <Skeleton className="h-8 w-62.5" />
-      <Skeleton className="h-4 w-87.5" />
-    </div>
-    <div className="grid gap-4 md:grid-cols-4">
-      {[1, 2, 3, 4].map((i) => (
-        <Skeleton key={i} className="h-32 w-full rounded-2xl" />
-      ))}
-    </div>
-    <div className="grid gap-6 md:grid-cols-12">
-      <Skeleton className="md:col-span-8 h-100 rounded-2xl" />
-      <Skeleton className="md:col-span-4 h-100 rounded-2xl" />
-    </div>
-  </div>
-);
 
 export default AdminDashboardContent;

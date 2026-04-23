@@ -4,6 +4,7 @@ import "./globals.css";
 import QueryProvider from "@/providers/QueryProvider";
 import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/providers/ThemeProvider";
+import AIChatBotAssistant from "@/components/modules/AI/AIChatBotAssistant";
 
 const space_Grotesk_init = Space_Grotesk({
   subsets: ["latin"],
@@ -26,7 +27,7 @@ export default function RootLayout({
     <html lang="en">
       <body
         suppressHydrationWarning={true}
-        className={`font-Space_Grotesk ${space_Grotesk_init.variable} antialiased`}
+        className={`font-Space_Grotesk ${space_Grotesk_init.variable} antialiased bg-white dark:bg-slate-950`}
       >
         <ThemeProvider
           attribute="class"
@@ -37,6 +38,7 @@ export default function RootLayout({
           <QueryProvider>
             {children}
             <Toaster position="top-center" richColors />
+            <AIChatBotAssistant />
           </QueryProvider>
         </ThemeProvider>
       </body>

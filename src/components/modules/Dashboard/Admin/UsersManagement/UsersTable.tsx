@@ -88,7 +88,10 @@ export default function UsersTable({
     queryFn: () => getAllUsers(queryString),
   });
 
-  const users = userDataResponse?.data ?? [];
+  // const users = userDataResponse?.data ?? [];
+  const users = Array.isArray(userDataResponse?.data)
+    ? userDataResponse.data
+    : [];
 
   const meta: PaginationMeta | undefined = userDataResponse?.meta ?? undefined;
 

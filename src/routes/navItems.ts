@@ -4,10 +4,12 @@ import { getDefaultDashboardRoute, UserRole } from "../lib/authUtils";
 export const getCommonNavItems = (role: UserRole): NavSection[] => {
   const defaultDashboard = getDefaultDashboardRoute(role);
 
-  const profilePath =
+  /*  const profilePath =
     role === "CUSTOMER"
       ? "/dashboard/profile"
-      : `/${role.toLowerCase().replace("_", "-")}/dashboard/profile`;
+      : `/${role.toLowerCase().replace("_", "-")}/dashboard/profile`; */
+
+  const profilePath = "/profile/me";
 
   return [
     {
@@ -37,11 +39,11 @@ export const getCommonNavItems = (role: UserRole): NavSection[] => {
           href: "/change-password",
           icon: "Settings",
         },
-        {
+        /* {
           title: "Account Settings",
           href: "/settings",
           icon: "Settings",
-        },
+        }, */
       ],
     },
   ];
@@ -53,43 +55,33 @@ export const providerNavItems: NavSection[] = [
     items: [
       {
         title: "Service Requests",
-        href: "/provider/dashboard/requests",
+        href: "/service-provider/dashboard/my-requests",
         icon: "ClipboardList",
       },
-      {
+      /* {
         title: "My Services",
-        href: "/provider/dashboard/my-services",
+        href: "/service-provider/dashboard/my-services",
         icon: "Briefcase",
-      },
+      }, */
       {
-        title: "Availability",
-        href: "/provider/dashboard/schedules",
+        title: "My Schedules",
+        href: "/service-provider/dashboard/my-schedules",
         icon: "Clock",
       },
-      {
+      /* {
         title: "Earnings",
-        href: "/provider/dashboard/earnings",
+        href: "/service-provider/dashboard/earnings",
         icon: "Wallet",
-      },
+      }, */
       {
         title: "Reviews",
-        href: "/provider/dashboard/reviews",
+        href: "/service-provider/dashboard/my-reviews",
         icon: "Star",
       },
       {
-        title: "Service Requests",
-        href: "/provider/dashboard/requests",
-        icon: "ClipboardList",
-      },
-      {
-        title: "Active Jobs",
-        href: "/provider/dashboard/active-jobs",
+        title: "Applied Jobs",
+        href: "/service-provider/dashboard/my-applied-jobs",
         icon: "Activity",
-      },
-      {
-        title: "Schedules",
-        href: "/provider/dashboard/schedules",
-        icon: "Clock",
       },
     ],
   },
@@ -135,7 +127,7 @@ export const adminNavItems: NavSection[] = [
     title: "Platform Operations",
     items: [
       {
-        title: "Services Catalog",
+        title: "Services Categories",
         href: "/admin/dashboard/services-management",
         icon: "Layers",
       },
@@ -160,7 +152,7 @@ export const adminNavItems: NavSection[] = [
         icon: "FilePlus",
       },
       {
-        title: "Applications",
+        title: "Job Applications",
         href: "/admin/dashboard/job-applications-management",
         icon: "FileUser",
       },
@@ -194,7 +186,7 @@ export const managerNavItems: NavSection[] = [
       }, */
       {
         title: "Providers",
-        href: "/manager/dashboard/providers",
+        href: "/manager/dashboard/service-providers",
         icon: "HardHat",
       },
       {
@@ -208,25 +200,35 @@ export const managerNavItems: NavSection[] = [
     title: "System Operations",
     items: [
       {
+        title: "Service Requests",
+        href: "/manager/dashboard/service-requests",
+        icon: "ClipboardList",
+      },
+      {
+        title: "Providers Schedules",
+        href: "/manager/dashboard/providers-schedules",
+        icon: "LayoutGrid",
+      },
+      /* {
         title: "Categories",
         href: "/manager/dashboard/categories",
         icon: "LayoutGrid",
-      },
-      {
+      }, */
+      /* {
         title: "Verifications",
         href: "/manager/dashboard/verifications",
         icon: "BadgeCheck",
-      },
-      {
+      }, */
+      /*  {
         title: "Transactions",
         href: "/manager/dashboard/transactions",
         icon: "Receipt",
-      },
-      {
+      }, */
+      /* {
         title: "Analytics",
         href: "/manager/dashboard/reports",
         icon: "BarChart3",
-      },
+      }, */
     ],
   },
 ];
@@ -237,19 +239,19 @@ export const candidateNavItems: NavSection[] = [
     items: [
       {
         title: "Applied Jobs",
-        href: "/candidate/dashboard/applied",
+        href: "/candidate/dashboard/applied-jobs",
         icon: "Briefcase",
       },
-      {
+      /*  {
         title: "Job Offers",
         href: "/candidate/dashboard/offers",
         icon: "MailOpen",
-      },
-      {
+      }, */
+      /* {
         title: "Resume Builder",
         href: "/candidate/dashboard/resume",
         icon: "FileUser",
-      },
+      }, */
     ],
   },
 ];
@@ -263,14 +265,14 @@ export const customerNavItems: NavSection[] = [
         href: "/dashboard/my-bookings",
         icon: "CalendarCheck",
       },
-      {
+      /* {
         title: "Track Service",
         href: "/dashboard/track-service",
         icon: "MapPin",
-      },
+      }, */
     ],
   },
-  {
+  /* {
     title: "Billing & Feedback",
     items: [
       {
@@ -280,7 +282,7 @@ export const customerNavItems: NavSection[] = [
       },
       { title: "My Reviews", href: "/dashboard/my-reviews", icon: "StarHalf" },
     ],
-  },
+  }, */
 ];
 
 export const getNavItemsByRole = (role: UserRole): NavSection[] => {

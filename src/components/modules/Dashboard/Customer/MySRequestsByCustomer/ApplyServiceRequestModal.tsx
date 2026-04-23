@@ -20,24 +20,24 @@ import {
   serviceRequestZodSchema,
   IServiceRequestPayload,
 } from "@/zod/serviceRequest.validation";
-import { createServiceRequestAction } from "@/actions/serviceRequest.action";
+import { applyServiceRequestAction } from "@/actions/serviceRequest.action";
 import { IServicePayload } from "@/types/service.type";
 import { Button } from "@/components/ui/button";
 
-interface ServiceRequestModalProps {
+interface ApplyServiceRequestModalProps {
   customerId: string;
   service: IServicePayload;
 }
 
-export default function ServiceRequestModal({
+export default function ApplyServiceRequestModal({
   customerId,
   service,
-}: ServiceRequestModalProps) {
+}: ApplyServiceRequestModalProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const { mutateAsync, isPending } = useMutation({
     mutationFn: (payload: IServiceRequestPayload) =>
-      createServiceRequestAction(payload),
+      applyServiceRequestAction(payload),
 
     onSuccess: (res) => {
       if (res.success) {

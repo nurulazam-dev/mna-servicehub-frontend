@@ -1,5 +1,8 @@
+"use server";
+
 import JobPostsComp from "@/components/modules/Career-Job-Post/JobPostsComp";
-import { getAllJobPosts } from "@/services/jobPosts.services";
+import { getAllJobPostsService } from "@/services/jobPosts.services";
+// import { getAllJobPostsService } from "@/services/jobPosts.services";
 import {
   dehydrate,
   HydrationBoundary,
@@ -11,7 +14,7 @@ export default async function JobPostsPage() {
 
   await queryClient.prefetchQuery({
     queryKey: ["job-posts"],
-    queryFn: () => getAllJobPosts(""),
+    queryFn: () => getAllJobPostsService(""),
   });
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
