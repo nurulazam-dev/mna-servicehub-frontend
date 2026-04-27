@@ -22,6 +22,23 @@ export async function getAllUsers(queryString: string) {
   }
 }
 
+export async function getAllCustomers(queryString: string) {
+  try {
+    const response = await httpClient.get<ApiResponse<IUserPayload[]>>(
+      queryString ? `/users/customers?${queryString}` : "/users/customers",
+    );
+
+    return response;
+  } catch (error: any) {
+    return {
+      success: false,
+      message: error.message || "An error occurred while fetching users data.",
+      data: null,
+      meta: null,
+    };
+  }
+}
+
 export const createStaff = async (payload: IUserPayload) => {
   try {
     const response = await httpClient.post<IUserPayload>(
