@@ -39,7 +39,7 @@ export const getCommonNavItems = (role: UserRole): NavSection[] => {
           href: "/change-password",
           icon: "Settings",
         },
-        /* {
+        /*  {
           title: "Account Settings",
           href: "/settings",
           icon: "Settings",
@@ -111,11 +111,11 @@ export const adminNavItems: NavSection[] = [
         href: "/admin/dashboard/service-providers-management",
         icon: "HardHat",
       }, */
-      {
+      /* {
         title: "Job Candidates",
         href: "/admin/dashboard/job-candidates-management",
         icon: "UserSearch",
-      },
+      }, */
       /* {
         title: "Customers",
         href: "/admin/dashboard/customers-management",
