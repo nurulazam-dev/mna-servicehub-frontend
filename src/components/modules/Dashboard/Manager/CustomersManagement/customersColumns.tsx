@@ -50,6 +50,28 @@ export const customersColumns: ColumnDef<IUserPayload>[] = [
     },
   },
   {
+    id: "serviceRequests",
+    accessorKey: "serviceRequests",
+    header: "Requests",
+    cell: ({ row }) => (
+      <div className="flex flex-col">
+        <span className="text-sm">
+          {row.original?.serviceRequests?.length || 0}
+        </span>
+      </div>
+    ),
+  },
+  {
+    id: "reviews",
+    accessorKey: "reviews",
+    header: "Reviews",
+    cell: ({ row }) => (
+      <div className="flex flex-col">
+        <span className="text-sm">{row.original?.reviews?.length || 0}</span>
+      </div>
+    ),
+  },
+  {
     id: "createdAt",
     accessorKey: "createdAt",
     header: "Joined On",
