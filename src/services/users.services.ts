@@ -39,6 +39,24 @@ export async function getAllCustomers(queryString: string) {
   }
 }
 
+export async function getAllProviders(queryString: string) {
+  try {
+    const response = await httpClient.get<ApiResponse<IUserPayload[]>>(
+      queryString ? `/users/providers?${queryString}` : "/users/providers",
+    );
+
+    return response;
+  } catch (error: any) {
+    return {
+      success: false,
+      message:
+        error.message || "An error occurred while fetching providers data.",
+      data: null,
+      meta: null,
+    };
+  }
+}
+
 export const createStaff = async (payload: IUserPayload) => {
   try {
     const response = await httpClient.post<IUserPayload>(
