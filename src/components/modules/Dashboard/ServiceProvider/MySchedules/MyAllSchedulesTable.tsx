@@ -40,7 +40,11 @@ export default function MyAllSchedulesTable({
     isViewDialogOpen,
     onViewOpenChange,
     tableActions,
-  } = useRowActionModalState<IServiceSchedulePayload>();
+  } = useRowActionModalState<IServiceSchedulePayload>({
+    enableView: true,
+    enableEdit: false,
+    enableDelete: false,
+  });
 
   const {
     queryStringFromUrl,

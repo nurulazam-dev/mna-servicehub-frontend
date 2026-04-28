@@ -40,7 +40,11 @@ export default function ProvidersTable({
     onViewOpenChange,
     onEditOpenChange,
     tableActions,
-  } = useRowActionModalState<IUserPayload>();
+  } = useRowActionModalState<IUserPayload>({
+    enableView: true,
+    enableEdit: true,
+    enableDelete: false,
+  });
 
   const {
     queryStringFromUrl,

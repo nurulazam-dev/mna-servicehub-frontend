@@ -283,6 +283,16 @@ export const customerNavItems: NavSection[] = [
       { title: "My Reviews", href: "/dashboard/my-reviews", icon: "StarHalf" },
     ],
   }, */
+  {
+    title: "Job Portal",
+    items: [
+      {
+        title: "Applied Jobs",
+        href: "/dashboard/applied-jobs",
+        icon: "Briefcase",
+      },
+    ],
+  },
 ];
 
 export const getNavItemsByRole = (role: UserRole): NavSection[] => {

@@ -5,52 +5,40 @@ import {
   DataTableFilterConfig,
   DataTableFilterValues,
 } from "@/components/shared/table/DataTableFilters";
-import { useRowActionModalState } from "@/hooks/useRowActionModalState";
-import { useServerManagedDataTable } from "@/hooks/useServerManagedDataTable";
 import {
   serverManagedFilter,
   useServerManagedDataTableFilters,
 } from "@/hooks/useServerManagedDataTableFilters";
 import { useServerManagedDataTableSearch } from "@/hooks/useServerManagedDataTableSearch";
-import { getAllServices } from "@/services/servicesData.services";
 import { PaginationMeta } from "@/types/api.types";
-import { useSearchParams } from "next/navigation";
-import { IServicePayload } from "@/types/service.type";
+import { useServerManagedDataTable } from "@/hooks/useServerManagedDataTable";
 import { useQuery } from "@tanstack/react-query";
+import { useSearchParams } from "next/navigation";
 import { useMemo } from "react";
-import CreateServiceModal from "./CreateServiceModal";
-import EditServiceModal from "./EditServiceModal";
-import ViewServiceModel from "./ViewServiceModel";
-import { servicesColumns } from "./servicesColumns";
-import DeleteServiceDialog from "./DeleteServiceDialog";
+import { useRowActionModalState } from "@/hooks/useRowActionModalState";
+import ViewMyApplicationByIdModal from "./ViewMyApplicationByIdModal";
+import { IJobApplicationPayload } from "@/types/jobApplication.type";
+import { getMyAllJobApplicationsService } from "@/services/jobApplications.services";
+import { myApplicationsColumns } from "./myApplicationsColumns";
 
 const DEFAULT_PAGE = 1;
 const DEFAULT_LIMIT = 10;
-const SERVICE_FILTER_DEFINITIONS = [serverManagedFilter.single("isActive")];
+const SERVICE_REQUEST_FILTER_DEFINITIONS = [
+  serverManagedFilter.single("status"),
+];
 
-export default function ServicesTable({
+export default function ManageMyAllApplicationsTable({
   initialQueryString,
 }: {
   initialQueryString: string;
 }) {
   const searchParams = useSearchParams();
-
-  const {
-    viewingItem,
-    editingItem,
-    deletingItem,
-    isDeleteDialogOpen,
-    onDeleteOpenChange,
-    isViewDialogOpen,
-    isEditModalOpen,
-    onViewOpenChange,
-    onEditOpenChange,
-    tableActions,
-  } = useRowActionModalState<IServicePayload>({
-    enableView: true,
-    enableEdit: true,
-    enableDelete: true,
-  });
+  const { viewingItem, isViewDialogOpen, onViewOpenChange, tableActions } =
+    useRowActionModalState<IJobApplicationPayload>({
+      enableView: true,
+      enableEdit: false,
+      enableDelete: false,
+    });
 
   const {
     queryStringFromUrl,
@@ -77,35 +65,36 @@ export default function ServicesTable({
   const { filterValues, handleFilterChange, clearAllFilters } =
     useServerManagedDataTableFilters({
       searchParams,
-      definitions: SERVICE_FILTER_DEFINITIONS,
+      definitions: SERVICE_REQUEST_FILTER_DEFINITIONS,
       updateParams,
     });
 
   const {
-    data: serviceDataResponse,
+    data: applicationDataResponse,
     isLoading,
     isFetching,
   } = useQuery({
-    queryKey: ["services", queryString],
-    queryFn: () => getAllServices(queryString),
+    queryKey: ["my-applications", queryString],
+    queryFn: () => getMyAllJobApplicationsService(queryString),
   });
 
-  const servicesData = Array.isArray(serviceDataResponse?.data)
-    ? serviceDataResponse.data
+  const applications = Array.isArray(applicationDataResponse?.data)
+    ? applicationDataResponse.data
     : [];
 
   const meta: PaginationMeta | undefined =
-    serviceDataResponse?.meta ?? undefined;
+    applicationDataResponse?.meta ?? undefined;
 
   const filterConfigs = useMemo<DataTableFilterConfig[]>(() => {
     return [
       {
-        id: "isActive",
-        label: "Active Status",
+        id: "status",
+        label: "Application Status",
         type: "single-select",
         options: [
-          { label: "Active", value: "true" },
-          { label: "Inactive", value: "false" },
+          { label: "Pending", value: "PENDING" },
+          { label: "Accepted", value: "ACCEPTED" },
+          { label: "Rejected", value: "REJECTED" },
         ],
       },
     ];
@@ -113,17 +102,17 @@ export default function ServicesTable({
 
   const filterValuesForTable = useMemo<DataTableFilterValues>(() => {
     return {
-      isActive: filterValues.isActive || "",
+      status: filterValues.status || "",
     };
   }, [filterValues]);
 
   return (
     <>
       <DataTable
-        data={servicesData}
-        columns={servicesColumns}
+        data={applications}
+        columns={myApplicationsColumns}
         isLoading={isLoading || isFetching || isRouteRefreshPending}
-        emptyMessage="No services found."
+        emptyMessage="No application found."
         sorting={{
           state: optimisticSortingState,
           onSortingChange: handleSortingChange,
@@ -134,7 +123,7 @@ export default function ServicesTable({
         }}
         search={{
           initialValue: searchTermFromUrl,
-          placeholder: "Search service by name...",
+          placeholder: "Search application by ID...",
           debounceMs: 700,
           onDebouncedChange: handleDebouncedSearchChange,
         }}
@@ -144,24 +133,13 @@ export default function ServicesTable({
           onFilterChange: handleFilterChange,
           onClearAll: clearAllFilters,
         }}
-        toolbarAction={<CreateServiceModal />}
         meta={meta}
         actions={tableActions}
       />
-      <EditServiceModal
-        open={isEditModalOpen}
-        onOpenChange={onEditOpenChange}
-        service={editingItem}
-      />
-      <DeleteServiceDialog
-        open={isDeleteDialogOpen}
-        onOpenChange={onDeleteOpenChange}
-        service={deletingItem}
-      />
-      <ViewServiceModel
+      <ViewMyApplicationByIdModal
         open={isViewDialogOpen}
         onOpenChange={onViewOpenChange}
-        service={viewingItem}
+        application={viewingItem}
       />
     </>
   );

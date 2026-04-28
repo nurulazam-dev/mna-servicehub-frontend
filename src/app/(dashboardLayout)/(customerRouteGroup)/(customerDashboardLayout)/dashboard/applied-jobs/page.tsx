@@ -7,7 +7,7 @@ import {
 import { getMyAllJobApplicationsService } from "@/services/jobApplications.services";
 import ManageMyAllApplicationsTable from "@/components/modules/Dashboard/Common/MyAllApplications/ManageMyAllApplicationsTable";
 
-export default async function MyAppliedJobSBySPPage({
+export default async function MyAppliedJobSByCustomerPage({
   searchParams,
 }: {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;

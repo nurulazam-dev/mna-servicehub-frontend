@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useCallback, useMemo, useState } from "react";
@@ -9,9 +10,12 @@ interface UseRowActionModalStateOptions {
 }
 
 export const useRowActionModalState = <TData>({
-  enableView = true,
-  enableEdit = true,
-  enableDelete = true,
+  // enableView = true,
+  // enableEdit = true,
+  // enableDelete = true,
+  enableView = false,
+  enableEdit = false,
+  enableDelete = false,
 }: UseRowActionModalStateOptions = {}) => {
   const [viewingItem, setViewingItem] = useState<TData | null>(null);
   const [editingItem, setEditingItem] = useState<TData | null>(null);
@@ -58,11 +62,16 @@ export const useRowActionModalState = <TData>({
   }, []);
 
   const tableActions = useMemo(() => {
-    return {
+    /* return {
       onView: enableView ? handleView : undefined,
       onEdit: enableEdit ? handleEdit : undefined,
       onDelete: enableDelete ? handleDelete : undefined,
-    };
+    }; */
+    const actions: any = {};
+    if (enableView) actions.onView = handleView;
+    if (enableEdit) actions.onEdit = handleEdit;
+    if (enableDelete) actions.onDelete = handleDelete;
+    return actions;
   }, [
     enableDelete,
     enableEdit,
