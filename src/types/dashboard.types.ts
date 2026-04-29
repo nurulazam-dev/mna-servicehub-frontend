@@ -1,3 +1,5 @@
+import { IServiceRequestPayload } from "./serviceRequest.type";
+
 export interface NavItem {
   title: string;
   href: string;
@@ -47,6 +49,7 @@ export interface IDashboardStatsDataPayload {
   acceptedApplications?: number;
   rejectedApplications?: number;
 
+  serviceRequest?: IServiceRequestPayload[];
   totalRequests?: number;
   activeRequests?: number;
   totalSpent?: number;

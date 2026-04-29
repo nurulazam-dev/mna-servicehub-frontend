@@ -1,4 +1,4 @@
-import CustomerDashboardContent from "@/components/modules/Dashboard/Customer/CandidateDashboardContent";
+import CustomerDashboardContent from "@/components/modules/Dashboard/Customer/CustomerDashboardContent";
 import { getDashboardData } from "@/services/dashboard.services";
 import {
   dehydrate,

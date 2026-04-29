@@ -20,14 +20,12 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 
-import {
-  IServiceRequestUpdateCostBySPPayload,
-  updateServiceCostBySPZodSchema,
-} from "@/zod/serviceRequest.validation";
+import { IServiceRequestUpdateCostBySPPayload } from "@/zod/serviceRequest.validation";
 import { IServiceRequestPayload } from "@/types/serviceRequest.type";
-import { updateServiceRequestCostBySPService } from "@/services/serviceRequest.services";
+import { updateServiceRequestCostBySPAction } from "@/actions/serviceRequest.action";
+import { ApiErrorResponse, ApiResponse } from "@/types/api.types";
 
-interface UpdateServiceRequestCostBySPFormModalProps {
+interface UpdateProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   mySRequest: IServiceRequestPayload | null;
@@ -41,258 +39,137 @@ const getInitialValues = (
   additionalCost: mySRequest?.costBreakdown?.additionalCost ?? 0,
 });
 
-/* const zodValidator = (schema: any) => {
-  return ({ value }: { value: unknown }) => {
-    const result = schema.safeParse(value);
-    return result.success ? undefined : result.error.issues[0]?.message;
-  };
-}; */
-
-const zodFormValidator = (schema: any) => {
-  return ({ value }: { value: unknown }) => {
-    const result = schema.safeParse(value);
-    if (!result.success) {
-      return result.error.formErrors.fieldErrors;
-    }
-    return undefined;
-  };
-};
-
 export default function UpdateServiceRequestCostBySPDialog({
   open,
   onOpenChange,
   mySRequest,
-}: UpdateServiceRequestCostBySPFormModalProps) {
+}: UpdateProps) {
   const queryClient = useQueryClient();
   const router = useRouter();
 
-  const { mutateAsync, isPending } = useMutation({
-    mutationFn: ({
-      serviceRequestId,
-      payload,
-    }: {
-      serviceRequestId: string;
-      payload: IServiceRequestUpdateCostBySPPayload;
-    }) => updateServiceRequestCostBySPService(serviceRequestId, payload),
+  const { mutateAsync, isPending } = useMutation<
+    ApiResponse | ApiErrorResponse,
+    Error,
+    { id: string; payload: IServiceRequestUpdateCostBySPPayload }
+  >({
+    mutationFn: ({ id, payload }) =>
+      updateServiceRequestCostBySPAction(id, payload),
   });
 
   const form = useForm({
-    defaultValues: getInitialValues(
-      mySRequest,
-    ) as IServiceRequestUpdateCostBySPPayload,
-    validators: {
-      onSubmit: zodFormValidator(updateServiceCostBySPZodSchema),
-    },
-
+    defaultValues: getInitialValues(mySRequest),
     onSubmit: async ({ value }) => {
-      if (!mySRequest) {
-        toast.error("service request not found");
-        return;
-      }
+      if (!mySRequest?.id) return;
+
       try {
         const payload: IServiceRequestUpdateCostBySPPayload = {
-          serviceCharge: value.serviceCharge,
-          productCost: value.productCost,
-          additionalCost: value.additionalCost,
+          serviceCharge: Number(value.serviceCharge) || 0,
+          productCost: Number(value.productCost) || 0,
+          additionalCost: Number(value.additionalCost) || 0,
         };
 
         const result = await mutateAsync({
-          serviceRequestId: String(mySRequest.id),
+          id: String(mySRequest.id),
           payload,
         });
 
         if (result.success) {
-          toast.success(result.message || "Updated successfully");
+          toast.success(result.message);
           onOpenChange(false);
           form.reset();
-          queryClient.invalidateQueries({ queryKey: ["my-requests-sp"] });
+          await queryClient.invalidateQueries({ queryKey: ["my-requests-sp"] });
+          router.refresh();
         } else {
-          toast.error(result.message || "Failed to update");
+          toast.error(result.message);
         }
       } catch (error: any) {
-        const errorMessage =
-          error?.response?.data?.message || "Something went wrong";
-        toast.error(errorMessage);
-        console.error(error);
+        toast.error(error?.message || "An unexpected error occurred");
       }
-
-      /*     if (!result.success) {
-        toast.error(result.message || "Failed to update Service request");
-        return;
-      }
-
-      toast.success(result.message || "Service request updated successfully");
-      onOpenChange(false);
-      form.reset();
-
-      if (!result.success) return toast.error(result.message);
-      toast.success("Service request updated");
-      onOpenChange(false); */
-
-      void queryClient.invalidateQueries({ queryKey: ["my-requests-sp"] });
-      void queryClient.refetchQueries({
-        queryKey: ["my-requests-sp"],
-        type: "active",
-      });
-      router.refresh();
     },
   });
 
   useEffect(() => {
-    if (open) {
+    if (open && mySRequest) {
       form.reset(getInitialValues(mySRequest));
     }
-  }, [mySRequest, form, open]);
-
-  /*   const handleOpenChange = useCallback(
-    (nextOpen: boolean) => {
-      onOpenChange(nextOpen);
-      if (!nextOpen) {
-        form.reset();
-      }
-    },
-    [form, onOpenChange],
-  ); */
+  }, [open, mySRequest, form]);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-150 p-0 overflow-hidden border-none shadow-2xl bg-white dark:bg-slate-950">
-        <DialogHeader className="px-6 py-6 bg-muted/30 border-b">
+      <DialogContent className="max-w-md p-0 overflow-hidden bg-white dark:bg-slate-950">
+        <DialogHeader className="px-6 py-6 border-b bg-muted/20">
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-primary/10 rounded-lg">
-              <Settings2 className="w-5 h-5 text-primary" />
-            </div>
+            <Settings2 className="w-5 h-5 text-primary" />
             <div>
               <DialogTitle className="text-xl font-bold">
                 Update Service Cost
               </DialogTitle>
               <DialogDescription>
-                Updated the service related costs.
+                Enter the breakdown of the service costs.
               </DialogDescription>
             </div>
           </div>
         </DialogHeader>
 
-        <ScrollArea className="max-h-[80vh]">
+        <ScrollArea className="max-h-[70vh]">
           <form
             onSubmit={(e) => {
               e.preventDefault();
               e.stopPropagation();
               form.handleSubmit();
             }}
-            className="p-6 space-y-6"
+            className="p-6 space-y-5"
           >
-            <form.Field
-              name="serviceCharge"
-              validators={{
-                onChange: ({ value }) => {
-                  const parsedValue =
-                    typeof value === "number"
-                      ? value
-                      : value
-                        ? Number(value)
-                        : undefined;
-
-                  const result =
-                    updateServiceCostBySPZodSchema.shape.serviceCharge.safeParse(
-                      parsedValue,
-                    );
-
-                  return result.success
-                    ? undefined
-                    : result.error.issues[0]?.message;
-                },
-              }}
-            >
+            <form.Field name="serviceCharge">
               {(field) => (
                 <AppField
                   field={field}
                   label="Service Charge"
-                  placeholder="e.g. 2500"
+                  type="number"
+                  placeholder="0.00"
                 />
               )}
             </form.Field>
-            <form.Field
-              name="productCost"
-              validators={{
-                onChange: ({ value }) => {
-                  const parsedValue =
-                    typeof value === "number"
-                      ? value
-                      : value
-                        ? Number(value)
-                        : undefined;
 
-                  const result =
-                    updateServiceCostBySPZodSchema.shape.productCost.safeParse(
-                      parsedValue,
-                    );
-
-                  return result.success
-                    ? undefined
-                    : result.error.issues[0]?.message;
-                },
-              }}
-            >
+            <form.Field name="productCost">
               {(field) => (
                 <AppField
                   field={field}
                   label="Product Cost"
-                  placeholder="e.g. 60000"
+                  type="number"
+                  placeholder="0.00"
                 />
               )}
             </form.Field>
-            <form.Field
-              name="additionalCost"
-              validators={{
-                onChange: ({ value }) => {
-                  const parsedValue =
-                    typeof value === "number"
-                      ? value
-                      : value
-                        ? Number(value)
-                        : undefined;
 
-                  const result =
-                    updateServiceCostBySPZodSchema.shape.additionalCost.safeParse(
-                      parsedValue,
-                    );
-
-                  return result.success
-                    ? undefined
-                    : result.error.issues[0]?.message;
-                },
-              }}
-            >
+            <form.Field name="additionalCost">
               {(field) => (
                 <AppField
                   field={field}
                   label="Additional Cost"
-                  placeholder="e.g. 500"
+                  type="number"
+                  placeholder="0.00"
                 />
               )}
             </form.Field>
 
-            <div className="flex items-center justify-end gap-3 pt-6 border-t">
+            <div className="flex justify-end gap-3 pt-4">
               <Button
                 type="button"
-                variant="ghost"
-                disabled={isPending}
+                variant="outline"
                 onClick={() => onOpenChange(false)}
-                className="px-6"
+                disabled={isPending}
               >
                 Cancel
               </Button>
-
               <form.Subscribe
                 selector={(state) => [state.canSubmit, state.isSubmitting]}
               >
                 {([canSubmit, isSubmitting]) => (
                   <CustomSubmitButton
                     isPending={isSubmitting || isPending}
-                    pendingLabel="Saving changes..."
+                    pendingLabel="Updating..."
                     disabled={!canSubmit}
-                    className="min-w-35 shadow-lg shadow-primary/20"
                   >
                     Save Changes
                   </CustomSubmitButton>

@@ -3,11 +3,6 @@
 
 import { httpClient } from "@/lib/axios/httpClient";
 import { ApiResponse } from "@/types/api.types";
-/* import {
-  ICreateJobPostPayload,
-  IJobPostPayload,
-  IUpdateJobPostPayload,
-} from "@/types/jobPost.type"; */
 import {
   IApplyServiceRequestPayload,
   IServiceRequestPayload,
@@ -127,29 +122,19 @@ export const updateServiceRequestService = async (
 export const updateServiceRequestCostBySPService = async (
   id: string,
   payload: IServiceRequestUpdateCostBySPPayload,
-) => {
+): Promise<any> => {
   try {
-    const response =
-      await httpClient.patch<IServiceRequestUpdateCostBySPPayload>(
-        `/service-requests/update-service-request-cost/${id}`,
-        payload,
-      );
-    return response;
+    const response = await httpClient.patch(
+      `/service-requests/update-service-request-cost/${id}`,
+      payload,
+    );
+
+    return response.data;
   } catch (error) {
-    console.log("Error updating service request:", error);
+    console.error("Service Error:", error);
     throw error;
   }
 };
-
-/* export const getJobPostService = async (id: string) => {
-  try {
-    const response = await httpClient.get<IJobPostPayload>(`/job-posts/${id}`);
-    return response;
-  } catch (error) {
-    console.log("Error fetching job post by id:", error);
-    throw error;
-  }
-}; */
 
 export const cancelServiceRequestService = async (id: string) => {
   try {
