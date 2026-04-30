@@ -1,5 +1,6 @@
 "use server";
 
+import { getActionErrorMessage } from "@/lib/getActionErrorMessage";
 import {
   createJobPostService,
   deleteJobPostService,
@@ -16,29 +17,6 @@ import {
   createJobPostZodSchema,
   updateJobPostZodSchema,
 } from "@/zod/jobPost.validation";
-
-const getActionErrorMessage = (error: unknown, fallbackMessage: string) => {
-  if (
-    error &&
-    typeof error === "object" &&
-    "response" in error &&
-    error.response &&
-    typeof error.response === "object" &&
-    "data" in error.response &&
-    error.response.data &&
-    typeof error.response.data === "object" &&
-    "message" in error.response.data &&
-    typeof error.response.data.message === "string"
-  ) {
-    return error.response.data.message;
-  }
-
-  if (error instanceof Error) {
-    return error.message;
-  }
-
-  return fallbackMessage;
-};
 
 export const createJobPostAction = async (
   payload: ICreateJobPostPayload,

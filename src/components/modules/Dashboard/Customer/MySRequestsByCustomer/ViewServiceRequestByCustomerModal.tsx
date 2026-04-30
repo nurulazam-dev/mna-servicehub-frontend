@@ -2,7 +2,6 @@
 
 import { getServiceRequestByIdAction } from "@/actions/serviceRequest.action";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -26,6 +25,7 @@ import {
   Star,
   Wrench,
 } from "lucide-react";
+import PayButton from "./PayButton";
 
 interface ViewServiceRequestByCustomerDialogProps {
   open: boolean;
@@ -117,7 +117,7 @@ export default function ViewServiceRequestByCustomerModal({
               <div className="flex items-center justify-center py-20 animate-pulse flex-col gap-4">
                 <div className="size-12 rounded-full border-4 border-indigo-600 border-t-transparent animate-spin" />
                 <p className="text-sm font-bold text-slate-500 italic">
-                  Fetching request details...
+                  Loading request details...
                 </p>
               </div>
             ) : hasError ? (
@@ -269,9 +269,7 @@ export default function ViewServiceRequestByCustomerModal({
 
                       {details.status === "COMPLETED" &&
                         details.paymentStatus === "UNPAID" && (
-                          <Button className="w-full mt-6 bg-white text-indigo-600 hover:bg-slate-100 font-black rounded-xl h-12">
-                            Proceed to Payment
-                          </Button>
+                          <PayButton requestId={details.id} />
                         )}
                     </div>
 

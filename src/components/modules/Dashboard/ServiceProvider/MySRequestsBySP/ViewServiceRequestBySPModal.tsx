@@ -2,7 +2,6 @@
 
 import { getServiceRequestByIdAction } from "@/actions/serviceRequest.action";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -260,13 +259,6 @@ export default function ViewServiceRequestBySPModal({
                           </span>
                         </div>
                       </div>
-
-                      {details.status === "COMPLETED" &&
-                        details.paymentStatus === "UNPAID" && (
-                          <Button className="w-full mt-6 bg-white text-indigo-600 hover:bg-slate-100 font-black rounded-xl h-12">
-                            Proceed to Payment
-                          </Button>
-                        )}
                     </div>
 
                     {details.status === "REJECTED" && (
