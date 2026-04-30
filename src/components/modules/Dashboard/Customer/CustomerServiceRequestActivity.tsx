@@ -16,17 +16,15 @@ export default function CustomerServiceRequestActivity() {
   });
 
   const myServiceRequests = Array.isArray(mySRsCustomerDataResponse?.data)
-    ? mySRsCustomerDataResponse.data.slice(0, 10)
+    ? mySRsCustomerDataResponse.data.slice(0, 7)
     : [];
 
   return (
-    <div className="md:col-span-6 lg:col-span-7 bg-white dark:bg-slate-900 p-6 rounded-[2rem] border border-slate-100 dark:border-slate-800 shadow-sm">
+    <div className="md:col-span-6 lg:col-span-7 p-6 rounded-lg border border-slate-100 dark:border-slate-800 shadow-sm">
       <div className="mb-6 flex justify-between items-center">
-        <h3 className="text-xl font-black tracking-tight uppercase">
-          Service Request Activity
-        </h3>
+        <h3 className="text-2xl font-black">Service Request Activity</h3>
         <span className="text-xs font-medium text-slate-500 bg-slate-100 dark:bg-slate-800 px-3 py-1 rounded-full">
-          Showing latest 10
+          Showing latest 7
         </span>
       </div>
 

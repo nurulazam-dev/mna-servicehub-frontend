@@ -3,12 +3,11 @@
 import { useQuery } from "@tanstack/react-query";
 import { getDashboardData } from "@/services/dashboard.services";
 import StatsCard from "../StatsCard";
-import ServiceRequestPieChart from "../ServiceRequestPieChart";
 import { IDashboardStatsDataPayload } from "@/types/dashboard.types";
 import DashboardBanner from "../DashboardBanner";
 import DashboardSkeleton from "../DashboardSkeleton";
 import CustomerServiceRequestActivity from "./CustomerServiceRequestActivity";
-import { Calendar } from "@/components/ui/calendar";
+import EnhancedCalendar from "./EnhancedCalendar";
 
 const CustomerDashboardContent = () => {
   const { data: response, isLoading } = useQuery({
@@ -63,27 +62,7 @@ const CustomerDashboardContent = () => {
 
       <div className="grid gap-6 md:grid-cols-12">
         <CustomerServiceRequestActivity />
-
-        <div className="md:col-span-6 lg:col-span-5 bg-white dark:bg-slate-900 p-6 rounded-lg border border-slate-100 dark:border-slate-800 shadow-sm">
-          <div className="">
-            <Calendar
-              mode="single"
-              captionLayout="dropdown"
-              className="rounded-lg border w-full"
-            />
-          </div>
-          <div className="mb-6">
-            <h3 className="text-xl font-black tracking-tight uppercase">
-              Success Rate
-            </h3>
-            <p className="text-xs text-muted-foreground">
-              Distribution of your service request statuses
-            </p>
-          </div>
-          <ServiceRequestPieChart
-            data={data?.requestStatusDistribution || []}
-          />
-        </div>
+        <EnhancedCalendar />
       </div>
     </div>
   );
