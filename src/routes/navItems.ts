@@ -231,6 +231,16 @@ export const managerNavItems: NavSection[] = [
       }, */
     ],
   },
+  {
+    title: "Financials & Feedback",
+    items: [
+      {
+        title: "Payments",
+        href: "/manager/dashboard/payments-management",
+        icon: "CreditCard",
+      },
+    ],
+  },
 ];
 
 export const candidateNavItems: NavSection[] = [
