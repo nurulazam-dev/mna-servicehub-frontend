@@ -3,7 +3,10 @@
 
 import { httpClient } from "@/lib/axios/httpClient";
 import { ApiResponse } from "@/types/api.types";
-import { IServiceSchedulePayload } from "@/types/schedule.type";
+import {
+  ICreateServiceSchedulePayload,
+  IServiceSchedulePayload,
+} from "@/types/schedule.type";
 
 export async function getAllSchedules(queryString: string) {
   try {
@@ -54,6 +57,21 @@ export const getServiceScheduleById = async (id: string) => {
     return data;
   } catch (error) {
     console.log("Error fetching schedule by id:", error);
+    throw error;
+  }
+};
+
+export const createServiceScheduleService = async (
+  payload: ICreateServiceSchedulePayload,
+) => {
+  try {
+    const response = await httpClient.post<IServiceSchedulePayload>(
+      "/service-schedules/create-schedule",
+      payload,
+    );
+    return response;
+  } catch (error) {
+    console.log("Error creating service schedule:", error);
     throw error;
   }
 };

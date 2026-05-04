@@ -1,7 +1,14 @@
 import { getActionErrorMessage } from "@/lib/getActionErrorMessage";
-import { getServiceScheduleById } from "@/services/serviceSchedules.services";
+import {
+  createServiceScheduleService,
+  getServiceScheduleById,
+} from "@/services/serviceSchedules.services";
 import { ApiErrorResponse, ApiResponse } from "@/types/api.types";
 import { IServiceSchedulePayload } from "@/types/schedule.type";
+import {
+  createServiceScheduleZodSchema,
+  ICreateServiceSchedulePayload,
+} from "@/zod/schedule.validation";
 
 export const getServiceScheduleByIdAction = async (
   id: string,
@@ -22,6 +29,30 @@ export const getServiceScheduleByIdAction = async (
         error,
         "Failed to fetch Service Schedule details",
       ),
+    };
+  }
+};
+
+export const createServiceScheduleAction = async (
+  payload: ICreateServiceSchedulePayload,
+): Promise<ApiResponse<IServiceSchedulePayload> | ApiErrorResponse> => {
+  const parsedPayload = createServiceScheduleZodSchema.safeParse(payload);
+
+  if (!parsedPayload.success) {
+    return {
+      success: false,
+      message: parsedPayload.error.issues[0]?.message || "Invalid input",
+    };
+  }
+
+  try {
+    return await createServiceScheduleService(
+      parsedPayload.data as ICreateServiceSchedulePayload,
+    );
+  } catch (error: unknown) {
+    return {
+      success: false,
+      message: getActionErrorMessage(error, "Failed to create schedule"),
     };
   }
 };

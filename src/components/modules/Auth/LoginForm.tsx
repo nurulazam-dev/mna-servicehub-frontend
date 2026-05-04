@@ -207,7 +207,6 @@ const LoginForm = ({ redirectPath }: LoginFormProps) => {
               </span>
             </div>
           </div>
-
           <Button
             variant="outline"
             type="button"
