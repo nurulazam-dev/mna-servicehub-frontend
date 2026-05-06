@@ -5,7 +5,7 @@ import { useState } from "react";
 import {
   KeyRound,
   Lock,
-  ShieldCheck,
+  // ShieldCheck,
   Eye,
   EyeOff,
   Loader2,
@@ -50,9 +50,9 @@ export default function ChangePassword() {
   return (
     <div className="max-w-md mx-auto">
       <div className="text-center mb-8">
-        <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-indigo-50 dark:bg-indigo-950/30 text-indigo-600 dark:text-indigo-400 mb-4 shadow-sm border border-indigo-100 dark:border-indigo-900">
+        {/* <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-indigo-50 dark:bg-indigo-950/30 text-indigo-600 dark:text-indigo-400 mb-4 shadow-sm border border-indigo-100 dark:border-indigo-900">
           <ShieldCheck size={32} />
-        </div>
+        </div> */}
         <h2 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">
           Security Settings
         </h2>

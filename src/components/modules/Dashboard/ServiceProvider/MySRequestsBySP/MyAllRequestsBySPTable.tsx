@@ -45,7 +45,11 @@ export default function MyAllRequestsBySPTable({
     isEditModalOpen,
     onEditOpenChange,
     tableActions,
-  } = useRowActionModalState<IServiceRequestPayload>();
+  } = useRowActionModalState<IServiceRequestPayload>({
+    enableView: true,
+    enableEdit: true,
+    enableDelete: false,
+  });
 
   const {
     queryStringFromUrl,

@@ -42,7 +42,11 @@ export default function JobApplicationsTable({
     onViewOpenChange,
     onEditOpenChange,
     tableActions,
-  } = useRowActionModalState<IJobApplicationPayload>();
+  } = useRowActionModalState<IJobApplicationPayload>({
+    enableView: true,
+    enableEdit: true,
+    enableDelete: false,
+  });
 
   const {
     queryStringFromUrl,

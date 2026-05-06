@@ -48,7 +48,11 @@ export default function JobPostsTable({
     onViewOpenChange,
     onEditOpenChange,
     tableActions,
-  } = useRowActionModalState<IJobPostPayload>();
+  } = useRowActionModalState<IJobPostPayload>({
+    enableView: true,
+    enableEdit: true,
+    enableDelete: true,
+  });
 
   const {
     queryStringFromUrl,

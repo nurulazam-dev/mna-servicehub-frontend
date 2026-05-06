@@ -42,7 +42,11 @@ export default function MyAllSRsByCustomerTable({
     isViewDialogOpen,
     onViewOpenChange,
     tableActions,
-  } = useRowActionModalState<IServiceRequestPayload>();
+  } = useRowActionModalState<IServiceRequestPayload>({
+    enableView: true,
+    enableEdit: false,
+    enableDelete: true,
+  });
 
   const {
     queryStringFromUrl,

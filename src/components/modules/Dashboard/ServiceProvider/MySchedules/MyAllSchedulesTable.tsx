@@ -20,6 +20,7 @@ import { myScheduleColumns } from "./myScheduleColumns";
 import { IServiceSchedulePayload } from "@/types/schedule.type";
 import { getMyAllSchedulesService } from "@/services/serviceSchedules.services";
 import ViewMyScheduleModal from "./ViewMyScheduleModal";
+import CreateServiceScheduleModal from "./CreateServiceScheduleModal";
 // import CancelServiceRequestDialog from "./CancelServiceRequestDialog";
 
 const DEFAULT_PAGE = 1;
@@ -40,7 +41,11 @@ export default function MyAllSchedulesTable({
     isViewDialogOpen,
     onViewOpenChange,
     tableActions,
-  } = useRowActionModalState<IServiceSchedulePayload>();
+  } = useRowActionModalState<IServiceSchedulePayload>({
+    enableView: true,
+    enableEdit: false,
+    enableDelete: false,
+  });
 
   const {
     queryStringFromUrl,
@@ -134,6 +139,7 @@ export default function MyAllSchedulesTable({
           onFilterChange: handleFilterChange,
           onClearAll: clearAllFilters,
         }}
+        toolbarAction={<CreateServiceScheduleModal />}
         meta={meta}
         actions={tableActions}
       />

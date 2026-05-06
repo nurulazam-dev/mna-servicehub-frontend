@@ -46,7 +46,11 @@ export default function ServicesTable({
     onViewOpenChange,
     onEditOpenChange,
     tableActions,
-  } = useRowActionModalState<IServicePayload>();
+  } = useRowActionModalState<IServicePayload>({
+    enableView: true,
+    enableEdit: true,
+    enableDelete: true,
+  });
 
   const {
     queryStringFromUrl,

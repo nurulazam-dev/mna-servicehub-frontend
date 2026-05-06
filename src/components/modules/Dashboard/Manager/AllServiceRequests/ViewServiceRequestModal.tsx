@@ -2,7 +2,6 @@
 
 import { getServiceRequestByIdAction } from "@/actions/serviceRequest.action";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -194,7 +193,13 @@ export default function ViewServiceRequestByIdModal({
                             <p className="font-black text-slate-900 dark:text-white">
                               {details?.provider?.user?.name}
                             </p>
-                            <p className="text-xs font-bold text-slate-500 uppercase tracking-tighter">
+                            <p className="font-semibold text-slate-700 dark:text-slate-400">
+                              {details?.provider?.user?.email}
+                            </p>
+                            <p className="font-semibold text-slate-700 dark:text-slate-400">
+                              {details?.provider?.user?.phone}
+                            </p>
+                            <p className="text-xs font-bold dark:text-slate-300 text-slate-600 uppercase tracking-tighter">
                               Certified Professional
                             </p>
                           </div>
@@ -289,13 +294,6 @@ export default function ViewServiceRequestByIdModal({
                           </span>
                         </div>
                       </div>
-
-                      {details.status === "COMPLETED" &&
-                        details.paymentStatus === "UNPAID" && (
-                          <Button className="w-full mt-6 bg-white text-indigo-600 hover:bg-slate-100 font-black rounded-xl h-12">
-                            Proceed to Payment
-                          </Button>
-                        )}
                     </div>
 
                     {details.status === "REJECTED" && (

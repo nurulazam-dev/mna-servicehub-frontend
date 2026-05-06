@@ -45,7 +45,11 @@ export default function ManagerServiceRequestsTable({
     editingItem,
     isEditModalOpen,
     onEditOpenChange,
-  } = useRowActionModalState<IServiceRequestPayload>();
+  } = useRowActionModalState<IServiceRequestPayload>({
+    enableView: true,
+    enableEdit: true,
+    enableDelete: false,
+  });
 
   const {
     queryStringFromUrl,

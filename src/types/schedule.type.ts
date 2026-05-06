@@ -14,3 +14,8 @@ export interface IServiceSchedulePayload {
   createdAt: Date | string;
   updatedAt: Date | string;
 }
+
+export interface ICreateServiceSchedulePayload {
+  scheduleDate: string;
+  startTime: string;
+}

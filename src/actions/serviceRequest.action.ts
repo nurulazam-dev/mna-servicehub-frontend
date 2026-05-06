@@ -1,42 +1,24 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
+import { getActionErrorMessage } from "@/lib/getActionErrorMessage";
 import {
   applyServiceRequestService,
   cancelServiceRequestService,
   getServiceRequestByIdService,
+  updateServiceRequestCostBySPService,
   updateServiceRequestService,
 } from "@/services/serviceRequest.services";
 import { ApiErrorResponse, ApiResponse } from "@/types/api.types";
 import { IApplyServiceRequestPayload } from "@/types/serviceRequest.type";
 import {
   IServiceRequestPayload,
+  IServiceRequestUpdateCostBySPPayload,
   IServiceRequestUpdatePayload,
   serviceRequestZodSchema,
+  updateServiceCostBySPZodSchema,
   updateServiceRequestByManagementZodSchema,
 } from "@/zod/serviceRequest.validation";
-
-const getActionErrorMessage = (error: unknown, fallbackMessage: string) => {
-  if (
-    error &&
-    typeof error === "object" &&
-    "response" in error &&
-    error.response &&
-    typeof error.response === "object" &&
-    "data" in error.response &&
-    error.response.data &&
-    typeof error.response.data === "object" &&
-    "message" in error.response.data &&
-    typeof error.response.data.message === "string"
-  ) {
-    return error.response.data.message;
-  }
-
-  if (error instanceof Error) {
-    return error.message;
-  }
-
-  return fallbackMessage;
-};
 
 export const applyServiceRequestAction = async (
   payload: IApplyServiceRequestPayload,
@@ -132,6 +114,37 @@ export const updateServiceRequestAction = async (
     return {
       success: false,
       message: getActionErrorMessage(error, "Failed to update service request"),
+    };
+  }
+};
+
+export const updateServiceRequestCostBySPAction = async (
+  id: string,
+  payload: IServiceRequestUpdateCostBySPPayload,
+): Promise<ApiResponse | ApiErrorResponse> => {
+  const parsedPayload = updateServiceCostBySPZodSchema.safeParse(payload);
+
+  if (!parsedPayload.success) {
+    return {
+      success: false,
+      message: parsedPayload.error.issues[0]?.message || "Invalid input",
+    };
+  }
+
+  try {
+    const result = await updateServiceRequestCostBySPService(
+      id,
+      parsedPayload.data,
+    );
+
+    return {
+      success: result?.success ?? true,
+      message: result?.message || "Cost updated successfully",
+    };
+  } catch (error: any) {
+    return {
+      success: false,
+      message: getActionErrorMessage(error, "Failed to update service cost"),
     };
   }
 };

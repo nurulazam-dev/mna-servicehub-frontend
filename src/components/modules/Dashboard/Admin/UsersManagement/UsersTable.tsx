@@ -48,7 +48,11 @@ export default function UsersTable({
     onViewOpenChange,
     onEditOpenChange,
     tableActions,
-  } = useRowActionModalState<IUserPayload>();
+  } = useRowActionModalState<IUserPayload>({
+    enableView: true,
+    enableEdit: true,
+    enableDelete: true,
+  });
 
   const {
     queryStringFromUrl,

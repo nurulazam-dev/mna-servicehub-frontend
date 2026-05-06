@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { ICostBreakdownPayload } from "./costBreakdown.type";
 import { IServiceRequestPayload } from "./serviceRequest.type";
 
 export type PaymentStatus = "PAID" | "PAID" | "UNPAID" | "FAILED";
@@ -16,4 +17,5 @@ export interface IPaymentPayload {
   updatedAt: Date | string;
   requestId: string;
   serviceRequest?: IServiceRequestPayload;
+  costBreakdown?: ICostBreakdownPayload;
 }

@@ -17,6 +17,7 @@ const CandidateDashboardContent = () => {
   });
 
   const data = response?.data as IDashboardStatsDataPayload;
+  console.log("dashboard data===", data);
 
   if (isLoading) {
     return <DashboardSkeleton />;
