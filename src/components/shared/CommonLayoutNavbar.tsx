@@ -74,9 +74,9 @@ interface Navbar1Props {
 const CommonLayoutNavbar = ({
   logo = {
     url: "/",
-    src: "/mna-serviceHub.png",
+    src: "/mna-serviceHub-logo.png",
     alt: "MNA ServiceHub",
-    title: "MNA SH",
+    title: "MNA ServiceHub",
   },
   menu = [
     { title: "Home", url: "/" },
@@ -165,9 +165,9 @@ const CommonLayoutNavbar = ({
                 preload
                 className="h-10 w-auto object-contain"
               />
-              <span className="text-2xl font-bold tracking-tighter">
+              {/* <span className="text-2xl font-bold tracking-tighter">
                 {logo.title}
-              </span>
+              </span> */}
             </Link>
           </div>
 

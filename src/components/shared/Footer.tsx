@@ -8,6 +8,8 @@ import {
   Phone,
   MapPin,
 } from "lucide-react";
+import Image from "next/image";
+// import logo from "/public/mna-serviceHub-logo.png";
 
 const footerLinks = {
   company: [
@@ -47,8 +49,16 @@ export default function Footer() {
         <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4">
           <div className="space-y-4">
             <Link href="/" className="flex items-center gap-2">
-              <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center text-primary-foreground font-bold">
-                M
+              <div className="flex items-center justify-center">
+                <Image
+                  // src={logo.src}
+                  src="/mna-serviceHub-logo.png"
+                  height={40}
+                  width={40}
+                  alt="MNA ServiceHub"
+                  preload
+                  className="h-10 w-auto object-contain"
+                />
               </div>
               <span className="text-xl font-bold tracking-tight">
                 MNA ServiceHub
